@@ -9,13 +9,14 @@ public:
 		None = -1,
 		Idle,
 		Move,
-		Jump,
+		Attack,
 	};
 protected:
 	Sprite sprite;
 	Animator animator;
 
 	States currState;
+	States prevState;
 
 	float speed;
 	Vector2f direction;
@@ -30,12 +31,12 @@ public:
 	void Update(float dt);
 	void UpdateInput(Event ev);
 	void Draw(RenderWindow& window);
-
+	void PlayAttack();
 	void OnCompleteJump();
 
 	void UpdateIdle(float dt);
 	void UpdateMove(float dt);
-	void UpdateJump(float dt);
+	void UpdateAttack(float dt);
 
 	bool EqualFloat(float a, float b);
 };

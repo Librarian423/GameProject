@@ -4,7 +4,8 @@
 
 void Player::Init()
 {
-	sprite.setPosition(1280.f / 2, 720.f / 2 + 60.f);
+	sprite.setPosition(1280.f * 0.5f - 80.f, (720.f * 0.5f) + 60.f);
+	sprite.setScale({ 3.f,3.f });
 	animator.SetTarget(&sprite);
 	
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerIdle"));
@@ -29,8 +30,6 @@ void Player::Init()
 		ev.onEvent = bind(&Player::OnCompleteJump, this);
 		animator.AddEvent(ev);
 	}
-	sprite.setScale({ 3.f,3.f });
-	//sprite.setPosition({ 120.f,160.f });
 	SetState(States::Idle);
 }
 
@@ -38,7 +37,10 @@ void Player::SetState(States newState)
 {
 	if (currState == newState)
 		return;
+
+	prevState = currState;
 	currState = newState;
+	
 	switch (currState)
 	{
 	case Player::States::Idle:
@@ -47,7 +49,7 @@ void Player::SetState(States newState)
 	case Player::States::Move:
 		animator.Play((direction.x > 0.f) ? "PlayerMove" : "PlayerMoveLeft");
 		break;
-	case Player::States::Jump:
+	case Player::States::Attack:
 		animator.Play((lastDirection.x > 0.f) ? "PlayerAttack" : "PlayerAttackLeft");
 		break;
 	}
@@ -67,8 +69,8 @@ void Player::Update(float dt)
 	case Player::States::Move:
 		UpdateMove(dt);
 		break;
-	case Player::States::Jump:
-		UpdateJump(dt);
+	case Player::States::Attack:
+		UpdateAttack(dt);
 		break;
 	default:
 		break;
@@ -89,10 +91,10 @@ void Player::UpdateInput(Event ev)
 	case Event::KeyPressed:
 		switch (ev.key.code)
 		{
-		case Keyboard::Key::Space:
-			animator.Play((lastDirection.x > 0.f) ? "PlayerAttack" : "PlayerAttackLeft");
-			//animator.PlayQueue((direction.x > 0.f) ? "PlayerMove" : "PlayerMoveLeft");
-			break;
+		//case Keyboard::Key::Space:
+		//	animator.Play((lastDirection.x > 0.f) ? "PlayerAttack" : "PlayerAttackLeft");
+		//	//animator.PlayQueue((direction.x > 0.f) ? "PlayerMove" : "PlayerMoveLeft");
+		//	break;
 		}
 		break;
 	}
@@ -101,6 +103,22 @@ void Player::UpdateInput(Event ev)
 void Player::Draw(RenderWindow& window)
 {
 	window.draw(sprite);
+}
+
+void Player::PlayAttack()
+{
+	animator.Play((lastDirection.x > 0.f) ? "PlayerAttack" : "PlayerAttackLeft");
+	switch ( currState )
+	{
+	case Player::States::Idle:
+		animator.PlayQueue((lastDirection.x > 0.f) ? "PlayerIdle" : "PlayerIdleLeft");
+		break;
+	case Player::States::Move:
+		animator.PlayQueue((lastDirection.x > 0.f) ? "PlayerMove" : "PlayerMoveLeft");
+		break;
+	default:
+		break;
+	}
 }
 
 void Player::OnCompleteJump()
@@ -130,7 +148,7 @@ void Player::UpdateMove(float dt)
 	}
 }
 
-void Player::UpdateJump(float dt)
+void Player::UpdateAttack(float dt)
 {
 	if ( EqualFloat(direction.x, 0.f) )
 	{

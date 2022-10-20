@@ -44,6 +44,10 @@ void SceneDev2::Exit()
 
 void SceneDev2::Update(float dt)
 {
+	if ( Keyboard::isKeyPressed(Keyboard::Key::Space) )
+	{
+		player->PlayAttack();
+	}
 	player->Update(dt);
 	Scene::Update(dt);
 }
