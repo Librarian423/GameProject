@@ -1,0 +1,9 @@
+ID,LOOPTYPE (0: Single 1: Move),FPS,,,,,,
+AttackBack,0,10,,,,,,
+,,,,,,,,
+TEXTURE ID,L,T,W,H,X,Y,FlipX,FlipY
+graphics/attack.png,0,0,256,200,128,100,0,0
+graphics/attack.png,256,0,256,200,128,100,0,0
+graphics/attack.png,512,0,256,200,128,100,0,0
+graphics/attack.png,768,0,256,200,128,100,0,0
+graphics/attack.png,1024,0,256,200,128,100,0,0

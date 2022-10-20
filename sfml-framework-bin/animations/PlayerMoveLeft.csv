@@ -1,0 +1,10 @@
+ID,LOOPTYPE (0: Single 1: Move),FPS,,,,,,
+PlayerMoveLeft,1,10,,,,,,
+,,,,,,,,
+TEXTURE ID,L,T,W,H,X,Y,FlipX,FlipY
+graphics/player.png,0,48,48,48,60,120,1,0
+graphics/player.png,48,48,48,48,60,120,1,0
+graphics/player.png,96,48,48,48,60,120,1,0
+graphics/player.png,144,48,48,48,60,120,1,0
+graphics/player.png,192,48,48,48,60,120,1,0
+graphics/player.png,240,48,48,48,60,120,1,0

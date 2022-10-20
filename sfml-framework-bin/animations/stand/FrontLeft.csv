@@ -1,0 +1,11 @@
+ID,LOOPTYPE (0: Single 1: Move),FPS,,,,,,
+StandFrontLeft,1,10,,,,,,
+,,,,,,,,
+TEXTURE ID,L,T,W,H,X,Y,FlipX,FlipY
+graphics/stand.png,0,0,136,80,68,40,0,0
+graphics/stand.png,136,0,136,80,68,40,0,0
+graphics/stand.png,272,0,136,80,68,40,0,0
+graphics/stand.png,408,0,136,80,68,40,0,0
+graphics/stand.png,544,0,136,80,68,40,0,0
+graphics/stand.png,680,0,136,80,68,40,0,0
+graphics/stand.png,816,0,136,80,68,40,0,0

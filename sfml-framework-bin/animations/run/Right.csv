@@ -1,0 +1,12 @@
+ID,LOOPTYPE (0: Single 1: Move),FPS,,,,,,
+RunRight,1,10,,,,,,
+,,,,,,,,
+TEXTURE ID,L,T,W,H,X,Y,FlipX,FlipY
+graphics/run.png,0,150,40,75,20,37,1,0
+graphics/run.png,40,150,40,75,20,37,1,0
+graphics/run.png,80,150,40,75,20,37,1,0
+graphics/run.png,120,150,40,75,20,37,1,0
+graphics/run.png,160,150,40,75,20,37,1,0
+graphics/run.png,200,150,40,75,20,37,1,0
+graphics/run.png,240,150,40,75,20,37,1,0
+graphics/run.png,280,150,40,75,20,37,1,0
