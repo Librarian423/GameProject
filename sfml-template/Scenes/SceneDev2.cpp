@@ -7,9 +7,10 @@
 #include "../Framework/SoundMgr.h"
 #include "../Framework/Framework.h"
 #include "../GameObject/Player.h"
+#include "../GameObject/Slime.h"
 
 SceneDev2::SceneDev2()
-	:Scene(Scenes::Dev2)
+	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f)
 {
 }
 
@@ -22,6 +23,9 @@ void SceneDev2::Init()
 	player = new Player();
 	player->Init();
 	
+	slime = new Slime();
+	slime->Init();
+
 	for ( auto obj : objList )
 	{
 		obj->Init();
@@ -44,16 +48,30 @@ void SceneDev2::Exit()
 
 void SceneDev2::Update(float dt)
 {
-	if ( Keyboard::isKeyPressed(Keyboard::Key::Space) )
+	timer += dt;
+	if ( timer > attackTimer && Keyboard::isKeyPressed(Keyboard::Key::Space) )
 	{
 		player->PlayAttack();
+		timer = 0.f;
+	}
+
+	if ( Keyboard::isKeyPressed(Keyboard::Key::A) )
+	{
+		slime->PlayIdle();
+	}
+	if ( Keyboard::isKeyPressed(Keyboard::Key::S) )
+	{
+		slime->PlayMove();
 	}
 	player->Update(dt);
+	slime->Update(dt);
+
 	Scene::Update(dt);
 }
 
 void SceneDev2::Draw(RenderWindow& window)
 {
 	player->Draw(window);
+	slime->Draw(window);
 	Scene::Draw(window);
 }
