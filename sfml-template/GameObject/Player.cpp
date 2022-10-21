@@ -213,7 +213,7 @@ void Player::UpdateMove(float dt)
 
 void Player::UpdateAttack(float dt)
 {
-	if ( EqualFloat(direction.x, 0.f) )
+	if (EqualFloat(direction.x, 0.f) )
 	{
 		SetState(States::Idle);
 		return;

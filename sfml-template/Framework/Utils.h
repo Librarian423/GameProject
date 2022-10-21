@@ -46,4 +46,5 @@ public:
 	static float RandomZeroToOne();
 	static Vector2f RandomInCirclePoint();
 	static Vector2f RandomOutCirclePoint();
+
 };
