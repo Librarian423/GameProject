@@ -22,6 +22,7 @@ protected:
 
 public:
 	Slime() : currState(States::None), speed(200.f), direction(1.f, 0.f), lastDirection(1.f, 0.f) {}
+	
 	void Init();
 
 	void SetState(States newState);

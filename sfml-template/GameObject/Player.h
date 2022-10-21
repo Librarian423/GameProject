@@ -24,6 +24,7 @@ protected:
 
 public:
 	Player() : currState(States::None), speed(200.f), direction(1.f, 0.f), lastDirection(1.f, 0.f) {}
+	
 	void Init();
 
 	void SetState(States newState);
@@ -39,5 +40,7 @@ public:
 	void UpdateAttack(float dt);
 
 	bool EqualFloat(float a, float b);
+
+	Vector2f GetPlayerDir() { return direction; }
 };
 

@@ -14,28 +14,16 @@ void Slime::Init()
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeIdleLeft"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeMoveLeft"));
 	
-
-	/*{
-		AnimationEvent ev;
-		ev.clipId = "PlayerAttack";
-		ev.frame = 6;
-		ev.onEvent = bind(&Slime::OnCompleteJump, this);
-		animator.AddEvent(ev);
-	}
-	{
-		AnimationEvent ev;
-		ev.clipId = "PlayerAttackLeft";
-		ev.frame = 6;
-		ev.onEvent = bind(&Slime::OnCompleteJump, this);
-		animator.AddEvent(ev);
-	}*/
-	SetState(States::Idle);
+	animator.Play("SlimeIdle");
+	//SetState(States::Idle);
 }
 
 void Slime::SetState(States newState)
 {
 	if ( currState == newState )
+	{
 		return;
+	}
 
 	prevState = currState;
 	currState = newState;
@@ -53,9 +41,9 @@ void Slime::SetState(States newState)
 
 void Slime::Update(float dt)
 {
-	/*direction.x = 0.f;
+	direction.x = 0.f;
 	direction.x += Keyboard::isKeyPressed(Keyboard::Right) ? 1 : 0;
-	direction.x += Keyboard::isKeyPressed(Keyboard::Left) ? -1 : 0;*/
+	direction.x += Keyboard::isKeyPressed(Keyboard::Left) ? -1 : 0;
 
 	switch ( currState )
 	{
@@ -114,5 +102,5 @@ void Slime::PlayMove()
 
 bool Slime::EqualFloat(float a, float b)
 {
-	return false;
+	return fabs(a - b) < numeric_limits<float>::epsilon();
 }
