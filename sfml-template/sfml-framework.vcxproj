@@ -164,6 +164,7 @@
     <ClCompile Include="Scenes\Scene.cpp" />
     <ClCompile Include="Scenes\SceneMgr.cpp" />
     <ClCompile Include="Framework\SoundMgr.cpp" />
+    <ClCompile Include="GameObject\Slime.cpp" />
     <ClCompile Include="UI\UIMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +187,7 @@
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SceneMgr.h" />
     <ClInclude Include="Framework\SoundMgr.h" />
+    <ClInclude Include="GameObject\Slime.h" />
     <ClInclude Include="UI\UIMgr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

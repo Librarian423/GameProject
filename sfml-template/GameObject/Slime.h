@@ -1,15 +1,13 @@
 #pragma once
 #include "../Animation/Animator.h"
 
-class Player
+class Slime
 {
-public:
 	enum class States
 	{
 		None = -1,
 		Idle,
 		Move,
-		Attack,
 	};
 protected:
 	Sprite sprite;
@@ -23,24 +21,21 @@ protected:
 	Vector2f lastDirection;
 
 public:
-	Player() : currState(States::None), speed(200.f), direction(1.f, 0.f), lastDirection(1.f, 0.f) {}
+	Slime() : currState(States::None), speed(200.f), direction(1.f, 0.f), lastDirection(1.f, 0.f) {}
 	
 	void Init();
 
 	void SetState(States newState);
 
 	void Update(float dt);
-	void UpdateInput(Event ev);
 	void Draw(RenderWindow& window);
-	void PlayAttack();
-	void OnCompleteJump();
 
 	void UpdateIdle(float dt);
 	void UpdateMove(float dt);
-	void UpdateAttack(float dt);
+
+	void PlayIdle();
+	void PlayMove();
 
 	bool EqualFloat(float a, float b);
-
-	Vector2f GetPlayerDir() { return direction; }
 };
 

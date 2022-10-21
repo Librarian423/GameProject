@@ -3,14 +3,19 @@
 #include "../GameObject/Object.h"
 
 class Player;
+class Slime;
 
 class SceneDev2 :public Scene
 {
 
 protected:
 	Player* player;
-	Object* obj1;
-	Object* obj2;
+	Slime* slime;
+	
+	float timer;
+	float attackTimer;
+
+
 public:
 	SceneDev2();
 	virtual ~SceneDev2();
