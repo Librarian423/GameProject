@@ -118,3 +118,4 @@ Vector2f Utils::RandomOutCirclePoint()
 	float radian = RandomRange(0.f, M_PI * 2);
 	return Vector2f({ cos(radian),sin(radian) });
 }
+

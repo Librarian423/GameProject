@@ -1,7 +1,8 @@
 #pragma once
+#include "SpriteObj.h"
 #include "../Animation/Animator.h"
 
-class Player
+class Player : public SpriteObj
 {
 public:
 	enum class States
@@ -12,18 +13,23 @@ public:
 		Attack,
 	};
 protected:
-	Sprite sprite;
+	//Sprite sprite;
 	Animator animator;
 
 	States currState;
 	States prevState;
 
 	float speed;
+	float accelation;
+	float deaccelation;
+	Vector2f velocity;
+
 	Vector2f direction;
 	Vector2f lastDirection;
+	Vector2f tempDirection;
 
 public:
-	Player() : currState(States::None), speed(200.f), direction(1.f, 0.f), lastDirection(1.f, 0.f) {}
+	Player() : currState(States::None), speed(200.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), accelation(500), deaccelation(500) {}
 	
 	void Init();
 
