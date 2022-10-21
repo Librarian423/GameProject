@@ -1,5 +1,8 @@
 #include "Player.h"
 #include "../Framework/ResourceMgr.h"
+#include "../Framework/InputMgr.h"
+#include "../Framework/Utils.h"
+#include "Object.h"
 #include <iostream>
 
 void Player::Init()
@@ -7,7 +10,7 @@ void Player::Init()
 	sprite.setPosition(1280.f * 0.5f - 80.f, (720.f * 0.5f) + 60.f);
 	sprite.setScale({ 3.f,3.f });
 	animator.SetTarget(&sprite);
-	
+
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerIdle"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerMove"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerAttack"));
@@ -48,6 +51,7 @@ void Player::SetState(States newState)
 		break;
 	case Player::States::Move:
 		animator.Play((direction.x > 0.f) ? "PlayerMove" : "PlayerMoveLeft");
+		lastDirection = direction;
 		break;
 	case Player::States::Attack:
 		animator.Play((lastDirection.x > 0.f) ? "PlayerAttack" : "PlayerAttackLeft");
@@ -60,6 +64,10 @@ void Player::Update(float dt)
 	direction.x = 0.f;
 	direction.x += Keyboard::isKeyPressed(Keyboard::Right) ? 1 : 0;
 	direction.x += Keyboard::isKeyPressed(Keyboard::Left) ? -1 : 0;
+	direction.y = 0.f;
+	direction.y += Keyboard::isKeyPressed(Keyboard::Down) ? 1 : 0;
+	direction.y += Keyboard::isKeyPressed(Keyboard::Up) ? -1 : 0;
+	//direction.y = InputMgr::GetAxisRaw(Axis::Vertical);
 
 	switch (currState)
 	{
@@ -76,8 +84,56 @@ void Player::Update(float dt)
 		break;
 	}
 
-	animator.Update(dt);
+	//가속
+	velocity += direction * accelation * dt;
+	if ( Utils::Magnitude(velocity) > speed )
+	{
+		velocity = Utils::Normalize(velocity) * speed;
+	}
 
+	//감속
+	if ( Utils::Magnitude(direction) == 0.f )
+	{
+		velocity = { 0.f, 0.f };
+	}
+
+	if ( direction.x == 0.f )
+	{
+		if ( velocity.x > 0.f )
+		{
+			velocity.x -= deaccelation * dt;
+			if ( velocity.x < 0.f )
+				velocity.x = 0.f;
+		}
+		if ( velocity.x < 0.f )
+		{
+			velocity.x += deaccelation * dt;
+			if ( velocity.x > 0.f )
+				velocity.x = 0.f;
+		}
+	}
+
+	if ( direction.y == 0.f )
+	{
+		if ( velocity.y > 0.f )
+		{
+			velocity.y -= deaccelation * dt;
+			if ( velocity.y < 0.f )
+				velocity.y = 0.f;
+		}
+		if ( velocity.y < 0.f )
+		{
+			velocity.y += deaccelation * dt;
+			if ( velocity.y > 0.f )
+				velocity.y = 0.f;
+		}
+	}
+
+
+	Translate(velocity*dt);
+
+	animator.Update(dt);
+	
 	if (!EqualFloat(direction.x, 0.f))
 	{
 		lastDirection = direction;
@@ -129,24 +185,30 @@ void Player::OnCompleteJump()
 
 void Player::UpdateIdle(float dt)
 {
-	if (!EqualFloat(direction.x, 0.f))
+	if ( !EqualFloat(direction.x, 0.f) )
 	{
 		SetState(States::Move);
-		return;
+	}
+	else if ( !EqualFloat(direction.y, 0.f) )
+	{
+		SetState(States::Move);
 	}
 }
 
 void Player::UpdateMove(float dt)
 {
-	if ( EqualFloat(direction.x, 0.f) )
+	if ( EqualFloat(direction.x, 0.f) && EqualFloat(direction.y, 0.f) )
 	{
 		SetState(States::Idle);
 		return;
 	}
-	if ( !EqualFloat(direction.x, lastDirection.x) )
+
+	if ( !EqualFloat(direction.x, lastDirection.x))
 	{
 		animator.Play((direction.x > 0.f) ? "PlayerMove" : "PlayerMoveLeft");
+		lastDirection.x = direction.x;
 	}
+
 }
 
 void Player::UpdateAttack(float dt)
