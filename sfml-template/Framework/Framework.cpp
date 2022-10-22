@@ -38,7 +38,7 @@ bool Framework::Init(int width, int height)
 {
     windowSize = { width, height };
     window.create(VideoMode(windowSize.x, windowSize.y), "Game");
-
+    Map = new CAP::SFMLMap("tilemap/", "test.tmx");
     RESOURCE_MGR->LoadAll();
     SOUND_MGR->Init();
     DATATABLE_MGR->Init();
@@ -69,6 +69,8 @@ bool Framework::Do()
         SOUND_MGR->Update();
 
         window.clear();
+
+        Map->draw(window, states);
         SCENE_MGR->Draw(window);
         window.display();
     }

@@ -140,5 +140,11 @@
     <ClInclude Include="GameObject\Slime.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="TileMapLoader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="XMLParse.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

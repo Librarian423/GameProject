@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "../3rd/Singleton.h"
+#include "../TileMapLoader.h"
 
 using namespace sf;
 
@@ -9,6 +10,10 @@ class Framework : public Singleton<Framework>
 protected:
 	RenderWindow window;
 	Vector2i windowSize;
+
+	//map
+	CAP::SFMLMap* Map;
+	RenderStates states;
 
 	//TimeMgr
 	Clock clock;

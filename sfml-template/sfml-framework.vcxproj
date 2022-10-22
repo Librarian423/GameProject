@@ -188,7 +188,9 @@
     <ClInclude Include="Scenes\SceneMgr.h" />
     <ClInclude Include="Framework\SoundMgr.h" />
     <ClInclude Include="GameObject\Slime.h" />
+    <ClInclude Include="TileMapLoader.h" />
     <ClInclude Include="UI\UIMgr.h" />
+    <ClInclude Include="XMLParse.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
