@@ -1,22 +1,24 @@
 #include "Slime.h"
+#include "Player.h"
 #include "../Framework/ResourceMgr.h"
 #include <iostream>
 
-void Slime::Init()
+void Slime::Init(Player* player)
 {
+	this->player = player;
+
 	sprite.setPosition(80.f, (720.f * 0.5f) + 60.f);
 	sprite.setScale({ 3.f,3.f });
 	animator.SetTarget(&sprite);
 
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeIdle"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeMove"));
-
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeIdleLeft"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeMoveLeft"));
 	
-	//animator.Play("SlimeMove");
 	animator.Play("SlimeIdle");
-	//SetState(States::Idle);
+
+	SpriteObj::Init();
 }
 
 void Slime::SetState(States newState)
@@ -42,19 +44,15 @@ void Slime::SetState(States newState)
 
 void Slime::Update(float dt)
 {
-	//direction.x = 0.f;
-	//direction.x += Keyboard::isKeyPressed(Keyboard::Right) ? 1 : 0;
-	//direction.x += Keyboard::isKeyPressed(Keyboard::Left) ? -1 : 0;
+	SpriteObj::Update(dt);
 
-	switch ( currState )
-	{
-	case Slime::States::Idle:
-		UpdateIdle(dt);
-		break;
-	case Slime::States::Move:
-		UpdateMove(dt);
-		break;
-	}
+	dir = Utils::Normalize(player->GetPos() - GetPos());
+
+	Translate(dir * this->speed * dt);
+
+	//float distance = Utils::Distance(player->GetPos(), GetPos());
+	
+	
 
 	animator.Update(dt);
 
@@ -62,25 +60,8 @@ void Slime::Update(float dt)
 
 void Slime::Draw(RenderWindow& window)
 {
+	SpriteObj::Draw(window);
 	window.draw(sprite);
-}
-
-void Slime::UpdateIdle(float dt)
-{
-	if ( !EqualFloat(direction.x, 0.f) )
-	{
-		//SetState(States::Move);
-		return;
-	}
-}
-
-void Slime::UpdateMove(float dt)
-{
-	if ( !EqualFloat(direction.x, lastDirection.x) )
-	{
-		animator.Play((direction.x > 0.f) ? "SlimeMove" : "SlimeMoveLeft");
-	}
-	
 }
 
 void Slime::PlayIdle()

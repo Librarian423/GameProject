@@ -24,7 +24,7 @@ void SceneDev2::Init()
 	player->Init();
 	
 	slime = new Slime();
-	slime->Init();
+	slime->Init(player);
 	Map1 = new CAP::SFMLMap("tilemap/", "map1.tmx");
 	Map = new CAP::SFMLMap("tilemap/", "map2.tmx");
 
@@ -40,6 +40,11 @@ void SceneDev2::Release()
 
 void SceneDev2::Enter()
 {
+	Vector2i size = FRAMEWORK->GetWindowSize();
+	worldView.setSize(size.x, size.y);
+	worldView.setCenter(0.f, 0.f);
+	uiView.setSize(size.x, size.y);
+	uiView.setCenter(size.x * 0.5f, size.y * 0.5f);
 	FRAMEWORK->GetWindow().setMouseCursorGrabbed(false);
 }
 
@@ -74,12 +79,15 @@ void SceneDev2::Update(float dt)
 		slimeTimer = 5.f;
 		
 	}
-	
+
+	worldView.setCenter(player->GetPos());
+	worldView.setCenter(player->GetPos());
+
 	/*if ( Map->GetGlobalBounds().intersects(player->GetGlobalBounds()) )
 	{
 		cout << "bound" << endl;
 	}*/
-	float border = 64.f;
+	float border = 32.f;
 	FloatRect wallBound = Map->GetGlobalBounds();
 	Vector2f pos;
 	pos.x = Utils::Clamp(player->GetPos().x,

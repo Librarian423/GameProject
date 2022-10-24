@@ -7,6 +7,7 @@
 
 void Player::Init()
 {
+	SpriteObj::Init();
 	sprite.setPosition(1280.f * 0.5f - 80.f, (720.f * 0.5f) + 60.f);
 	sprite.setScale({ 3.f,3.f });
 	animator.SetTarget(&sprite);

@@ -1,7 +1,10 @@
 #pragma once
+#include "SpriteObj.h"
 #include "../Animation/Animator.h"
 
-class Slime
+class Player;
+
+class Slime : public SpriteObj
 {
 	enum class States
 	{
@@ -10,7 +13,7 @@ class Slime
 		Move,
 	};
 protected:
-	Sprite sprite;
+	Player* player;
 	Animator animator;
 
 	States currState;
@@ -19,22 +22,23 @@ protected:
 	float speed;
 	Vector2f direction;
 	Vector2f lastDirection;
+	Vector2f dir;
 
 	int slimeState;
 	float moveTime;
 
 public:
-	Slime() : currState(States::None), speed(200.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f) {}
+	Slime() : currState(States::None), speed(20.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f) {}
 	
-	void Init();
+	void Init(Player* player);
 
 	void SetState(States newState);
 
 	void Update(float dt);
 	void Draw(RenderWindow& window);
 
-	void UpdateIdle(float dt);
-	void UpdateMove(float dt);
+	//void UpdateIdle(float dt);
+	//void UpdateMove(float dt);
 
 	void PlayIdle();
 	void PlayMove();
