@@ -6,6 +6,7 @@ class Player;
 
 class Slime : public SpriteObj
 {
+public:
 	enum class States
 	{
 		None = -1,
@@ -27,8 +28,10 @@ protected:
 	int slimeState;
 	float moveTime;
 
+	bool attack;
+
 public:
-	Slime() : currState(States::None), speed(20.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f) {}
+	Slime() : currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f), attack(true) {}
 	
 	void Init(Player* player);
 
@@ -37,8 +40,8 @@ public:
 	void Update(float dt);
 	void Draw(RenderWindow& window);
 
-	//void UpdateIdle(float dt);
-	//void UpdateMove(float dt);
+	void UpdateIdle(float dt);
+	void UpdateMove(float dt);
 
 	void PlayIdle();
 	void PlayMove();

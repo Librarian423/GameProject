@@ -16,18 +16,11 @@ void Slime::Init(Player* player)
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeIdleLeft"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeMoveLeft"));
 	
-	animator.Play("SlimeIdle");
-
 	SpriteObj::Init();
 }
 
 void Slime::SetState(States newState)
 {
-	if ( currState == newState )
-	{
-		return;
-	}
-
 	prevState = currState;
 	currState = newState;
 
@@ -35,6 +28,7 @@ void Slime::SetState(States newState)
 	{
 	case Slime::States::Idle:
 		animator.Play((direction.x > 0.f) ? "SlimeIdle" : "SlimeIdleLeft");
+		attack = true;
 		break;
 	case Slime::States::Move:
 		animator.Play((direction.x > 0.f) ? "SlimeMove" : "SlimeMoveLeft");
@@ -46,16 +40,30 @@ void Slime::Update(float dt)
 {
 	SpriteObj::Update(dt);
 
-	dir = Utils::Normalize(player->GetPos() - GetPos());
+	direction.x = (player->GetPos().x > GetPos().x) ? 1.f : -1.f;
 
-	Translate(dir * this->speed * dt);
 
-	//float distance = Utils::Distance(player->GetPos(), GetPos());
+	if ( currState == States::Move )
+	{
+		dir = Utils::Normalize(player->GetPos() - GetPos());
+
+		Translate(dir * this->speed * dt);
+	}
 	
+	if ( currState == States::Move && (Utils::Distance(player->GetPos(), GetPos()) < 150.f) && attack )
+	{
+		cout << "attack" << endl;
+		Translate(dir * 200.f * dt);
+	}
+	if ( currState == States::Move && Utils::Distance(player->GetPos(), GetPos()) < 15.f )
+	{
+		cout << "stop" << endl;
+		Translate(dir * 50.f * dt);
+		attack = false;
+	}
 	
-
 	animator.Update(dt);
-
+	
 }
 
 void Slime::Draw(RenderWindow& window)
@@ -63,6 +71,22 @@ void Slime::Draw(RenderWindow& window)
 	SpriteObj::Draw(window);
 	window.draw(sprite);
 }
+
+//void Slime::UpdateIdle(float dt)
+//{
+//	if ( !EqualFloat(direction.x, 0.f) )
+//	{
+//		animator.PlayQueue((direction.x > 0.f) ? "SlimeIdle" : "SlimeIdleLeft");
+//	}
+//}
+//
+//void Slime::UpdateMove(float dt)
+//{
+//	if ( !EqualFloat(direction.x, 0.f) )
+//	{
+//		animator.PlayQueue((direction.x > 0.f) ? "SlimeMove" : "SlimeMoveLeft");
+//	}
+//}
 
 void Slime::PlayIdle()
 {

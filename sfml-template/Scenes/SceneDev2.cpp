@@ -10,7 +10,7 @@
 #include "../GameObject/Slime.h"
 
 SceneDev2::SceneDev2()
-	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f), slimeTimer(3.f), slimeState(0)
+	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f), slimeTimer(0.8f), slimeState(0)
 {
 }
 
@@ -68,18 +68,19 @@ void SceneDev2::Update(float dt)
 		cout << "timer" << endl;
 		if ( slimeState % 2 == 0 )
 		{
-			slime->PlayIdle();
+			slime->SetState(Slime::States::Idle);
 			slimeState = 1;
 		}
 		else
 		{
-			slime->PlayMove();
+			slime->SetState(Slime::States::Move);
 			slimeState = 0;
 		}
 		slimeTimer = 5.f;
 		
 	}
 
+	slime->Update(dt);
 	worldView.setCenter(player->GetPos());
 	worldView.setCenter(player->GetPos());
 
@@ -103,7 +104,7 @@ void SceneDev2::Update(float dt)
 		//ResetVelocity();
 	}
 	player->Update(dt);
-	slime->Update(dt);
+	
 
 	Scene::Update(dt);
 }

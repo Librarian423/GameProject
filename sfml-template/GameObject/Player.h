@@ -29,7 +29,7 @@ protected:
 	Vector2f tempDirection;
 
 public:
-	Player() : currState(States::None), speed(300.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), accelation(500), deaccelation(500) {}
+	Player() : currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), accelation(500), deaccelation(500) {}
 	
 	void Init();
 
