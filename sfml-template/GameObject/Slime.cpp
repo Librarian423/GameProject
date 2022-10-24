@@ -14,6 +14,7 @@ void Slime::Init()
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeIdleLeft"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeMoveLeft"));
 	
+	//animator.Play("SlimeMove");
 	animator.Play("SlimeIdle");
 	//SetState(States::Idle);
 }
@@ -31,7 +32,7 @@ void Slime::SetState(States newState)
 	switch ( currState )
 	{
 	case Slime::States::Idle:
-		animator.Play((lastDirection.x > 0.f) ? "SlimeIdle" : "SlimeIdleLeft");
+		animator.Play((direction.x > 0.f) ? "SlimeIdle" : "SlimeIdleLeft");
 		break;
 	case Slime::States::Move:
 		animator.Play((direction.x > 0.f) ? "SlimeMove" : "SlimeMoveLeft");
@@ -41,9 +42,9 @@ void Slime::SetState(States newState)
 
 void Slime::Update(float dt)
 {
-	direction.x = 0.f;
-	direction.x += Keyboard::isKeyPressed(Keyboard::Right) ? 1 : 0;
-	direction.x += Keyboard::isKeyPressed(Keyboard::Left) ? -1 : 0;
+	//direction.x = 0.f;
+	//direction.x += Keyboard::isKeyPressed(Keyboard::Right) ? 1 : 0;
+	//direction.x += Keyboard::isKeyPressed(Keyboard::Left) ? -1 : 0;
 
 	switch ( currState )
 	{
@@ -57,10 +58,6 @@ void Slime::Update(float dt)
 
 	animator.Update(dt);
 
-	if ( !EqualFloat(direction.x, 0.f) )
-	{
-		lastDirection = direction;
-	}
 }
 
 void Slime::Draw(RenderWindow& window)
@@ -72,22 +69,18 @@ void Slime::UpdateIdle(float dt)
 {
 	if ( !EqualFloat(direction.x, 0.f) )
 	{
-		SetState(States::Move);
+		//SetState(States::Move);
 		return;
 	}
 }
 
 void Slime::UpdateMove(float dt)
 {
-	if ( EqualFloat(direction.x, 0.f) )
-	{
-		SetState(States::Idle);
-		return;
-	}
 	if ( !EqualFloat(direction.x, lastDirection.x) )
 	{
 		animator.Play((direction.x > 0.f) ? "SlimeMove" : "SlimeMoveLeft");
 	}
+	
 }
 
 void Slime::PlayIdle()

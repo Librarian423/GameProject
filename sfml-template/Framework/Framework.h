@@ -11,10 +11,6 @@ protected:
 	RenderWindow window;
 	Vector2i windowSize;
 
-	//map
-	CAP::SFMLMap* Map;
-	RenderStates states;
-
 	//TimeMgr
 	Clock clock;
 	Time deltaTime;

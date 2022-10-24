@@ -4,7 +4,7 @@
 
 int main()
 {
-    FRAMEWORK->Init(1280, 720);
+    FRAMEWORK->Init(1280, 640);
     FRAMEWORK->Do();
 
     return 0;

@@ -3,65 +3,51 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "D:/PersonalProject/sfml-framework-bin/tilemap/test.tmx",
+    "activeFile": "map2.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
-        "C:/Users/ysh42/Desktop/tilemap/fence_floor.tsx": {
-            "scaleInDock": 1
-        },
-        "C:/Users/ysh42/Desktop/tilemap/grass_floor.tsx": {
-            "scaleInDock": 1
-        },
-        "D:/PersonalProject/sfml-framework-bin/tilemap/grass_floor.tsx": {
-            "scaleInDock": 1
-        },
-        "D:/PersonalProject/sfml-framework-bin/tilemap/test.tmx": {
-            "scale": 0.9925520833333332,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 480.0755627853282,
-                "y": 320.38620979167763
-            }
-        },
-        "D:/PersonalProject/sfml-framework-bin/tilemap/testMap.tmx": {
-            "scale": 0.912890625,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 480.3423192126658,
-                "y": 225.1091142490373
-            }
-        },
-        "grass_floor.tsx": {
+        "fence.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
-        "test.tmx": {
-            "expandedGroupLayers": [
-                5
-            ],
-            "scale": 0.9925520833333332,
-            "selectedLayer": 1,
+        "grass.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "map1.tmx": {
+            "scale": 0.7444140625,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 464.45925381749487,
-                "y": 562.1871228420003
+                "x": 640.1007503804377,
+                "y": 321.0578789945952
+            }
+        },
+        "map2.tmx": {
+            "scale": 0.7444140625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 641.4440887862728,
+                "y": 322.40121740043037
             }
         }
     },
-    "last.imagePath": "C:/Users/ysh42/Desktop/animation/demo-animation-bin/tilemap",
+    "last.imagePath": "D:/PersonalProject/sfml-framework-bin/tilemap",
     "map.lastUsedFormat": "tmx",
+    "map.width": 40,
     "openFiles": [
-        "grass_floor.tsx",
-        "test.tmx",
-        "D:/PersonalProject/sfml-framework-bin/tilemap/test.tmx"
+        "grass.tsx",
+        "fence.tsx",
+        "map1.tmx",
+        "map2.tmx"
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
-        "grass_floor.tsx",
-        "test.tmx",
-        "D:/PersonalProject/sfml-framework-bin/tilemap/test.tmx",
-        "D:/PersonalProject/sfml-framework-bin/tilemap/testMap.tmx"
+        "grass.tsx",
+        "fence.tsx",
+        "map1.tmx",
+        "map2.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

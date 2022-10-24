@@ -20,8 +20,11 @@ protected:
 	Vector2f direction;
 	Vector2f lastDirection;
 
+	int slimeState;
+	float moveTime;
+
 public:
-	Slime() : currState(States::None), speed(200.f), direction(1.f, 0.f), lastDirection(1.f, 0.f) {}
+	Slime() : currState(States::None), speed(200.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f) {}
 	
 	void Init();
 

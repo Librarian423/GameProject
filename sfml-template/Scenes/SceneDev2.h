@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "../GameObject/Object.h"
+#include "../TileMapLoader.h"
 
 class Player;
 class Slime;
@@ -12,9 +13,16 @@ protected:
 	Player* player;
 	Slime* slime;
 	
+	int slimeState;
+
 	float timer;
 	float attackTimer;
+	float slimeTimer;
 
+	//map
+	CAP::SFMLMap* Map1;
+	CAP::SFMLMap* Map;
+	RenderStates states;
 
 public:
 	SceneDev2();
