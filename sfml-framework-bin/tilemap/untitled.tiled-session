@@ -3,33 +3,66 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "map2.tmx",
+    "activeFile": "map1.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
+        "C:/Users/ysh42/Desktop/newland-master/newland-master/resources/maps/domek1.tmx": {
+            "scale": 2.144921875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 152.91932252777272,
+                "y": 191.84847932981242
+            }
+        },
+        "C:/Users/ysh42/Desktop/newland-master/newland-master/resources/maps/domek1.tmx#MC1": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/Desktop/newland-master/newland-master/resources/maps/domek1.tmx#TilesetB": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/Desktop/newland-master/newland-master/resources/maps/domek1.tmx#TilesetC": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/Desktop/newland-master/newland-master/resources/maps/domek1.tmx#TilesetD": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/Desktop/newland-master/newland-master/resources/maps/domek1.tmx#TilesetE": {
+            "scaleInDock": 1
+        },
         "fence.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "grass.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "images.tsx": {
+            "dynamicWrapping": true,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "map1.tmx": {
-            "scale": 0.7444140625,
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 619.2790050899932,
-                "y": 643.4590963950254
+                "x": 698,
+                "y": 322
             }
         },
         "map2.tmx": {
             "scale": 0.7444140625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 641.4440887862728,
-                "y": 323.74455580626545
+                "x": 638.7574119746025,
+                "y": 320.38620979167763
             }
         }
     },
@@ -40,14 +73,19 @@
         "grass.tsx",
         "fence.tsx",
         "map1.tmx",
-        "map2.tmx"
+        "map2.tmx",
+        "images.tsx",
+        "C:/Users/ysh42/Desktop/newland-master/newland-master/resources/maps/domek1.tmx"
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
         "grass.tsx",
         "fence.tsx",
-        "map1.tmx",
-        "map2.tmx"
+        "C:/Users/ysh42/Desktop/newland-master/newland-master/resources/maps/domek1.tmx",
+        "images.tsx",
+        "map2.tmx",
+        "map1.tmx"
     ],
-    "tileset.lastUsedFormat": "tsx"
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.type": 1
 }

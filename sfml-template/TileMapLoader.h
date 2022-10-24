@@ -2,6 +2,7 @@
 
 #include "XMLParse.h"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 namespace CAP {
 
@@ -152,6 +153,7 @@ namespace CAP {
 	{
 		sf::Texture m_texture;
 		sf::VertexArray m_vertices;
+		//list<
 	public:
 		SFMLMap(std::string Folder, std::string FILE)
 		{
@@ -164,38 +166,39 @@ namespace CAP {
 			m_vertices.setPrimitiveType(sf::Quads);
 			m_vertices.resize(doc.TileLayers[0].columns * doc.TileLayers[0].rows * 4);
 
-			for ( int k = 0; k < doc.TileLayers.size(); k++ )
-			{
-				for ( int i = 0; i < doc.TileLayers[k].rows; i++ )
+			for ( int i = 0; i < doc.TileLayers[0].rows; i++ )
 
-					for ( int j = 0; j < doc.TileLayers[k].columns; j++ )
-					{
-						int index = (j + i * doc.TileLayers[k].columns) * 4;
-						int gid = doc.TileLayers[k].lay[j + i * doc.TileLayers[k].columns];
+				for ( int j = 0; j < doc.TileLayers[0].columns; j++ )
+				{
+					int index = (j + i * doc.TileLayers[0].columns) * 4;
+					int gid = doc.TileLayers[0].lay[j + i * doc.TileLayers[0].columns];
 
-						sf::Vertex* vertex = &m_vertices[index];
-						vertex[0].position = sf::Vector2f(doc.width * j, doc.height * i);
-						vertex[1].position = sf::Vector2f((j + 1) * doc.width, i * doc.height);
-						vertex[2].position = sf::Vector2f((j + 1) * doc.width, (i + 1) * doc.height);
-						vertex[3].position = sf::Vector2f(j * doc.width, (i + 1) * doc.height);
+					sf::Vertex* vertex = &m_vertices[index];
+					vertex[0].position = sf::Vector2f(doc.width * j, doc.height * i);
+					vertex[1].position = sf::Vector2f((j + 1) * doc.width, i * doc.height);
+					vertex[2].position = sf::Vector2f((j + 1) * doc.width, (i + 1) * doc.height);
+					vertex[3].position = sf::Vector2f(j * doc.width, (i + 1) * doc.height);
 
-						int colp = gid % dis - 1;
-						int rowp = gid / dis;
+					int colp = gid % dis - 1;
+					int rowp = gid / dis;
 
-						vertex[0].texCoords = sf::Vector2f(doc.width * colp, doc.height * rowp);
-						vertex[1].texCoords = sf::Vector2f((colp + 1) * doc.width, rowp * doc.height);
-						vertex[2].texCoords = sf::Vector2f((colp + 1) * doc.width, (rowp + 1) * doc.height);
-						vertex[3].texCoords = sf::Vector2f(colp * doc.width, (rowp + 1) * doc.height);
+					vertex[0].texCoords = sf::Vector2f(doc.width * colp, doc.height * rowp);
+					vertex[1].texCoords = sf::Vector2f((colp + 1) * doc.width, rowp * doc.height);
+					vertex[2].texCoords = sf::Vector2f((colp + 1) * doc.width, (rowp + 1) * doc.height);
+					vertex[3].texCoords = sf::Vector2f(colp * doc.width, (rowp + 1) * doc.height);
 
 
-					}
-			}
-
+				}
+				for ( auto it = doc.TileLayers[0].lay.begin(); it != doc.TileLayers[0].lay.end(); it++ )
+				{
+					std::cout << *it << std::endl;
+				}
 		}
 
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states)const 
 		{
 			states.texture = &m_texture;
+			
 			target.draw(m_vertices, states);
 
 		}
@@ -204,6 +207,7 @@ namespace CAP {
 		{
 			return m_vertices.getBounds();
 		}
+		
 
 	};
 
