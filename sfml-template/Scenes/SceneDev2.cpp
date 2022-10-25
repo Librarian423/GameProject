@@ -8,6 +8,10 @@
 #include "../Framework/Framework.h"
 #include "../GameObject/Player.h"
 #include "../GameObject/Slime.h"
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+//#include <tmx/MapLoader.hpp>
 
 SceneDev2::SceneDev2()
 	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f), slimeTimer(0.8f), slimeState(0)
@@ -27,6 +31,8 @@ void SceneDev2::Init()
 	slime->Init(player);
 	Map1 = new CAP::SFMLMap("tilemap/", "map1.tmx");
 	Map = new CAP::SFMLMap("tilemap/", "map2.tmx");
+	
+	
 
 	for ( auto obj : objList )
 	{
@@ -63,7 +69,7 @@ void SceneDev2::Update(float dt)
 		timer = 0.f;
 	}
 
-	if ( slimeTimer < 0.f )
+	if ( (slime->GetState() != Slime::States::Dead) && slimeTimer < 0.f )
 	{
 		cout << "timer" << endl;
 		if ( slimeState % 2 == 0 )
@@ -77,7 +83,11 @@ void SceneDev2::Update(float dt)
 			slimeState = 0;
 		}
 		slimeTimer = 5.f;
-		
+	}
+	
+	if ( Keyboard::isKeyPressed(Keyboard::Key::A) )
+	{
+		slime->SetState(Slime::States::Dead);
 	}
 
 	slime->Update(dt);
@@ -107,6 +117,14 @@ void SceneDev2::Update(float dt)
 	
 
 	Scene::Update(dt);
+
+	if ( InputMgr::GetKeyDown(Keyboard::F1) )
+	{
+		for ( Object* obj : objList )
+		{
+			obj->SetDevMode(true);
+		}
+	}
 }
 
 void SceneDev2::Draw(RenderWindow& window)
@@ -116,6 +134,6 @@ void SceneDev2::Draw(RenderWindow& window)
 	slime->Draw(window);
 	player->Draw(window);
 	
-	
+	window.setView(worldView);
 	Scene::Draw(window);
 }

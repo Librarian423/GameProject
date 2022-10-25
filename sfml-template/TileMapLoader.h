@@ -189,10 +189,7 @@ namespace CAP {
 
 
 				}
-				for ( auto it = doc.TileLayers[0].lay.begin(); it != doc.TileLayers[0].lay.end(); it++ )
-				{
-					std::cout << *it << std::endl;
-				}
+				
 		}
 
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states)const 

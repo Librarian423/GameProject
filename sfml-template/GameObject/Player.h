@@ -20,8 +20,8 @@ protected:
 	States prevState;
 
 	float speed;
-	float accelation;
-	float deaccelation;
+	//float accelation;
+	//float deaccelation;
 	Vector2f velocity;
 
 	Vector2f direction;
@@ -29,7 +29,7 @@ protected:
 	Vector2f tempDirection;
 
 public:
-	Player() : currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), accelation(500), deaccelation(500) {}
+	Player() : currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f) {}//, accelation(500), deaccelation(500)
 	
 	void Init();
 
@@ -39,7 +39,7 @@ public:
 	void UpdateInput(Event ev);
 	void Draw(RenderWindow& window);
 	void PlayAttack();
-	void OnCompleteJump();
+	void OnCompleteAttack();
 
 	void UpdateIdle(float dt);
 	void UpdateMove(float dt);

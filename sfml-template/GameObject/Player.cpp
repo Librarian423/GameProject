@@ -11,6 +11,7 @@ void Player::Init()
 	sprite.setPosition(1280.f * 0.5f - 80.f, (720.f * 0.5f) + 60.f);
 	sprite.setScale({ 3.f,3.f });
 	animator.SetTarget(&sprite);
+	SetHitbox(FloatRect(0.f, 0.f, 32.f, 32.f));
 
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerIdle"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerMove"));
@@ -23,15 +24,15 @@ void Player::Init()
 	{
 		AnimationEvent ev;
 		ev.clipId = "PlayerAttack";
-		ev.frame = 6;
-		ev.onEvent = bind(&Player::OnCompleteJump, this);
+		ev.frame = 3;
+		ev.onEvent = bind(&Player::OnCompleteAttack, this);
 		animator.AddEvent(ev);
 	}
 	{
 		AnimationEvent ev;
 		ev.clipId = "PlayerAttackLeft";
-		ev.frame = 6;
-		ev.onEvent = bind(&Player::OnCompleteJump, this);
+		ev.frame = 3;
+		ev.onEvent = bind(&Player::OnCompleteAttack, this);
 		animator.AddEvent(ev);
 	}
 	SetState(States::Idle);
@@ -86,7 +87,7 @@ void Player::Update(float dt)
 	}
 
 	//°¡¼Ó
-	velocity += direction * accelation * dt;
+	velocity += direction * speed * dt;
 	if ( Utils::Magnitude(velocity) > speed )
 	{
 		velocity = Utils::Normalize(velocity) * speed;
@@ -100,7 +101,8 @@ void Player::Update(float dt)
 
 	if ( direction.x == 0.f )
 	{
-		if ( velocity.x > 0.f )
+		velocity.x = 0.f;
+		/*if ( velocity.x > 0.f )
 		{
 			velocity.x -= deaccelation * dt;
 			if ( velocity.x < 0.f )
@@ -111,12 +113,13 @@ void Player::Update(float dt)
 			velocity.x += deaccelation * dt;
 			if ( velocity.x > 0.f )
 				velocity.x = 0.f;
-		}
+		}*/
 	}
 
 	if ( direction.y == 0.f )
 	{
-		if ( velocity.y > 0.f )
+		velocity.y = 0.f;
+		/*if ( velocity.y > 0.f )
 		{
 			velocity.y -= deaccelation * dt;
 			if ( velocity.y < 0.f )
@@ -127,7 +130,7 @@ void Player::Update(float dt)
 			velocity.y += deaccelation * dt;
 			if ( velocity.y > 0.f )
 				velocity.y = 0.f;
-		}
+		}*/
 	}
 
 
@@ -179,7 +182,7 @@ void Player::PlayAttack()
 	
 }
 
-void Player::OnCompleteJump()
+void Player::OnCompleteAttack()
 {
 	SetState(States::Idle);
 }

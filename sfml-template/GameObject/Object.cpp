@@ -1,4 +1,5 @@
 #include "Object.h"
+#include "../Framework/Utils.h"
 
 int Object::objCount = 0;
 
@@ -75,11 +76,12 @@ void Object::Draw(RenderWindow& window)
 
 void Object::SetHitbox(const FloatRect rect)
 {
-	/*Vector2f hitboxPos = GetPos();
-
-	hitboxPos.x -= rect.left;
-	hitboxPos.y -= rect.top;*/
-
-	hitbox.setPosition(position);
+	hitBoxRect = rect;
 	hitbox.setSize({ rect.width, rect.height });
+	Utils::SetOrigin(hitbox, Origins::MC);
+}
+
+RectangleShape Object::GetHitbox() const
+{
+	return hitbox;
 }

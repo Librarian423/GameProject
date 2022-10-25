@@ -12,6 +12,7 @@ public:
 		None = -1,
 		Idle,
 		Move,
+		Dead,
 	};
 protected:
 	Player* player;
@@ -27,15 +28,18 @@ protected:
 
 	int slimeState;
 	float moveTime;
+	float hitTime;
+	float deleteTime;
 
 	bool attack;
 
 public:
-	Slime() : currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f), attack(true) {}
+	Slime() : currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f), hitTime(1.f), deleteTime(1.f), attack(true) {}
 	
 	void Init(Player* player);
 
 	void SetState(States newState);
+	States GetState();
 
 	void Update(float dt);
 	void Draw(RenderWindow& window);
@@ -46,6 +50,7 @@ public:
 	void PlayIdle();
 	void PlayMove();
 
+	void OnCompleteDead();
 	bool EqualFloat(float a, float b);
 };
 

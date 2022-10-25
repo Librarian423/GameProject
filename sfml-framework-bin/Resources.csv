@@ -11,3 +11,5 @@ animations/slime/SlimeIdle.csv,3
 animations/slime/SlimeIdleLeft.csv,3
 animations/slime/SlimeMove.csv,3
 animations/slime/SlimeMoveLeft.csv,3
+animations/slime/SlimeDead.csv,3
+animations/slime/SlimeDeadLeft.csv,3
