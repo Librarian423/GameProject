@@ -3,15 +3,25 @@
 #include "../Framework/InputMgr.h"
 #include "../Framework/Utils.h"
 #include "Object.h"
+#include "HitBox.h"
 #include <iostream>
 
 void Player::Init()
 {
-	SpriteObj::Init();
-	sprite.setPosition(1280.f * 0.5f - 80.f, (720.f * 0.5f) + 60.f);
+	Object::Reset();
+	SpriteObj::SetPos({ 1280.f * 0.5f - 80.f, (720.f * 0.5f) + 60.f });
 	sprite.setScale({ 3.f,3.f });
+	Utils::SetOrigin(sprite, Origins::TC);
 	animator.SetTarget(&sprite);
-	SetHitbox(FloatRect(0.f, 0.f, 32.f, 32.f));
+
+	playerHitbox = new HitBox();
+	playerHitbox->SetHitbox({ 0,0,48.f,48.f });
+	playerHitbox->SetPos(GetPos());
+
+	attackHitbox = new HitBox();
+	attackHitbox->SetHitbox({ 0,0,48.f,48.f });
+	attackHitbox->SetPos(GetPos());
+	attackHitbox->SetActive(false);
 
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerIdle"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerMove"));
@@ -35,6 +45,7 @@ void Player::Init()
 		ev.onEvent = bind(&Player::OnCompleteAttack, this);
 		animator.AddEvent(ev);
 	}
+	SpriteObj::Init();
 	SetState(States::Idle);
 }
 
@@ -82,8 +93,6 @@ void Player::Update(float dt)
 	case Player::States::Attack:
 		UpdateAttack(dt);
 		break;
-	default:
-		break;
 	}
 
 	//°¡¼Ó
@@ -98,46 +107,25 @@ void Player::Update(float dt)
 	{
 		velocity = { 0.f, 0.f };
 	}
-
 	if ( direction.x == 0.f )
 	{
 		velocity.x = 0.f;
-		/*if ( velocity.x > 0.f )
-		{
-			velocity.x -= deaccelation * dt;
-			if ( velocity.x < 0.f )
-				velocity.x = 0.f;
-		}
-		if ( velocity.x < 0.f )
-		{
-			velocity.x += deaccelation * dt;
-			if ( velocity.x > 0.f )
-				velocity.x = 0.f;
-		}*/
 	}
-
 	if ( direction.y == 0.f )
 	{
 		velocity.y = 0.f;
-		/*if ( velocity.y > 0.f )
-		{
-			velocity.y -= deaccelation * dt;
-			if ( velocity.y < 0.f )
-				velocity.y = 0.f;
-		}
-		if ( velocity.y < 0.f )
-		{
-			velocity.y += deaccelation * dt;
-			if ( velocity.y > 0.f )
-				velocity.y = 0.f;
-		}*/
 	}
 
-
 	Translate(velocity*dt);
-
+	playerHitbox->SetPos(GetPos());
+	attackHitbox->SetPos(GetPos());
 	animator.Update(dt);
 	
+	if ( InputMgr::GetKeyDown(Keyboard::F1) )
+	{
+ 		isHitBox = !isHitBox;
+	}
+
 	if (!EqualFloat(direction.x, 0.f))
 	{
 		lastDirection = direction;
@@ -163,6 +151,7 @@ void Player::UpdateInput(Event ev)
 void Player::Draw(RenderWindow& window)
 {
 	window.draw(sprite);
+	playerHitbox->Draw(window);
 }
 
 void Player::PlayAttack()
@@ -223,6 +212,7 @@ void Player::UpdateAttack(float dt)
 		return;
 	}
 }
+
 
 bool Player::EqualFloat(float a, float b)
 {

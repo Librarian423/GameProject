@@ -2,6 +2,8 @@
 #include "SpriteObj.h"
 #include "../Animation/Animator.h"
 
+class HitBox;
+
 class Player : public SpriteObj
 {
 public:
@@ -16,20 +18,22 @@ protected:
 	//Sprite sprite;
 	Animator animator;
 
+	HitBox *playerHitbox;
+	HitBox *attackHitbox;
+
 	States currState;
 	States prevState;
 
 	float speed;
-	//float accelation;
-	//float deaccelation;
 	Vector2f velocity;
 
 	Vector2f direction;
 	Vector2f lastDirection;
 	Vector2f tempDirection;
 
+	bool isHitBox;
 public:
-	Player() : currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f) {}//, accelation(500), deaccelation(500)
+	Player() : currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), isHitBox(true) {}
 	
 	void Init();
 

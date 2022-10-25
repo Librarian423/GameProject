@@ -118,13 +118,7 @@ void SceneDev2::Update(float dt)
 
 	Scene::Update(dt);
 
-	if ( InputMgr::GetKeyDown(Keyboard::F1) )
-	{
-		for ( Object* obj : objList )
-		{
-			obj->SetDevMode(true);
-		}
-	}
+	
 }
 
 void SceneDev2::Draw(RenderWindow& window)

@@ -10,7 +10,7 @@ void Slime::Init(Player* player)
 	sprite.setPosition(80.f, (720.f * 0.5f) + 60.f);
 	sprite.setScale({ 3.f,3.f });
 	animator.SetTarget(&sprite);
-	SetHitbox(FloatRect(0.f, 0.f, 32.f, 32.f));
+	//SetHitbox(FloatRect(0.f, 0.f, 32.f, 32.f));
 
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeIdle"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeMove"));
@@ -52,7 +52,6 @@ void Slime::SetState(States newState)
 		break;
 	case Slime::States::Dead:
 		animator.Play((direction.x > 0.f) ? "SlimeDead" : "SlimeDeadLeft");
-		
 		break;
 	}
 
@@ -93,12 +92,12 @@ void Slime::Update(float dt)
 		deleteTime -= dt;
 	}
 	
-	hitTime -= dt;
+	/*hitTime -= dt;
 	if ( hitTime <= 0.f && (hitbox.getGlobalBounds().intersects(player->GetHitbox().getGlobalBounds())) )
 	{
 		cout << "hit" << endl;
 		hitTime = 1.f;
-	}
+	}*/
 	animator.Update(dt);
 	
 }

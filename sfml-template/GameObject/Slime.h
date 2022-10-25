@@ -33,8 +33,11 @@ protected:
 
 	bool attack;
 
+	int damage;
+	int hp;
+
 public:
-	Slime() : currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f), hitTime(1.f), deleteTime(1.f), attack(true) {}
+	Slime() : currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f), hitTime(1.f), deleteTime(1.f), attack(true), damage(1), hp(2) {}
 	
 	void Init(Player* player);
 

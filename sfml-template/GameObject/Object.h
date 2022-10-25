@@ -18,10 +18,6 @@ protected:
 
 	static int objCount;
 	
-	//vector<Shape> hitbox;
-	RectangleShape hitbox;
-	FloatRect hitBoxRect;
-
 	bool isDevMod;
 
 public:
@@ -46,9 +42,6 @@ public:
 
 	virtual void Update(float dt);
 	virtual void Draw(RenderWindow& window);
-
-	virtual void SetHitbox(const FloatRect rect);
-	virtual RectangleShape GetHitbox() const;
 
 	virtual void SetDevMode(bool dev)
 	{

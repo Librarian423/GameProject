@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "C:/Users/ysh42/Desktop/maps/shader_example.tmx",
+    "activeFile": "map2.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -138,7 +138,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 320.26374661485926,
-                "y": 223.05427999529024
+                "y": 223.80784175203107
             }
         },
         "C:/Users/ysh42/Desktop/maps/shader_example.tmx#forest_tileset": {
@@ -148,6 +148,9 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "grass.tsx": {
+            "scaleInDock": 1
+        },
         "grass1.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -156,12 +159,15 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "images.tsx": {
+            "scaleInDock": 1
+        },
         "map1.tmx": {
             "scale": 0.78078125,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 619.8919351610967,
-                "y": 627.5765459275567
+                "x": 716.5899539723835,
+                "y": 297.13828296978187
             }
         },
         "map1.tmx#plains": {
@@ -172,8 +178,8 @@
             "scale": 0.78078125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 639.1034620772464,
-                "y": 318.91134680808494
+                "x": 734.5207124274565,
+                "y": 320.1921152691615
             }
         },
         "object.tsx": {
@@ -190,10 +196,7 @@
         "object.tsx",
         "fence.tsx",
         "map1.tmx",
-        "map2.tmx",
-        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357705a2bf7291b/b2d.tmx",
-        "C:/Users/ysh42/Desktop/maps/b2d.tmx",
-        "C:/Users/ysh42/Desktop/maps/shader_example.tmx"
+        "map2.tmx"
     ],
     "project": "tilemap.tiled-project",
     "recentFiles": [
@@ -203,9 +206,9 @@
         "fence.tsx",
         "map1.tmx",
         "map2.tmx",
-        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357705a2bf7291b/b2d.tmx",
         "C:/Users/ysh42/Desktop/maps/b2d.tmx",
         "C:/Users/ysh42/Desktop/maps/shader_example.tmx",
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357705a2bf7291b/b2d.tmx",
         "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749342b5e3d76/desert.tmx",
         "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357494f2b5ea596/addRemove.tmx",
         "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749242b5dfea8/isometric_grass_and_water.tmx"
