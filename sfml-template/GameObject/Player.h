@@ -19,15 +19,15 @@ protected:
 	//Sprite sprite;
 	Animator animator;
 
+	RectangleShape healthBar;
+
 	HitBox *playerHitbox;
 	HitBox *attackHitbox;
 
 	States currState;
-	States prevState;
-
+	
 	float speed;
 	Vector2f velocity;
-
 	Vector2f direction;
 	Vector2f lastDirection;
 	Vector2f tempDirection;
@@ -35,18 +35,23 @@ protected:
 	float timer;
 	float attackTime;
 
+	int damage;
+	int hp;
+
 	bool isHitBox;
 public:
-	Player() : currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.8f), isHitBox(true) {}
+	Player();
+	virtual~Player();
 	
 	void Init();
 
 	void SetState(States newState);
 
 	void Update(float dt);
-	//void UpdateInput(Event ev);
 	void Draw(RenderWindow& window);
+
 	void PlayAttack();
+	void Dash(float dt);
 	void OnCompleteAttack();
 
 	void UpdateIdle(float dt);
@@ -58,5 +63,10 @@ public:
 	HitBox* GetPlayerHitBox();
 	HitBox* GetAttackHitbox();
 	Vector2f GetPlayerDir() { return direction; }
+	int GetDamage() { return damage; }
+
+	void SetHp(int num);
+	void SetHpBar();
+	
 };
 

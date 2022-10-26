@@ -13,6 +13,14 @@ void Slime::Init(Player* player)
 	
 	animator.SetTarget(&sprite);
 	
+	//health bar
+	healthBar.setFillColor(Color::Green);
+	healthBar.setOutlineColor(Color::Black);
+	healthBar.setOutlineThickness(2.f);
+	healthBar.setSize({barScaleX, 15.f });
+	healthBar.setPosition({ GetPos().x, GetPos().y - 15.f });
+	Utils::SetOrigin(healthBar, Origins::MC);
+
 	//hit box
 	slimeHitbox = new HitBox();
 	slimeHitbox->SetHitbox({ 0,0,35.f,30.f });
@@ -75,48 +83,67 @@ void Slime::Update(float dt)
 
 	direction.x = (player->GetPos().x > GetPos().x) ? 1.f : -1.f;
 
-
+	//move
 	if ( currState == States::Move )
 	{
 		dir = Utils::Normalize(player->GetPos() - GetPos());
 
 		Translate(dir * this->speed * dt);
 	}
-	
+
+	//attack motion
 	if ( currState == States::Move && (Utils::Distance(player->GetPos(), GetPos()) < 150.f) && attack )
 	{
-		//cout << "attack" << endl;
 		Translate(dir * 200.f * dt);
 	}
 	if ( currState == States::Move && Utils::Distance(player->GetPos(), GetPos()) < 15.f )
 	{
-		//cout << "stop" << endl;
 		Translate(dir * 50.f * dt);
 		attack = false;
 	}
-	if ( currState == States::Dead )
-	{
-		deleteTime -= dt;
-	}
+
 	hitTime += dt;
-	if ( hitTime > 1.f && Utils::OBB(slimeHitbox->GetHitbox(), player->GetPlayerHitBox()->GetHitbox()) )
+	getAttackTime += dt;
+
+	//slime hits player
+	if ( slimeHitbox->GetActive() )
 	{
-		cout << "slime hit player" << endl;
-		hitTime = 0.f;
+		if ( hitTime > 1.f && Utils::OBB(slimeHitbox->GetHitbox(), player->GetPlayerHitBox()->GetHitbox()) )
+		{
+			cout << "slime hit player" << endl;
+			player->SetHp(damage);
+			hitTime = 0.f;
+		}
 	}
-	if ( player->GetAttackHitbox()->GetActive() && Utils::OBB(slimeHitbox->GetHitbox(), player->GetAttackHitbox()->GetHitbox()) )
+	
+	//player attack hitbox hits slime
+	if ( getAttackTime > 0.2f )
 	{
-		cout << "player hit slime" << endl;
-		//SetState(States::Dead);
+		if ( slimeHitbox->GetActive() && player->GetAttackHitbox()->GetActive() )
+		{
+			if ( Utils::OBB(slimeHitbox->GetHitbox(), player->GetAttackHitbox()->GetHitbox()) )
+			{
+				cout << "player hit slime" << endl;
+				SetHp(player->GetDamage());
+				if ( hp <= 0 )
+				{
+					SetState(States::Dead);
+				}
+				getAttackTime = 0.f;
+			}
+		}
 	}
+	
+
 	if ( InputMgr::GetKeyDown(Keyboard::F1) )
 	{
 		isHitBox = !isHitBox;
 	}
 
 	slimeHitbox->SetPos({ GetPos().x,GetPos().y + 30.f });
+	SetHpBar();
+
 	animator.Update(dt);
-	
 }
 
 void Slime::Draw(RenderWindow& window)
@@ -130,7 +157,7 @@ void Slime::Draw(RenderWindow& window)
 	{
 		slimeHitbox->Draw(window);
 	}
-	//window.draw(sprite);
+	window.draw(healthBar);
 }
 
 void Slime::PlayIdle()
@@ -152,4 +179,42 @@ void Slime::OnCompleteDead()
 bool Slime::EqualFloat(float a, float b)
 {
 	return fabs(a - b) < numeric_limits<float>::epsilon();
+}
+
+void Slime::SetHp(int num)
+{
+	if ( hp > 0 )
+	{
+		hp -= num;
+	}
+	else
+	{
+		hp = 0;
+	}
+}
+
+void Slime::SetHpBar()
+{
+	healthBar.setPosition({ GetPos().x, GetPos().y - 15.f });
+	healthBar.setSize({ (barScaleX / maxHp) * hp, 15.f });
+	if ( hp > (maxHp / 2) )
+	{
+		healthBar.setFillColor(Color::Green);
+	}
+	else if ( hp <= (maxHp / 2) && hp > (maxHp / 5) )
+	{
+		healthBar.setFillColor(Color::Yellow);
+	}
+	else
+	{
+		healthBar.setFillColor(Color::Red);
+	}
+	if ( hp <= 0 )
+	{
+		healthBar.setOutlineThickness(0.f);
+	}
+	else
+	{
+		healthBar.setOutlineThickness(2.f);
+	}
 }

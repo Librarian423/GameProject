@@ -11,7 +11,6 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-//#include <tmx/MapLoader.hpp>
 
 SceneDev2::SceneDev2()
 	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f), slimeTimer(0.8f), slimeState(0)
@@ -31,8 +30,6 @@ void SceneDev2::Init()
 	slime->Init(player);
 	Map1 = new CAP::SFMLMap("tilemap/", "map1.tmx");
 	Map = new CAP::SFMLMap("tilemap/", "map2.tmx");
-	
-	
 
 	for ( auto obj : objList )
 	{
@@ -61,7 +58,6 @@ void SceneDev2::Exit()
 
 void SceneDev2::Update(float dt)
 {
-	//timer += dt;
 	slimeTimer -= dt;
 
 	if ( (slime->GetState() != Slime::States::Dead) && slimeTimer < 0.f )
@@ -79,20 +75,11 @@ void SceneDev2::Update(float dt)
 		}
 		slimeTimer = 5.f;
 	}
-	
-	if ( Keyboard::isKeyPressed(Keyboard::Key::A) )
-	{
-		slime->SetState(Slime::States::Dead);
-	}
 
 	slime->Update(dt);
 	worldView.setCenter(player->GetPos());
 	worldView.setCenter(player->GetPos());
 
-	/*if ( Map->GetGlobalBounds().intersects(player->GetGlobalBounds()) )
-	{
-		cout << "bound" << endl;
-	}*/
 	float border = 32.f;
 	FloatRect wallBound = Map->GetGlobalBounds();
 	Vector2f pos;
@@ -107,9 +94,9 @@ void SceneDev2::Update(float dt)
 	{
 		player->SetPos(pos);
 	}
+
 	player->Update(dt);
 	
-
 	Scene::Update(dt);
 }
 

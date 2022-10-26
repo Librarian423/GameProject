@@ -18,7 +18,9 @@ public:
 protected:
 	Player* player;
 	Animator animator;
-	
+
+	RectangleShape healthBar;
+
 	HitBox* slimeHitbox;
 
 	States currState;
@@ -32,16 +34,18 @@ protected:
 	int slimeState;
 	float moveTime;
 	float hitTime;
-	float deleteTime;
+	float getAttackTime;
 
 	bool attack;
 
 	int damage;
+	int maxHp;
 	int hp;
+	float barScaleX;
 
 	bool isHitBox;
 public:
-	Slime() : currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f), hitTime(1.f), deleteTime(1.f), attack(true), damage(1), hp(2), isHitBox(true) {}
+	Slime() : currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f), hitTime(1.f), getAttackTime(1.f), attack(true), damage(1), hp(10), maxHp(10), barScaleX(60.f), isHitBox(true) {}
 	
 	void Init(Player* player);
 
@@ -51,13 +55,13 @@ public:
 	void Update(float dt);
 	void Draw(RenderWindow& window);
 
-	void UpdateIdle(float dt);
-	void UpdateMove(float dt);
-
 	void PlayIdle();
 	void PlayMove();
 
 	void OnCompleteDead();
 	bool EqualFloat(float a, float b);
+
+	void SetHp(int num);
+	void SetHpBar();
 };
 

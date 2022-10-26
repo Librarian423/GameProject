@@ -6,24 +6,40 @@
 #include "HitBox.h"
 #include <iostream>
 
+Player::Player()
+	: currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.8f), isHitBox(true), damage(1), hp(10)
+{
+}
+
+Player::~Player()
+{
+}
+
 void Player::Init()
 {
-	//SpriteObj::Init();
-	//SpriteObj::SetPos({ 1280.f * 0.5f - 80.f, (720.f * 0.5f) + 60.f });
 	sprite.setScale({ 3.f,3.f });
-	//SpriteObj::SetOrigin(Origins::TC);
-	//Utils::SetOrigin(sprite, Origins::TC);
+	
 	animator.SetTarget(&sprite);
 
+	//health bar
+	healthBar.setFillColor(Color::Green);
+	healthBar.setOutlineColor(Color::Black);
+	healthBar.setOutlineThickness(2.f);
+	healthBar.setSize({ 6.f * hp, 15.f })                                   ;
+	healthBar.  setPosition({ GetPos().x, GetPos().y - 15.f });
+	Utils::SetOrigin(healthBar, Origins::MC);
+
+	//player hitbox
 	playerHitbox = new HitBox();
 	playerHitbox->SetHitbox({ 0,0,35.f,48.f });
 	playerHitbox->SetPos({ GetPos().x,GetPos().y + 50.f });
-
+	//attack hitbox
 	attackHitbox = new HitBox();
-	attackHitbox->SetHitbox({ 0,0,85.f,20.f });
+	attackHitbox->SetHitbox({ 0,0,100.f,65.f });
 	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x ,GetPos().y + 50.f });
 	attackHitbox->SetActive(false);
 
+	//animation
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerIdle"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerMove"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerAttack"));
@@ -55,7 +71,6 @@ void Player::SetState(States newState)
 	if (currState == newState)
 		return;
 
-	prevState = currState;
 	currState = newState;
 	
 	switch (currState)
@@ -75,17 +90,8 @@ void Player::SetState(States newState)
 
 void Player::Update(float dt)
 {
-	/*if ( attackHitbox->GetActive() )
-	{
-		cout << "attack hitbox true" << endl;
-	}*/
-	direction.x = 0.f;
-	direction.x += Keyboard::isKeyPressed(Keyboard::Right) ? 1 : 0;
-	direction.x += Keyboard::isKeyPressed(Keyboard::Left) ? -1 : 0;
-	direction.y = 0.f;
-	direction.y += Keyboard::isKeyPressed(Keyboard::Down) ? 1 : 0;
-	direction.y += Keyboard::isKeyPressed(Keyboard::Up) ? -1 : 0;
-	//direction.y = InputMgr::GetAxisRaw(Axis::Vertical);
+	direction.x = InputMgr::GetAxisRaw(Axis::Horizontal);
+	direction.y = InputMgr::GetAxisRaw(Axis::Vertical);
 
 	switch (currState)
 	{
@@ -101,11 +107,7 @@ void Player::Update(float dt)
 	}
 
 	//가속
-	velocity += direction * speed * dt;
-	if ( Utils::Magnitude(velocity) > speed )
-	{
-		velocity = Utils::Normalize(velocity) * speed;
-	}
+	velocity = direction * speed;// *dt;
 
 	//감속
 	if ( Utils::Magnitude(direction) == 0.f )
@@ -120,6 +122,19 @@ void Player::Update(float dt)
 	{
 		velocity.y = 0.f;
 	}
+	
+	Translate(velocity * dt);
+
+	//dash
+	if ( Keyboard::isKeyPressed(Keyboard::Key::LControl) )
+	{
+		Dash(dt);
+	}
+	else
+	{
+		speed = 500.f;
+	}
+	//attack
 	timer += dt;
 	if ( timer > attackTime && Keyboard::isKeyPressed(Keyboard::Key::Space) )
 	{
@@ -129,9 +144,12 @@ void Player::Update(float dt)
 		timer = 0.f;
 	}
 
-	Translate(velocity*dt);
+	//positions
 	playerHitbox->SetPos({ GetPos().x,GetPos().y + 50.f });
 	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x ,GetPos().y + 50.f });
+	//hp bar
+	SetHpBar();
+
 	animator.Update(dt);
 	
 	if ( InputMgr::GetKeyDown(Keyboard::F1) )
@@ -148,16 +166,12 @@ void Player::Update(float dt)
 void Player::Draw(RenderWindow& window)
 {
 	window.draw(sprite);
+	window.draw(healthBar);
 	if ( isHitBox )
 	{
 		playerHitbox->Draw(window);
 		attackHitbox->Draw(window);
 	}
-	/*if ( attackHitbox->GetActive() )
-	{
-		attackHitbox->Draw(window);
-	}*/
-	
 }
 
 void Player::PlayAttack()
@@ -174,7 +188,11 @@ void Player::PlayAttack()
 	default:
 		break;
 	}
-	
+}
+
+void Player::Dash(float dt)
+{
+	Translate(direction * dt);
 }
 
 void Player::OnCompleteAttack()
@@ -186,6 +204,7 @@ void Player::OnCompleteAttack()
 
 void Player::UpdateIdle(float dt)
 {
+	attackHitbox->SetActive(false);
 	if ( !EqualFloat(direction.x, 0.f) )
 	{
 		SetState(States::Move);
@@ -198,6 +217,7 @@ void Player::UpdateIdle(float dt)
 
 void Player::UpdateMove(float dt)
 {
+	//attackHitbox->SetActive(false);
 	if ( EqualFloat(direction.x, 0.f) && EqualFloat(direction.y, 0.f) )
 	{
 		SetState(States::Idle);
@@ -221,7 +241,6 @@ void Player::UpdateAttack(float dt)
 	}
 }
 
-
 bool Player::EqualFloat(float a, float b)
 {
 	return fabs(a - b) < numeric_limits<float>::epsilon();
@@ -235,4 +254,42 @@ HitBox* Player::GetPlayerHitBox()
 HitBox* Player::GetAttackHitbox()
 {
 	return attackHitbox;
+}
+
+void Player::SetHp(int num)
+{
+	if ( hp > 0 )
+	{
+		hp -= num;
+	}
+	else
+	{
+		hp = 0;
+	}
+}
+
+void Player::SetHpBar()
+{
+	healthBar.setPosition({ GetPos().x, GetPos().y - 15.f });
+	healthBar.setSize({ 6.f * hp, 15.f });
+	if ( hp > 5 )
+	{
+		healthBar.setFillColor(Color::Green);
+	}
+	else if ( hp <= 5 && hp > 2 )
+	{
+		healthBar.setFillColor(Color::Yellow);
+	}
+	else if ( hp <= 2 )
+	{
+		healthBar.setFillColor(Color::Red);
+	}
+	if ( hp <= 0 )
+	{
+		healthBar.setOutlineThickness(0.f);
+	}
+	else
+	{
+		healthBar.setOutlineThickness(2.f);
+	}
 }
