@@ -28,6 +28,7 @@ void SceneDev2::Init()
 	
 	slime = new Slime();
 	slime->Init(player);
+	slime->SetPos({ 500.f,500.f });
 	Map1 = new CAP::SFMLMap("tilemap/", "map1.tmx");
 	Map = new CAP::SFMLMap("tilemap/", "map2.tmx");
 

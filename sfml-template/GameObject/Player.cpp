@@ -226,6 +226,7 @@ void Player::UpdateMove(float dt)
 
 	if ( !EqualFloat(direction.x, lastDirection.x))
 	{
+		attackHitbox->SetActive(false);
 		animator.Play((direction.x > 0.f) ? "PlayerMove" : "PlayerMoveLeft");
 		lastDirection.x = direction.x;
 	}
