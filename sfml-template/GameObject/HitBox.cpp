@@ -16,7 +16,7 @@ void HitBox::SetActive(bool active)
 
 bool HitBox::GetActive() const
 {
-	return false;
+	return Object::GetActive();
 }
 
 void HitBox::Init()
@@ -37,7 +37,7 @@ void HitBox::Update(float dt)
 
 void HitBox::Draw(RenderWindow& window)
 {
-	if ( isDevMod )
+	if ( enabled )
 	{
 		window.draw(hitbox);
 	}

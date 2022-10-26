@@ -1,16 +1,22 @@
 #include "Slime.h"
 #include "Player.h"
+#include "HitBox.h"
 #include "../Framework/ResourceMgr.h"
+#include "../Framework/InputMgr.h"
 #include <iostream>
 
 void Slime::Init(Player* player)
 {
 	this->player = player;
 
-	sprite.setPosition(80.f, (720.f * 0.5f) + 60.f);
 	sprite.setScale({ 3.f,3.f });
+	
 	animator.SetTarget(&sprite);
-	//SetHitbox(FloatRect(0.f, 0.f, 32.f, 32.f));
+	
+	//hit box
+	slimeHitbox = new HitBox();
+	slimeHitbox->SetHitbox({ 0,0,35.f,30.f });
+	slimeHitbox->SetPos({ GetPos().x,GetPos().y + 30.f });
 
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeIdle"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeMove"));
@@ -52,6 +58,7 @@ void Slime::SetState(States newState)
 		break;
 	case Slime::States::Dead:
 		animator.Play((direction.x > 0.f) ? "SlimeDead" : "SlimeDeadLeft");
+		slimeHitbox->SetActive(false);
 		break;
 	}
 
@@ -91,13 +98,23 @@ void Slime::Update(float dt)
 	{
 		deleteTime -= dt;
 	}
-	
-	/*hitTime -= dt;
-	if ( hitTime <= 0.f && (hitbox.getGlobalBounds().intersects(player->GetHitbox().getGlobalBounds())) )
+	hitTime += dt;
+	if ( hitTime > 1.f && Utils::OBB(slimeHitbox->GetHitbox(), player->GetPlayerHitBox()->GetHitbox()) )
 	{
-		cout << "hit" << endl;
-		hitTime = 1.f;
-	}*/
+		cout << "slime hit player" << endl;
+		hitTime = 0.f;
+	}
+	if ( player->GetAttackHitbox()->GetActive() && Utils::OBB(slimeHitbox->GetHitbox(), player->GetAttackHitbox()->GetHitbox()) )
+	{
+		cout << "player hit slime" << endl;
+		//SetState(States::Dead);
+	}
+	if ( InputMgr::GetKeyDown(Keyboard::F1) )
+	{
+		isHitBox = !isHitBox;
+	}
+
+	slimeHitbox->SetPos({ GetPos().x,GetPos().y + 30.f });
 	animator.Update(dt);
 	
 }
@@ -109,7 +126,10 @@ void Slime::Draw(RenderWindow& window)
 	{
 		SpriteObj::Draw(window);
 	}
-	
+	if ( isHitBox )
+	{
+		slimeHitbox->Draw(window);
+	}
 	//window.draw(sprite);
 }
 
@@ -126,6 +146,7 @@ void Slime::PlayMove()
 void Slime::OnCompleteDead()
 {
 	SetActive(false);
+	slimeHitbox->SetActive(false);
 }
 
 bool Slime::EqualFloat(float a, float b)

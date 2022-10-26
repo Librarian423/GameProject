@@ -61,13 +61,8 @@ void SceneDev2::Exit()
 
 void SceneDev2::Update(float dt)
 {
-	timer += dt;
+	//timer += dt;
 	slimeTimer -= dt;
-	if ( timer > attackTimer && Keyboard::isKeyPressed(Keyboard::Key::Space) )
-	{
-		player->PlayAttack();
-		timer = 0.f;
-	}
 
 	if ( (slime->GetState() != Slime::States::Dead) && slimeTimer < 0.f )
 	{
@@ -111,14 +106,11 @@ void SceneDev2::Update(float dt)
 	if ( pos != player->GetPos() )
 	{
 		player->SetPos(pos);
-		//ResetVelocity();
 	}
 	player->Update(dt);
 	
 
 	Scene::Update(dt);
-
-	
 }
 
 void SceneDev2::Draw(RenderWindow& window)

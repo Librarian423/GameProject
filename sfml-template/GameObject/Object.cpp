@@ -31,7 +31,6 @@ bool Object::GetActive() const
 
 void Object::Init()
 {
-	//hitbox.setFillColor(Color::Red);
 	Reset();
 }
 

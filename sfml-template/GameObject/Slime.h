@@ -3,6 +3,7 @@
 #include "../Animation/Animator.h"
 
 class Player;
+class HitBox;
 
 class Slime : public SpriteObj
 {
@@ -17,6 +18,8 @@ public:
 protected:
 	Player* player;
 	Animator animator;
+	
+	HitBox* slimeHitbox;
 
 	States currState;
 	States prevState;
@@ -36,8 +39,9 @@ protected:
 	int damage;
 	int hp;
 
+	bool isHitBox;
 public:
-	Slime() : currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f), hitTime(1.f), deleteTime(1.f), attack(true), damage(1), hp(2) {}
+	Slime() : currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f), hitTime(1.f), deleteTime(1.f), attack(true), damage(1), hp(2), isHitBox(true) {}
 	
 	void Init(Player* player);
 

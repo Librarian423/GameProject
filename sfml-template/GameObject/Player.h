@@ -1,5 +1,6 @@
 #pragma once
 #include "SpriteObj.h"
+#include "Slime.h"
 #include "../Animation/Animator.h"
 
 class HitBox;
@@ -31,16 +32,19 @@ protected:
 	Vector2f lastDirection;
 	Vector2f tempDirection;
 
+	float timer;
+	float attackTime;
+
 	bool isHitBox;
 public:
-	Player() : currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), isHitBox(true) {}
+	Player() : currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.8f), isHitBox(true) {}
 	
 	void Init();
 
 	void SetState(States newState);
 
 	void Update(float dt);
-	void UpdateInput(Event ev);
+	//void UpdateInput(Event ev);
 	void Draw(RenderWindow& window);
 	void PlayAttack();
 	void OnCompleteAttack();
@@ -51,6 +55,8 @@ public:
 
 	bool EqualFloat(float a, float b);
 
+	HitBox* GetPlayerHitBox();
+	HitBox* GetAttackHitbox();
 	Vector2f GetPlayerDir() { return direction; }
 };
 

@@ -8,19 +8,20 @@
 
 void Player::Init()
 {
-	Object::Reset();
-	SpriteObj::SetPos({ 1280.f * 0.5f - 80.f, (720.f * 0.5f) + 60.f });
+	//SpriteObj::Init();
+	//SpriteObj::SetPos({ 1280.f * 0.5f - 80.f, (720.f * 0.5f) + 60.f });
 	sprite.setScale({ 3.f,3.f });
-	Utils::SetOrigin(sprite, Origins::TC);
+	//SpriteObj::SetOrigin(Origins::TC);
+	//Utils::SetOrigin(sprite, Origins::TC);
 	animator.SetTarget(&sprite);
 
 	playerHitbox = new HitBox();
-	playerHitbox->SetHitbox({ 0,0,48.f,48.f });
-	playerHitbox->SetPos(GetPos());
+	playerHitbox->SetHitbox({ 0,0,35.f,48.f });
+	playerHitbox->SetPos({ GetPos().x,GetPos().y + 50.f });
 
 	attackHitbox = new HitBox();
-	attackHitbox->SetHitbox({ 0,0,48.f,48.f });
-	attackHitbox->SetPos(GetPos());
+	attackHitbox->SetHitbox({ 0,0,85.f,20.f });
+	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x ,GetPos().y + 50.f });
 	attackHitbox->SetActive(false);
 
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerIdle"));
@@ -45,7 +46,7 @@ void Player::Init()
 		ev.onEvent = bind(&Player::OnCompleteAttack, this);
 		animator.AddEvent(ev);
 	}
-	SpriteObj::Init();
+	
 	SetState(States::Idle);
 }
 
@@ -74,6 +75,10 @@ void Player::SetState(States newState)
 
 void Player::Update(float dt)
 {
+	/*if ( attackHitbox->GetActive() )
+	{
+		cout << "attack hitbox true" << endl;
+	}*/
 	direction.x = 0.f;
 	direction.x += Keyboard::isKeyPressed(Keyboard::Right) ? 1 : 0;
 	direction.x += Keyboard::isKeyPressed(Keyboard::Left) ? -1 : 0;
@@ -115,10 +120,18 @@ void Player::Update(float dt)
 	{
 		velocity.y = 0.f;
 	}
+	timer += dt;
+	if ( timer > attackTime && Keyboard::isKeyPressed(Keyboard::Key::Space) )
+	{
+		cout << "attack" << endl;
+		attackHitbox->SetActive(true);
+		PlayAttack();
+		timer = 0.f;
+	}
 
 	Translate(velocity*dt);
-	playerHitbox->SetPos(GetPos());
-	attackHitbox->SetPos(GetPos());
+	playerHitbox->SetPos({ GetPos().x,GetPos().y + 50.f });
+	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x ,GetPos().y + 50.f });
 	animator.Update(dt);
 	
 	if ( InputMgr::GetKeyDown(Keyboard::F1) )
@@ -132,26 +145,19 @@ void Player::Update(float dt)
 	}
 }
 
-void Player::UpdateInput(Event ev)
-{
-	switch (ev.type)
-	{
-	case Event::KeyPressed:
-		switch (ev.key.code)
-		{
-		//case Keyboard::Key::Space:
-		//	animator.Play((lastDirection.x > 0.f) ? "PlayerAttack" : "PlayerAttackLeft");
-		//	//animator.PlayQueue((direction.x > 0.f) ? "PlayerMove" : "PlayerMoveLeft");
-		//	break;
-		}
-		break;
-	}
-}
-
 void Player::Draw(RenderWindow& window)
 {
 	window.draw(sprite);
-	playerHitbox->Draw(window);
+	if ( isHitBox )
+	{
+		playerHitbox->Draw(window);
+		attackHitbox->Draw(window);
+	}
+	/*if ( attackHitbox->GetActive() )
+	{
+		attackHitbox->Draw(window);
+	}*/
+	
 }
 
 void Player::PlayAttack()
@@ -174,6 +180,8 @@ void Player::PlayAttack()
 void Player::OnCompleteAttack()
 {
 	SetState(States::Idle);
+	//cout << "attack" << endl;
+	attackHitbox->SetActive(false);
 }
 
 void Player::UpdateIdle(float dt)
@@ -217,4 +225,14 @@ void Player::UpdateAttack(float dt)
 bool Player::EqualFloat(float a, float b)
 {
 	return fabs(a - b) < numeric_limits<float>::epsilon();
+}
+
+HitBox* Player::GetPlayerHitBox()
+{
+	return playerHitbox;
+}
+
+HitBox* Player::GetAttackHitbox()
+{
+	return attackHitbox;
 }
