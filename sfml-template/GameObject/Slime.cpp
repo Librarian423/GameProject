@@ -1,14 +1,22 @@
 #include "Slime.h"
 #include "Player.h"
 #include "HitBox.h"
+#include "ItemGenerator.h"
 #include "../Framework/ResourceMgr.h"
 #include "../Framework/InputMgr.h"
 #include <iostream>
 
+Slime::Slime()
+	: currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f), hitTime(0.f), getAttackTime(1.f), attack(true), damage(1), hp(5), maxHp(5), barScaleX(60.f), isHitBox(true)
+{
+}
+
 void Slime::Init(Player* player)
 {
 	this->player = player;
-
+	
+	hp = maxHp;
+	
 	sprite.setScale({ 3.f,3.f });
 	
 	animator.SetTarget(&sprite);
@@ -25,7 +33,9 @@ void Slime::Init(Player* player)
 	slimeHitbox = new HitBox();
 	slimeHitbox->SetHitbox({ 0,0,35.f,30.f });
 	slimeHitbox->SetPos({ GetPos().x,GetPos().y + 30.f });
+	slimeHitbox->SetActive(true);
 
+	//animation
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeIdle"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeMove"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("SlimeIdleLeft"));
@@ -47,7 +57,7 @@ void Slime::Init(Player* player)
 		ev.onEvent = bind(&Slime::OnCompleteDead, this);
 		animator.AddEvent(ev);
 	}
-	//SetState(States::Move);
+	
 	SpriteObj::Init();
 }
 
@@ -129,20 +139,20 @@ void Slime::Update(float dt)
 				if ( hp <= 0 )
 				{
 					SetState(States::Dead);
+					ITEM_GEN->Generate(GetPos());
 				}
 				getAttackTime = 0.f;
 			}
 		}
 	}
+	slimeHitbox->SetPos({ GetPos().x,GetPos().y + 30.f });
 	
-
+	SetHpBar();
+	
 	if ( InputMgr::GetKeyDown(Keyboard::F1) )
 	{
 		isHitBox = !isHitBox;
 	}
-
-	slimeHitbox->SetPos({ GetPos().x,GetPos().y + 30.f });
-	SetHpBar();
 
 	animator.Update(dt);
 }
@@ -159,16 +169,6 @@ void Slime::Draw(RenderWindow& window)
 		slimeHitbox->Draw(window);
 	}
 	window.draw(healthBar);
-}
-
-void Slime::PlayIdle()
-{
-	SetState(States::Idle);
-}
-
-void Slime::PlayMove()
-{
-	SetState(States::Move);
 }
 
 void Slime::OnCompleteDead()

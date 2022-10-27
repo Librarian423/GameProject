@@ -4,6 +4,7 @@
 #include "../Animation/Animator.h"
 
 class HitBox;
+class Item;
 
 class Player : public SpriteObj
 {
@@ -36,6 +37,7 @@ protected:
 
 	int damage;
 	int hp;
+	int maxHp;
 
 	bool isHitBox;
 public:
@@ -66,6 +68,6 @@ public:
 
 	void SetHp(int num);
 	void SetHpBar();
-	
+	void OnPickupItem(Item* item);
 };
 

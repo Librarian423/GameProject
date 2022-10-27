@@ -28,15 +28,11 @@ void SceneDev2::Init()
 	player = new Player();
 	player->SetName("Player");
 	player->Init();
-	//objList.push_back(player);
+	objList.push_back(player);
 	
 	slime = new Slime();
 	slime->Init(player);
 	slime->SetPos({ 500.f,500.f });
-
-	/*item = new Item();
-	item->Init();
-	item->SetPos({ 10.f,10.f });*/
 
 	Map1 = new CAP::SFMLMap("tilemap/", "map1.tmx");
 	Map = new CAP::SFMLMap("tilemap/", "map2.tmx");
@@ -72,22 +68,31 @@ void SceneDev2::Exit()
 void SceneDev2::Update(float dt)
 {
 	slimeTimer -= dt;
-	
-	if ( (slime->GetState() != Slime::States::Dead) && slimeTimer < 0.f )
+	if ( slime->GetState() != Slime::States::Dead )
 	{
-		cout << "timer" << endl;
-		if ( slimeState % 2 == 0 )
+		if ( slimeTimer < 0.f )
 		{
-			slime->SetState(Slime::States::Idle);
-			slimeState = 1;
+			cout << "timer" << endl;
+			if ( slimeState % 2 == 0 )
+			{
+				slime->SetState(Slime::States::Idle);
+				slimeState = 1;
+			}
+			else
+			{
+				slime->SetState(Slime::States::Move);
+				slimeState = 0;
+			}
+			slimeTimer = 5.f;
 		}
-		else
-		{
-			slime->SetState(Slime::States::Move);
-			slimeState = 0;
-		}
-		slimeTimer = 5.f;
 	}
+	else if ( slime->GetState() == Slime::States::Dead )
+	{
+		slime->Init(player);
+		slime->SetState(Slime::States::Idle);
+		slime->SetPos({ 200.f,200.f });
+	}
+	
 
 	slime->Update(dt);
 	worldView.setCenter(player->GetPos());
@@ -108,14 +113,11 @@ void SceneDev2::Update(float dt)
 		player->SetPos(pos);
 	}
 
-	if ( Keyboard::isKeyPressed(Keyboard::Key::Num1) )
+	if ( InputMgr::GetKeyDown(Keyboard::Num1) )
 	{
-		ITEM_GEN->Generate({ 10.f,10.f }, 10);
+		ITEM_GEN->Generate({ 100.f,100.f });
 	}
 
-	//item->Update(dt);
-	player->Update(dt);
-	ITEM_GEN->Update(dt);
 	Scene::Update(dt);
 }
 
@@ -124,9 +126,6 @@ void SceneDev2::Draw(RenderWindow& window)
 	Map1->draw(window, states);
 	Map->draw(window, states);
 	slime->Draw(window);
-	ITEM_GEN->Draw(window);
-	player->Draw(window);
-	//item->Draw(window);
 	window.setView(worldView);
 	Scene::Draw(window);
 }

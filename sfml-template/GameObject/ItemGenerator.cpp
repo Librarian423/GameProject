@@ -2,6 +2,7 @@
 #include "../Scenes/SceneMgr.h"
 #include "Item.h"
 
+
 ItemGenerator::ItemGenerator()
 {
 }
@@ -70,13 +71,14 @@ void ItemGenerator::Draw(RenderWindow& window)
 	}
 }
 
-void ItemGenerator::Generate(Vector2f pos, int value)
+void ItemGenerator::Generate(Vector2f pos)
 {
+	
 	Scene* scene = SCENE_MGR->GetCurScene();
 	//µå¶ø È®·ü
-	int healthChance = Utils::RandomRange(0, 100);
+	int healthChance = Utils::RandomRange(0, 10);
 	Item::Types itemType;
-	if ( healthChance <= 9 )
+	if ( healthChance <= 5 )
 	{
 		itemType = Item::Types::Coin;
 	}
@@ -86,22 +88,19 @@ void ItemGenerator::Generate(Vector2f pos, int value)
 	}
 
 	Item* item = new Item();
-	item->Init();
+	item->Init(itemType);
 	item->SetType(itemType);
-	//item->SetPlayer((Player*)scene->FindGameObj("Player"));
-	item->Init();
-
-	Vector2f center = { 0,0 };
-	bool success = false;
-	int count = 0;
-
-	while ( !success && count < 100 )
+	item->SetPlayer((Player*)scene->FindGameObj("Player"));
+	switch ( itemType )
 	{
-		success = true;
-		Vector2f position = pos;
-
-		item->SetPos(position);
-
+	case Item::Types::Coin:
+		item->SetValue(1);
+		break;
+	case Item::Types::Potion:
+		item->SetValue(1);
+		break;
 	}
+	item->SetPos(pos);
 	itemList.push_back(item);
+	scene->AddGameObj(item);
 }

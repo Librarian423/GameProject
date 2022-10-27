@@ -22,11 +22,14 @@ protected:
 	Player* player;
 	HitBox* itemHitbox;
 
+	bool isHitBox;
+	int value;
+
 public:
 	Item();
 	virtual~Item();
 
-	void Init();
+	void Init(Types type);
 
 	void SetType(Types newTypes);
 	Types GetType() { return currState; }
@@ -35,8 +38,8 @@ public:
 	void Draw(RenderWindow& window);
 
 	void SetPlayer(Player* p);
+	void SetValue(int num) { value = num; }
+	int GetValue() { return value; }
 
-
-	bool EqualFloat(float a, float b);
 };
 

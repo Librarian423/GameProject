@@ -4,10 +4,11 @@
 #include "../Framework/Utils.h"
 #include "Object.h"
 #include "HitBox.h"
+#include "Item.h"
 #include <iostream>
 
 Player::Player()
-	: currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.8f), isHitBox(true), damage(1), hp(10)
+	: currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.8f), isHitBox(true), damage(1), hp(10), maxHp(10)
 {
 }
 
@@ -25,13 +26,13 @@ void Player::Init()
 	healthBar.setFillColor(Color::Green);
 	healthBar.setOutlineColor(Color::Black);
 	healthBar.setOutlineThickness(2.f);
-	healthBar.setSize({ 6.f * hp, 15.f })                                   ;
+	healthBar.setSize({ 6.f * maxHp, 15.f });
 	healthBar.  setPosition({ GetPos().x, GetPos().y - 15.f });
 	Utils::SetOrigin(healthBar, Origins::MC);
 
 	//player hitbox
 	playerHitbox = new HitBox();
-	playerHitbox->SetHitbox({ 0,0,35.f,48.f });
+	playerHitbox->SetHitbox({ 0,0,35.f,35.f });
 	playerHitbox->SetPos({ GetPos().x,GetPos().y + 50.f });
 	//attack hitbox
 	attackHitbox = new HitBox();
@@ -107,7 +108,7 @@ void Player::Update(float dt)
 	}
 
 	//가속
-	velocity = direction * speed;// *dt;
+	velocity = direction * speed;
 
 	//감속
 	if ( Utils::Magnitude(direction) == 0.f )
@@ -147,6 +148,7 @@ void Player::Update(float dt)
 	//positions
 	playerHitbox->SetPos({ GetPos().x,GetPos().y + 50.f });
 	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x ,GetPos().y + 50.f });
+	
 	//hp bar
 	SetHpBar();
 
@@ -292,5 +294,21 @@ void Player::SetHpBar()
 	else
 	{
 		healthBar.setOutlineThickness(2.f);
+	}
+}
+
+void Player::OnPickupItem(Item* item)
+{
+	switch ( item->GetType() )
+	{
+	case Item::Types::Potion:
+
+		hp += item->GetValue();
+		if ( hp >= maxHp )
+			hp = maxHp;
+		break;
+	case Item::Types::Coin:
+		//exp += item->GetValue();
+		break;
 	}
 }

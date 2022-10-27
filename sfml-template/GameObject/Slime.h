@@ -45,7 +45,8 @@ protected:
 
 	bool isHitBox;
 public:
-	Slime() : currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f), hitTime(0.f), getAttackTime(1.f), attack(true), damage(1), hp(10), maxHp(10), barScaleX(60.f), isHitBox(true) {}
+	Slime();
+	virtual ~Slime();
 	
 	void Init(Player* player);
 
@@ -54,9 +55,6 @@ public:
 
 	void Update(float dt);
 	void Draw(RenderWindow& window);
-
-	void PlayIdle();
-	void PlayMove();
 
 	void OnCompleteDead();
 	bool EqualFloat(float a, float b);
