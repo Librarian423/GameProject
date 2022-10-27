@@ -47,6 +47,7 @@ void Slime::Init(Player* player)
 		ev.onEvent = bind(&Slime::OnCompleteDead, this);
 		animator.AddEvent(ev);
 	}
+	//SetState(States::Move);
 	SpriteObj::Init();
 }
 

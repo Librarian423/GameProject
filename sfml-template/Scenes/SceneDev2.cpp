@@ -8,6 +8,8 @@
 #include "../Framework/Framework.h"
 #include "../GameObject/Player.h"
 #include "../GameObject/Slime.h"
+#include "../GameObject/Item.h"
+#include "../GameObject/ItemGenerator.h"
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -24,13 +26,22 @@ SceneDev2::~SceneDev2()
 void SceneDev2::Init()
 {
 	player = new Player();
+	player->SetName("Player");
 	player->Init();
+	//objList.push_back(player);
 	
 	slime = new Slime();
 	slime->Init(player);
 	slime->SetPos({ 500.f,500.f });
+
+	/*item = new Item();
+	item->Init();
+	item->SetPos({ 10.f,10.f });*/
+
 	Map1 = new CAP::SFMLMap("tilemap/", "map1.tmx");
 	Map = new CAP::SFMLMap("tilemap/", "map2.tmx");
+	
+	ITEM_GEN->Init();
 
 	for ( auto obj : objList )
 	{
@@ -44,6 +55,7 @@ void SceneDev2::Release()
 
 void SceneDev2::Enter()
 {
+	ITEM_GEN->Release();
 	Vector2i size = FRAMEWORK->GetWindowSize();
 	worldView.setSize(size.x, size.y);
 	worldView.setCenter(0.f, 0.f);
@@ -54,13 +66,13 @@ void SceneDev2::Enter()
 
 void SceneDev2::Exit()
 {
-	
+	ITEM_GEN->Release();
 }
 
 void SceneDev2::Update(float dt)
 {
 	slimeTimer -= dt;
-
+	
 	if ( (slime->GetState() != Slime::States::Dead) && slimeTimer < 0.f )
 	{
 		cout << "timer" << endl;
@@ -96,8 +108,14 @@ void SceneDev2::Update(float dt)
 		player->SetPos(pos);
 	}
 
+	if ( Keyboard::isKeyPressed(Keyboard::Key::Num1) )
+	{
+		ITEM_GEN->Generate({ 10.f,10.f }, 10);
+	}
+
+	//item->Update(dt);
 	player->Update(dt);
-	
+	ITEM_GEN->Update(dt);
 	Scene::Update(dt);
 }
 
@@ -106,8 +124,9 @@ void SceneDev2::Draw(RenderWindow& window)
 	Map1->draw(window, states);
 	Map->draw(window, states);
 	slime->Draw(window);
+	ITEM_GEN->Draw(window);
 	player->Draw(window);
-	
+	//item->Draw(window);
 	window.setView(worldView);
 	Scene::Draw(window);
 }

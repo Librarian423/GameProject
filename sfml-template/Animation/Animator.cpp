@@ -41,7 +41,7 @@ void Animator::Update(float dt)
 		return;
 	}
 	accumTime += dt * speed;
-	if ( accumTime < frameDuration )
+ 	if ( accumTime < frameDuration )
 	{
 		return;
 	}

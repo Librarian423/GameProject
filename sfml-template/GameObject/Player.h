@@ -16,7 +16,6 @@ public:
 		Attack,
 	};
 protected:
-	//Sprite sprite;
 	Animator animator;
 
 	RectangleShape healthBar;

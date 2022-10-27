@@ -5,14 +5,15 @@
 
 class Player;
 class Slime;
-
+class Item;
 class SceneDev2 :public Scene
 {
 
 protected:
 	Player* player;
 	Slime* slime;
-	
+	//Item* item;
+
 	int slimeState;
 
 	float timer;

@@ -1,0 +1,8 @@
+ID,LOOPTYPE (0: Single 1: Move),FPS,,,,,,
+Coin,1,10,,,,,,
+,,,,,,,,
+TEXTURE ID,L,T,W,H,X,Y,FlipX,FlipY
+graphics/coins.png,0,0,32,32,16,16,0,0
+graphics/coins.png,37.6,0,32,32,16,16,0,0
+graphics/coins.png,75.3,0,32,32,16,16,0,0
+graphics/coins.png,113,0,32,32,16,16,0,0

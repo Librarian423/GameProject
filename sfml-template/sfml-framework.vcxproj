@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="Animation\AnimationClip.cpp" />
     <ClCompile Include="Animation\Animator.cpp" />
+    <ClCompile Include="GameObject\Item.cpp" />
     <ClCompile Include="DataTable\DataTable.cpp" />
     <ClCompile Include="DataTable\DataTableMGR.cpp" />
     <ClCompile Include="DataTable\StringTable.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="Framework\InputMgr.cpp" />
     <ClCompile Include="Framework\ResourceMgr.cpp" />
     <ClCompile Include="Framework\Utils.cpp" />
+    <ClCompile Include="GameObject\ItemGenerator.cpp" />
     <ClCompile Include="GameObject\Object.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
     <ClCompile Include="GameObject\SpriteObj.cpp" />
@@ -174,6 +176,7 @@
     <ClInclude Include="3rd\Singleton.h" />
     <ClInclude Include="Animation\AnimationClip.h" />
     <ClInclude Include="Animation\Animator.h" />
+    <ClInclude Include="GameObject\Item.h" />
     <ClInclude Include="DataTable\DataTable.h" />
     <ClInclude Include="DataTable\DataTableMGR.h" />
     <ClInclude Include="DataTable\StringTable.h" />
@@ -181,6 +184,7 @@
     <ClInclude Include="Framework\InputMgr.h" />
     <ClInclude Include="Framework\ResourceMgr.h" />
     <ClInclude Include="Framework\Utils.h" />
+    <ClInclude Include="GameObject\ItemGenerator.h" />
     <ClInclude Include="GameObject\Object.h" />
     <ClInclude Include="GameObject\Player.h" />
     <ClInclude Include="GameObject\SpriteObj.h" />

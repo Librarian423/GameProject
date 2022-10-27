@@ -165,7 +165,7 @@ void Player::Update(float dt)
 
 void Player::Draw(RenderWindow& window)
 {
-	window.draw(sprite);
+	SpriteObj::Draw(window);
 	window.draw(healthBar);
 	if ( isHitBox )
 	{
