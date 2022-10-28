@@ -11,6 +11,10 @@ Slime::Slime()
 {
 }
 
+Slime::~Slime()
+{
+}
+
 void Slime::Init(Player* player)
 {
 	this->player = player;

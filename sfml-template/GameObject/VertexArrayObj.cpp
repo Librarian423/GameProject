@@ -31,6 +31,7 @@ FloatRect VertexArrayObj::GetGlobalBounds() const
 
 void VertexArrayObj::SetOrigin(Origins newOrigin)
 {
+	//sprite.setScale({ 20.f,20.f });
 	FloatRect rect = vertexArray.getBounds();
 	Vector2f prevPos(
 		rect.width * ((int)origin % 3) * 0.5f, 

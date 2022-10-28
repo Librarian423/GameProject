@@ -166,8 +166,8 @@
             "scale": 0.78078125,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 716.5899539723835,
-                "y": 297.13828296978187
+                "x": 619.8919351610967,
+                "y": 627.5765459275567
             }
         },
         "map1.tmx#plains": {
@@ -187,7 +187,7 @@
             "scaleInEditor": 1
         }
     },
-    "last.imagePath": "D:/PersonalProject/sfml-framework-bin/tilemap",
+    "last.imagePath": "D:/PersonalProject/sfml-framework-bin/graphics",
     "map.lastUsedFormat": "tmx",
     "map.width": 40,
     "openFiles": [

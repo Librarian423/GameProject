@@ -1,11 +1,14 @@
 #pragma once
 #include "Scene.h"
 #include "../GameObject/Object.h"
-#include "../TileMapLoader.h"
+#include <map>
+#include <list>
 
 class Player;
 class Slime;
 class Item;
+class VertexArrayObj;
+
 class SceneDev2 :public Scene
 {
 
@@ -20,10 +23,9 @@ protected:
 	float slimeTimer;
 
 	//map
-	CAP::SFMLMap* Map1;
-	CAP::SFMLMap* Map;
-	RenderStates states;
-
+	VertexArrayObj* background;
+	map<string, Vector2i> tileType;
+	list<string> tileList;
 public:
 	SceneDev2();
 	virtual ~SceneDev2();
@@ -37,5 +39,10 @@ public:
 
 	virtual void Update(float dt) override;
 	virtual void Draw(RenderWindow& window) override;
+
+	void CreateBackground(int width, int height, float quadWidth, float quadHeight);
+	void SetTileNum();
+	void ReadMap();
+	Vector2i GetTile(string num);
 };
 

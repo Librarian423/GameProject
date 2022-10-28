@@ -1,14 +1,18 @@
 #pragma once
-#include "Object.h"
+//#include "Object.h"
+#include "SpriteObj.h"
 #include "../Framework/Utils.h"
 
-class VertexArrayObj : public Object
+class Player;
+
+class VertexArrayObj : public SpriteObj
 {
 protected:
 	VertexArray vertexArray;
 	Texture* texture;
 	Origins origin;
 
+	Player* player;
 public:
 	VertexArrayObj();
 	~VertexArrayObj();
