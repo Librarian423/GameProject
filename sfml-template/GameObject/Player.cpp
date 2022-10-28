@@ -2,6 +2,7 @@
 #include "../Framework/ResourceMgr.h"
 #include "../Framework/InputMgr.h"
 #include "../Framework/Utils.h"
+#include "VertexArrayObj.h"
 #include "Object.h"
 #include "HitBox.h"
 #include "Item.h"
@@ -89,6 +90,11 @@ void Player::SetState(States newState)
 	}
 }
 
+void Player::SetBackground(VertexArrayObj* bk)
+{
+	background = bk;
+}
+
 void Player::Update(float dt)
 {
 	direction.x = InputMgr::GetAxisRaw(Axis::Horizontal);
@@ -151,6 +157,21 @@ void Player::Update(float dt)
 	
 	//hp bar
 	SetHpBar();
+
+	//wall bound
+	float border = 32.f;
+	FloatRect wallBound = background->GetGlobalBounds();
+	Vector2f pos;
+	pos.x = Utils::Clamp(position.x,
+		wallBound.left + border,
+		wallBound.left + wallBound.width - border);
+	pos.y = Utils::Clamp(position.y,
+		wallBound.top + border,
+		wallBound.top + wallBound.height - border-32.f);
+	if ( pos != position )
+	{
+		SetPos(pos);
+	}
 
 	animator.Update(dt);
 	
