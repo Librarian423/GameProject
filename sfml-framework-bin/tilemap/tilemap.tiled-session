@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "map2.tmx",
+    "activeFile": "untitled.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -185,6 +185,17 @@
         "object.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "untitled.tmx": {
+            "scale": 0.8913671874999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 654.612384416495,
+                "y": 320.8554274946317
+            }
+        },
+        "untitled.tmx#tile": {
+            "scaleInDock": 1
         }
     },
     "last.imagePath": "D:/PersonalProject/sfml-framework-bin/graphics",
@@ -196,7 +207,8 @@
         "object.tsx",
         "fence.tsx",
         "map1.tmx",
-        "map2.tmx"
+        "map2.tmx",
+        "untitled.tmx"
     ],
     "project": "tilemap.tiled-project",
     "recentFiles": [
@@ -206,12 +218,12 @@
         "fence.tsx",
         "map1.tmx",
         "map2.tmx",
+        "untitled.tmx",
         "C:/Users/ysh42/Desktop/maps/b2d.tmx",
         "C:/Users/ysh42/Desktop/maps/shader_example.tmx",
         "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357705a2bf7291b/b2d.tmx",
         "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749342b5e3d76/desert.tmx",
-        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357494f2b5ea596/addRemove.tmx",
-        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749242b5dfea8/isometric_grass_and_water.tmx"
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357494f2b5ea596/addRemove.tmx"
     ],
     "tileset.embedInMap": true,
     "tileset.lastUsedFormat": "tsx"

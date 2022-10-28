@@ -18,7 +18,7 @@ Player::~Player()
 
 void Player::Init()
 {
-	sprite.setScale({ 3.f,3.f });
+	sprite.setScale({ 2.f,2.f });
 	
 	animator.SetTarget(&sprite);
 
@@ -32,12 +32,12 @@ void Player::Init()
 
 	//player hitbox
 	playerHitbox = new HitBox();
-	playerHitbox->SetHitbox({ 0,0,35.f,35.f });
-	playerHitbox->SetPos({ GetPos().x,GetPos().y + 50.f });
+	playerHitbox->SetHitbox({ 0,0,25.f,25.f });
+	playerHitbox->SetPos({ GetPos().x + 5.f,GetPos().y + 35.f });
 	//attack hitbox
 	attackHitbox = new HitBox();
-	attackHitbox->SetHitbox({ 0,0,100.f,65.f });
-	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x ,GetPos().y + 50.f });
+	attackHitbox->SetHitbox({ 0,0,80.f,35.f });
+	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x, GetPos().y + 40.f });
 	attackHitbox->SetActive(false);
 
 	//animation
@@ -146,8 +146,8 @@ void Player::Update(float dt)
 	}
 
 	//positions
-	playerHitbox->SetPos({ GetPos().x,GetPos().y + 50.f });
-	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x ,GetPos().y + 50.f });
+	playerHitbox->SetPos({ GetPos().x + 5.f,GetPos().y + 35.f });
+	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x , GetPos().y + 40.f });
 	
 	//hp bar
 	SetHpBar();

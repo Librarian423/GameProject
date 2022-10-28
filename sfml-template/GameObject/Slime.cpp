@@ -21,7 +21,7 @@ void Slime::Init(Player* player)
 	
 	hp = maxHp;
 	
-	sprite.setScale({ 3.f,3.f });
+	sprite.setScale({ 2.f,2.f });
 	
 	animator.SetTarget(&sprite);
 	
@@ -35,8 +35,8 @@ void Slime::Init(Player* player)
 
 	//hit box
 	slimeHitbox = new HitBox();
-	slimeHitbox->SetHitbox({ 0,0,35.f,30.f });
-	slimeHitbox->SetPos({ GetPos().x,GetPos().y + 30.f });
+	slimeHitbox->SetHitbox({ 0,0,30.f,20.f });
+	slimeHitbox->SetPos({ GetPos().x,GetPos().y + 20.f });
 	slimeHitbox->SetActive(true);
 
 	//animation
@@ -149,7 +149,7 @@ void Slime::Update(float dt)
 			}
 		}
 	}
-	slimeHitbox->SetPos({ GetPos().x,GetPos().y + 30.f });
+	slimeHitbox->SetPos({ GetPos().x,GetPos().y + 20.f });
 	
 	SetHpBar();
 	
