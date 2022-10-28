@@ -39,6 +39,7 @@ void SceneDev2::Init()
 	player = new Player();
 	player->SetName("Player");
 	player->Init();
+	player->SetBackground(background);
 	objList.push_back(player);
 	
 	slime = new Slime();
@@ -107,6 +108,7 @@ void SceneDev2::Update(float dt)
 	worldView.setCenter(player->GetPos());
 	worldView.setCenter(player->GetPos());
 
+	
 	/*float border = 32.f;
 	FloatRect wallBound = Map->GetGlobalBounds();
 	Vector2f pos;

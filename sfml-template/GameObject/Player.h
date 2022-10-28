@@ -5,6 +5,7 @@
 
 class HitBox;
 class Item;
+class VertexArrayObj;
 
 class Player : public SpriteObj
 {
@@ -31,6 +32,7 @@ protected:
 	Vector2f direction;
 	Vector2f lastDirection;
 	Vector2f tempDirection;
+	VertexArrayObj* background;
 
 	float timer;
 	float attackTime;
@@ -40,6 +42,7 @@ protected:
 	int maxHp;
 
 	bool isHitBox;
+
 public:
 	Player();
 	virtual~Player();
@@ -47,6 +50,7 @@ public:
 	void Init();
 
 	void SetState(States newState);
+	void SetBackground(VertexArrayObj* bk);
 
 	void Update(float dt);
 	void Draw(RenderWindow& window);
