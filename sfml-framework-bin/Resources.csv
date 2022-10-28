@@ -11,3 +11,10 @@ animations/slime/SlimeIdle.csv,3
 animations/slime/SlimeIdleLeft.csv,3
 animations/slime/SlimeMove.csv,3
 animations/slime/SlimeMoveLeft.csv,3
+animations/slime/SlimeDead.csv,3
+animations/slime/SlimeDeadLeft.csv,3
+graphics/coins.png,0
+animations/item/coin/Coin.csv,3
+graphics/redpotion.png,0
+animations/item/potion/Potion.csv,3
+graphics/tilemap_packed.png,0

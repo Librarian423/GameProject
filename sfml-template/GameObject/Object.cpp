@@ -1,9 +1,9 @@
 #include "Object.h"
+#include "../Framework/Utils.h"
 
 int Object::objCount = 0;
 
 Object::Object()
-	:isDevMod(false)
 {
 	id = ++objCount;
 	Init();
@@ -31,7 +31,6 @@ bool Object::GetActive() const
 
 void Object::Init()
 {
-	hitbox.setFillColor(Color::Red);
 	Reset();
 }
 
@@ -47,7 +46,8 @@ void Object::Reset()
 void Object::SetPos(const Vector2f& pos)
 {
 	position = pos;
-	hitbox.setPosition(position);
+	//Vector2f hitboxPos = { hitBoxRect.left, hitBoxRect.top + 50.f };
+	//hitbox.setPosition(hitboxPos + pos);
 }
 
 const Vector2f& Object::GetPos() const
@@ -67,19 +67,5 @@ void Object::Update(float dt)
 
 void Object::Draw(RenderWindow& window)
 {
-	if ( isDevMod )
-	{
-		window.draw(hitbox);
-	}
-}
-
-void Object::SetHitbox(const FloatRect rect)
-{
-	/*Vector2f hitboxPos = GetPos();
-
-	hitboxPos.x -= rect.left;
-	hitboxPos.y -= rect.top;*/
-
-	hitbox.setPosition(position);
-	hitbox.setSize({ rect.width, rect.height });
+	
 }

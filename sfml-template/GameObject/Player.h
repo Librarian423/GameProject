@@ -1,6 +1,10 @@
 #pragma once
 #include "SpriteObj.h"
+#include "Slime.h"
 #include "../Animation/Animator.h"
+
+class HitBox;
+class Item;
 
 class Player : public SpriteObj
 {
@@ -13,33 +17,43 @@ public:
 		Attack,
 	};
 protected:
-	//Sprite sprite;
 	Animator animator;
 
+	RectangleShape healthBar;
+
+	HitBox *playerHitbox;
+	HitBox *attackHitbox;
+
 	States currState;
-	States prevState;
-
+	
 	float speed;
-	float accelation;
-	float deaccelation;
 	Vector2f velocity;
-
 	Vector2f direction;
 	Vector2f lastDirection;
 	Vector2f tempDirection;
 
+	float timer;
+	float attackTime;
+
+	int damage;
+	int hp;
+	int maxHp;
+
+	bool isHitBox;
 public:
-	Player() : currState(States::None), speed(200.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), accelation(500), deaccelation(500) {}
+	Player();
+	virtual~Player();
 	
 	void Init();
 
 	void SetState(States newState);
 
 	void Update(float dt);
-	void UpdateInput(Event ev);
 	void Draw(RenderWindow& window);
+
 	void PlayAttack();
-	void OnCompleteJump();
+	void Dash(float dt);
+	void OnCompleteAttack();
 
 	void UpdateIdle(float dt);
 	void UpdateMove(float dt);
@@ -47,6 +61,13 @@ public:
 
 	bool EqualFloat(float a, float b);
 
+	HitBox* GetPlayerHitBox();
+	HitBox* GetAttackHitbox();
 	Vector2f GetPlayerDir() { return direction; }
+	int GetDamage() { return damage; }
+
+	void SetHp(int num);
+	void SetHpBar();
+	void OnPickupItem(Item* item);
 };
 

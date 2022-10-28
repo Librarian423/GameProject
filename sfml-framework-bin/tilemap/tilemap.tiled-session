@@ -1,0 +1,218 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "map2.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749032b5d7dfe/shader_example.tmx": {
+            "scale": 0.912890625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.95849379546434,
+                "y": 225.1091142490373
+            }
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749032b5d7dfe/shader_example.tmx#forest_tileset": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357490b2b5d9c06/b2d.tmx": {
+            "scale": 0.78078125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1237.22233340004,
+                "y": 469.40164098459076
+            }
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357490b2b5d9c06/b2d.tmx#diffuse": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749102b5dafdc/desert.tmx": {
+            "scale": 0.0883203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 639.7169394073419,
+                "y": 645.3781512605044
+            }
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749102b5dafdc/desert.tmx#Sewer": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749102b5dafdc/desert.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749122b5db710/desert.tmx": {
+            "scale": 0.0883203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 639.7169394073419,
+                "y": 645.3781512605044
+            }
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749122b5db710/desert.tmx#Sewer": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749122b5db710/desert.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357491e2b5de718/desert.tmx": {
+            "scale": 0.4564453125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 641.9169875909287,
+                "y": 640.821566110398
+            }
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357491e2b5de718/desert.tmx#Sewer": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357491e2b5de718/desert.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749242b5dfea8/isometric_grass_and_water.tmx": {
+            "scale": 0.624625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 800.4802881729038,
+                "y": 401.0406243746247
+            }
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749242b5dfea8/isometric_grass_and_water.tmx#isometric_grass_and_water": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749342b5e3d76/desert.tmx": {
+            "scale": 0.4564453125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 693.4017971758665,
+                "y": 497.32135216089006
+            }
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749342b5e3d76/desert.tmx#Sewer": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749342b5e3d76/desert.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357494f2b5ea596/addRemove.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 339.39393939393926,
+                "y": 471.21212121212113
+            }
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357494f2b5ea596/addRemove.tmx#Sewer": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357494f2b5ea596/desert.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357705a2bf7291b/b2d.tmx": {
+            "scale": 0.78078125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 670.4822893736242,
+                "y": 235.66139683810286
+            }
+        },
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357705a2bf7291b/b2d.tmx#diffuse": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/Desktop/maps/b2d.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 530,
+                "y": -64
+            }
+        },
+        "C:/Users/ysh42/Desktop/maps/b2d.tmx#diffuse": {
+            "scaleInDock": 1
+        },
+        "C:/Users/ysh42/Desktop/maps/shader_example.tmx": {
+            "scale": 1.32703125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.26374661485926,
+                "y": 223.80784175203107
+            }
+        },
+        "C:/Users/ysh42/Desktop/maps/shader_example.tmx#forest_tileset": {
+            "scaleInDock": 1
+        },
+        "fence.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "grass.tsx": {
+            "scaleInDock": 1
+        },
+        "grass1.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "grass2.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "images.tsx": {
+            "scaleInDock": 1
+        },
+        "map1.tmx": {
+            "scale": 0.78078125,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 619.8919351610967,
+                "y": 627.5765459275567
+            }
+        },
+        "map1.tmx#plains": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "map2.tmx": {
+            "scale": 0.78078125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 734.5207124274565,
+                "y": 320.1921152691615
+            }
+        },
+        "object.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "D:/PersonalProject/sfml-framework-bin/graphics",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 40,
+    "openFiles": [
+        "grass1.tsx",
+        "grass2.tsx",
+        "object.tsx",
+        "fence.tsx",
+        "map1.tmx",
+        "map2.tmx"
+    ],
+    "project": "tilemap.tiled-project",
+    "recentFiles": [
+        "grass1.tsx",
+        "grass2.tsx",
+        "object.tsx",
+        "fence.tsx",
+        "map1.tmx",
+        "map2.tmx",
+        "C:/Users/ysh42/Desktop/maps/b2d.tmx",
+        "C:/Users/ysh42/Desktop/maps/shader_example.tmx",
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357705a2bf7291b/b2d.tmx",
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749342b5e3d76/desert.tmx",
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357494f2b5ea596/addRemove.tmx",
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749242b5dfea8/isometric_grass_and_water.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.lastUsedFormat": "tsx"
+}
