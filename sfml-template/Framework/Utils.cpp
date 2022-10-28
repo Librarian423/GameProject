@@ -1,4 +1,5 @@
 #include "Utils.h"
+#include "../3rd/OBB.h"
 
 std::random_device Utils::rd;
 std::mt19937 Utils::gen(Utils::rd());
@@ -117,4 +118,10 @@ Vector2f Utils::RandomOutCirclePoint()
 {
 	float radian = RandomRange(0.f, M_PI * 2);
 	return Vector2f({ cos(radian),sin(radian) });
+}
+
+bool Utils::OBB(const RectangleShape& obb1, const RectangleShape& obb2)
+{
+	Vector2f MTV;
+	return testCollision(obb1, obb2, MTV);
 }

@@ -1,0 +1,9 @@
+ID,LOOPTYPE (0: Single 1: Move),FPS,,,,,,
+SlimeDeadLeft,0,10,,,,,,
+,,,,,,,,
+TEXTURE ID,L,T,W,H,X,Y,FlipX,FlipY
+graphics/slime.png,0,128,32,32,16,16,1,0
+graphics/slime.png,32,128,32,32,16,16,1,0
+graphics/slime.png,64,128,32,32,16,16,1,0
+graphics/slime.png,96,128,32,32,16,16,1,0
+graphics/slime.png,128,128,32,32,16,16,1,0

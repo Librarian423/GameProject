@@ -46,4 +46,6 @@ public:
 	static float RandomZeroToOne();
 	static Vector2f RandomInCirclePoint();
 	static Vector2f RandomOutCirclePoint();
+
+	static bool OBB(const RectangleShape& obb1, const RectangleShape& obb2);
 };

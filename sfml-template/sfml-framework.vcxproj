@@ -117,7 +117,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_USE_MATH_DEFINES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./Frameworks;./SFML-2.5.1/include;./3rd</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Frameworks;./SFML-2.5.1/include;./3rd;./tmx/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,7 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_USE_MATH_DEFINES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./Frameworks;./SFML-2.5.1/include;./3rd</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Frameworks;./SFML-2.5.1/include;./3rd;./tmx/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,6 +148,9 @@
   <ItemGroup>
     <ClCompile Include="Animation\AnimationClip.cpp" />
     <ClCompile Include="Animation\Animator.cpp" />
+    <ClCompile Include="GameObject\CreateMap.cpp" />
+    <ClCompile Include="GameObject\VertexArrayObj.cpp" />
+    <ClCompile Include="GameObject\Item.cpp" />
     <ClCompile Include="DataTable\DataTable.cpp" />
     <ClCompile Include="DataTable\DataTableMGR.cpp" />
     <ClCompile Include="DataTable\StringTable.cpp" />
@@ -155,22 +158,29 @@
     <ClCompile Include="Framework\InputMgr.cpp" />
     <ClCompile Include="Framework\ResourceMgr.cpp" />
     <ClCompile Include="Framework\Utils.cpp" />
+    <ClCompile Include="GameObject\ItemGenerator.cpp" />
     <ClCompile Include="GameObject\Object.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
     <ClCompile Include="GameObject\SpriteObj.cpp" />
     <ClCompile Include="GameObject\TextObj.cpp" />
+    <ClCompile Include="GameObject\HitBox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\SceneDev2.cpp" />
     <ClCompile Include="Scenes\Scene.cpp" />
     <ClCompile Include="Scenes\SceneMgr.cpp" />
     <ClCompile Include="Framework\SoundMgr.cpp" />
+    <ClCompile Include="GameObject\Slime.cpp" />
     <ClCompile Include="UI\UIMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3rd\OBB.h" />
     <ClInclude Include="3rd\rapidcsv.h" />
     <ClInclude Include="3rd\Singleton.h" />
     <ClInclude Include="Animation\AnimationClip.h" />
     <ClInclude Include="Animation\Animator.h" />
+    <ClInclude Include="GameObject\CreateMap.h" />
+    <ClInclude Include="GameObject\VertexArrayObj.h" />
+    <ClInclude Include="GameObject\Item.h" />
     <ClInclude Include="DataTable\DataTable.h" />
     <ClInclude Include="DataTable\DataTableMGR.h" />
     <ClInclude Include="DataTable\StringTable.h" />
@@ -178,14 +188,17 @@
     <ClInclude Include="Framework\InputMgr.h" />
     <ClInclude Include="Framework\ResourceMgr.h" />
     <ClInclude Include="Framework\Utils.h" />
+    <ClInclude Include="GameObject\ItemGenerator.h" />
     <ClInclude Include="GameObject\Object.h" />
     <ClInclude Include="GameObject\Player.h" />
     <ClInclude Include="GameObject\SpriteObj.h" />
     <ClInclude Include="GameObject\TextObj.h" />
+    <ClInclude Include="GameObject\HitBox.h" />
     <ClInclude Include="Scenes\SceneDev2.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SceneMgr.h" />
     <ClInclude Include="Framework\SoundMgr.h" />
+    <ClInclude Include="GameObject\Slime.h" />
     <ClInclude Include="UI\UIMgr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
