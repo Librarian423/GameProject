@@ -33,21 +33,24 @@ void SceneDev2::Init()
 	ReadMap();
 	SetTileNum();
 	CreateBackground(20, 40, 32.f, 32.f);
-	background->SetPos({ 0,0 });
-	background->SetOrigin(Origins::MC);
+	background->Init();
 
 	player = new Player();
 	player->SetName("Player");
 	player->Init();
+	player->SetPos({ 200,300 });
 	player->SetBackground(background);
 	objList.push_back(player);
-	
+
 	slime = new Slime();
 	slime->SetName("Slime");
 	slime->Init(player);
-	slime->SetPos({ 500.f,500.f });
+	slime->SetPos({ 200.f,200.f });
+	slime->SetBackground(background);
 	objList.push_back(slime);
+
 	
+
 	ITEM_GEN->Init();
 
 	for ( auto obj : objList )
@@ -64,11 +67,15 @@ void SceneDev2::Release()
 void SceneDev2::Enter()
 {
 	ITEM_GEN->Release();
+
 	Vector2i size = FRAMEWORK->GetWindowSize();
+
 	worldView.setSize(size.x, size.y);
 	worldView.setCenter(0.f, 0.f);
+
 	uiView.setSize(size.x, size.y);
 	uiView.setCenter(size.x * 0.5f, size.y * 0.5f);
+
 	FRAMEWORK->GetWindow().setMouseCursorGrabbed(false);
 }
 
@@ -108,22 +115,6 @@ void SceneDev2::Update(float dt)
 	worldView.setCenter(player->GetPos());
 	worldView.setCenter(player->GetPos());
 
-	
-	/*float border = 32.f;
-	FloatRect wallBound = Map->GetGlobalBounds();
-	Vector2f pos;
-	pos.x = Utils::Clamp(player->GetPos().x,
-		wallBound.left + border,
-		wallBound.left + wallBound.width - border);
-	pos.y = Utils::Clamp(player->GetPos().y,
-		wallBound.top + border,
-		wallBound.top + wallBound.height - border);
-
-	if ( pos != player->GetPos() )
-	{
-		player->SetPos(pos);
-	}*/
-
 	if ( InputMgr::GetKeyDown(Keyboard::Num1) )
 	{
 		ITEM_GEN->Generate({ 100.f,100.f });
@@ -134,9 +125,6 @@ void SceneDev2::Update(float dt)
 
 void SceneDev2::Draw(RenderWindow& window)
 {
-	//Map1->draw(window, states);
-	//Map->draw(window, states);
-	//slime->Draw(window);
 	window.setView(worldView);
 	Scene::Draw(window);
 }
@@ -149,6 +137,8 @@ void SceneDev2::CreateBackground(int width, int height, float quadWidth, float q
 		background->SetTexture(GetTexture("graphics/tilemap_packed.png"));
 		objList.push_back(background);
 	}
+	
+	Vector2f hitBoxPos = { 10.f,0.f };
 
 	Vector2f startPos = background->GetPos();
 	VertexArray& va = background->GetVA();
@@ -163,7 +153,9 @@ void SceneDev2::CreateBackground(int width, int height, float quadWidth, float q
 		{quadWidth, quadHeight},
 		{0, quadHeight},
 	};
-
+	
+	list<string>::iterator it;
+	
 	for ( int i = 0; i < width; ++i )
 	{
 		for ( int j = 0; j < height; ++j )
@@ -180,9 +172,18 @@ void SceneDev2::CreateBackground(int width, int height, float quadWidth, float q
 				va[vertexIndex].texCoords = offsets[k];
 				va[vertexIndex].texCoords.x += quadWidth * tile.x;
 				va[vertexIndex].texCoords.y += quadHeight * tile.y;
+				
 			}
+			it = find(wallNum.begin(), wallNum.end(), tileNum);
+			if ( it != wallNum.end() )
+			{
+				background->MakeWallHitBox(hitBoxPos);
+			}
+			hitBoxPos.x += 32.f;
 			currPos.x += (int)quadWidth;
 		}
+		hitBoxPos.x = 10.f;
+		hitBoxPos.y += 32.f;
 		currPos.x = startPos.x;
 		currPos.y += (int)quadHeight;
 		
@@ -237,13 +238,4 @@ void SceneDev2::ReadMap()
 	}
 	file.close();
 	cout << "file close" << endl;
-}
-
-Vector2i SceneDev2::GetTile(string num)
-{
-	for ( auto it = tileType.begin(); it != tileType.end(); it++ )
-	{
-
-	}
-	return Vector2i();
 }

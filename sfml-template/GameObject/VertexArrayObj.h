@@ -1,9 +1,11 @@
 #pragma once
-//#include "Object.h"
 #include "SpriteObj.h"
 #include "../Framework/Utils.h"
+#include <list>
 
 class Player;
+class HitBox;
+class Slime;
 
 class VertexArrayObj : public SpriteObj
 {
@@ -12,10 +14,15 @@ protected:
 	Texture* texture;
 	Origins origin;
 
-	Player* player;
+	std::list<HitBox*> wallHitboxList;
+	HitBox* wallHitbox;
+
+	bool isHitBox;
 public:
 	VertexArrayObj();
 	~VertexArrayObj();
+
+	void Init();
 
 	VertexArray& GetVA();
 	void SetTexture(Texture* tex);
@@ -30,5 +37,9 @@ public:
 
 	virtual void Update(float dt);
 	virtual void Draw(RenderWindow& window);
+
+	void MakeWallHitBox(Vector2f pos);
+	
+	std::list<HitBox*>GetHitBoxList();
 };
 

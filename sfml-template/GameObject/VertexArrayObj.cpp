@@ -1,4 +1,8 @@
 #include "VertexArrayObj.h"
+#include "HitBox.h"
+#include "../Framework/Utils.h"
+#include "../Framework/InputMgr.h"
+#include <iostream>
 
 VertexArrayObj::VertexArrayObj()
 	:texture(nullptr), origin(Origins::TL)
@@ -7,6 +11,11 @@ VertexArrayObj::VertexArrayObj()
 
 VertexArrayObj::~VertexArrayObj()
 {
+}
+
+void VertexArrayObj::Init()
+{
+	isHitBox = true;
 }
 
 VertexArray& VertexArrayObj::GetVA()
@@ -31,7 +40,6 @@ FloatRect VertexArrayObj::GetGlobalBounds() const
 
 void VertexArrayObj::SetOrigin(Origins newOrigin)
 {
-	//sprite.setScale({ 20.f,20.f });
 	FloatRect rect = vertexArray.getBounds();
 	Vector2f prevPos(
 		rect.width * ((int)origin % 3) * 0.5f, 
@@ -66,9 +74,38 @@ const Vector2f& VertexArrayObj::GetPos() const
 
 void VertexArrayObj::Update(float dt)
 {
+	if ( InputMgr::GetKeyDown(Keyboard::F1) )
+	{
+		isHitBox = !isHitBox;
+	}
 }
 
 void VertexArrayObj::Draw(RenderWindow& window)
 {
 	window.draw(vertexArray, texture);
+	if ( isHitBox )
+	{
+		for ( const auto& hb : wallHitboxList )
+		{
+			if ( hb->GetActive() )
+			{
+				hb->Draw(window);
+			}
+		}
+	}
+}
+
+void VertexArrayObj::MakeWallHitBox(Vector2f pos)
+{
+	wallHitbox = new HitBox();
+	wallHitbox->SetHitbox({ 0,0,30.f,30.f });
+	wallHitbox->SetPos(pos);
+	wallHitbox->SetActive(true);
+	wallHitboxList.push_back(wallHitbox);
+	wallHitbox->Release();
+}
+
+std::list<HitBox*> VertexArrayObj::GetHitBoxList()
+{
+	return wallHitboxList;
 }
