@@ -9,7 +9,7 @@
 #include <iostream>
 
 Player::Player()
-	: currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.5f), isHitBox(true), damage(1), hp(10), maxHp(10)
+	: currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.5f), isHitBox(true), damage(1), hp(10), maxHp(10), isKey(false)
 {
 }
 
@@ -165,6 +165,7 @@ void Player::Update(float dt)
 	//animation
 	animator.Update(dt);
 
+	//wall bound
 	for ( const auto& hb: background->GetHitBoxList() )
 	{
 		if ( Utils::OBB(hb->GetHitbox(), playerHitbox->GetHitbox()) )
@@ -178,24 +179,23 @@ void Player::Update(float dt)
 	{
  		isHitBox = !isHitBox;
 	}
-
+	
 	if (!EqualFloat(direction.x, 0.f))
 	{
 		lastDirection = direction;
 	}
-
-	
 }
 
 void Player::Draw(RenderWindow& window)
 {
-	SpriteObj::Draw(window);
-	window.draw(healthBar);
 	if ( isHitBox )
 	{
 		playerHitbox->Draw(window);
 		attackHitbox->Draw(window);
 	}
+	SpriteObj::Draw(window);
+	window.draw(healthBar);
+	
 }
 
 void Player::PlayAttack()
@@ -329,6 +329,10 @@ void Player::OnPickupItem(Item* item)
 		break;
 	case Item::Types::Coin:
 		//exp += item->GetValue();
+		break;
+	case Item::Types::Key:
+		item->SetIsKey();
+		isKey = true;
 		break;
 	}
 }

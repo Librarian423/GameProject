@@ -164,6 +164,7 @@
     <ClCompile Include="GameObject\SpriteObj.cpp" />
     <ClCompile Include="GameObject\TextObj.cpp" />
     <ClCompile Include="GameObject\HitBox.cpp" />
+    <ClCompile Include="GameObject\ItemBox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scenes\SceneDev2.cpp" />
     <ClCompile Include="Scenes\Scene.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="GameObject\SpriteObj.h" />
     <ClInclude Include="GameObject\TextObj.h" />
     <ClInclude Include="GameObject\HitBox.h" />
+    <ClInclude Include="GameObject\ItemBox.h" />
     <ClInclude Include="Scenes\SceneDev2.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SceneMgr.h" />

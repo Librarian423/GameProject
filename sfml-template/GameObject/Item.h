@@ -16,13 +16,13 @@ public:
 		Key,
 	};
 protected:
-	//Sprite sprite;
 	Animator animator;
 	Types currState;
 	Player* player;
 	HitBox* itemHitbox;
 
 	bool isHitBox;
+	bool isKey;
 	int value;
 
 public:
@@ -40,6 +40,7 @@ public:
 	void SetPlayer(Player* p);
 	void SetValue(int num) { value = num; }
 	int GetValue() { return value; }
+	void SetIsKey(bool key = true) { isKey = key; }
 
 };
 
