@@ -247,6 +247,7 @@ void Slime::SetSlimePos()
 {
 	SetPos(prevPosition);
 	slimeHitbox->SetPos(prevPosition);
+	healthBar.setPosition({ prevPosition.x, prevPosition.y - 15.f });
 }
 
 HitBox* Slime::GetSlimeHitBox()
