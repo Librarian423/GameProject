@@ -6,7 +6,8 @@
 
 class Player;
 class Slime;
-class Item;
+//class Item;
+class ItemBox;
 class VertexArrayObj;
 
 class SceneDev2 :public Scene
@@ -15,7 +16,7 @@ class SceneDev2 :public Scene
 protected:
 	Player* player;
 	Slime* slime;
-
+	ItemBox* itemBox;
 	//
 	int slimeState;
 	float timer;

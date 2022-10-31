@@ -8,6 +8,7 @@
 #include "../Framework/Framework.h"
 #include "../GameObject/Player.h"
 #include "../GameObject/Slime.h"
+#include "../GameObject/ItemBox.h"
 #include "../GameObject/Item.h"
 #include "../GameObject/ItemGenerator.h"
 #include "../GameObject/VertexArrayObj.h"
@@ -35,6 +36,12 @@ void SceneDev2::Init()
 	CreateBackground(20, 40, 32.f, 32.f);
 	background->Init();
 
+	itemBox = new ItemBox();
+	itemBox->SetName("ItemBox");
+	itemBox->Init();
+	itemBox->SetActive(false);
+	objList.push_back(itemBox);
+
 	player = new Player();
 	player->SetName("Player");
 	player->Init();
@@ -42,14 +49,14 @@ void SceneDev2::Init()
 	player->SetBackground(background);
 	objList.push_back(player);
 
+	itemBox->SetPlayer(player);
+
 	slime = new Slime();
 	slime->SetName("Slime");
 	slime->Init(player);
 	slime->SetPos({ 200.f,200.f });
 	slime->SetBackground(background);
 	objList.push_back(slime);
-
-	
 
 	ITEM_GEN->Init();
 
@@ -117,9 +124,15 @@ void SceneDev2::Update(float dt)
 
 	if ( InputMgr::GetKeyDown(Keyboard::Num1) )
 	{
-		ITEM_GEN->Generate({ 100.f,100.f });
+		itemBox->SetActive(true);
+		itemBox->SetState(ItemBox::States::Idle);
+		ITEM_GEN->Generate({ 300.f,300.f },true);
 	}
-
+	if ( InputMgr::GetKeyDown(Keyboard::Num2) )
+	{
+		itemBox->SetActive(false);
+		ITEM_GEN->EraseKey();
+	}
 	Scene::Update(dt);
 }
 

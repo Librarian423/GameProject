@@ -18,3 +18,8 @@ animations/item/coin/Coin.csv,3
 graphics/redpotion.png,0
 animations/item/potion/Potion.csv,3
 graphics/tilemap_packed.png,0
+graphics/key.png,0
+animations/item/key/Key.csv,3
+graphics/chest_01.png,0
+animations/item/itembox/ItemBoxIdle.csv,3
+animations/item/itembox/ItemBoxOpen.csv,3

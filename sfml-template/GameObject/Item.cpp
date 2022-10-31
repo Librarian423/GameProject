@@ -8,7 +8,7 @@
 #include <iostream>
 
 Item::Item()
-    :currState(Types::None), isHitBox(true), value(0)
+    :currState(Types::None), isHitBox(true), isKey(false), value(0)
 {
 }
 
@@ -35,10 +35,12 @@ void Item::Init(Types type)
         animator.SetTarget(&sprite);
         break;
     case Item::Types::Key:
+        animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("Key"));
+        sprite.setScale({ 3.f,3.f });
+        animator.SetTarget(&sprite);
         break;
     }
     
-    //SetType(Types::Coin);
     itemHitbox = new HitBox();
     itemHitbox->SetHitbox({ 0,0,20.f,20.f });
    
@@ -58,6 +60,7 @@ void Item::SetType(Types newTypes)
         animator.Play("Potion");
         break;
     case Item::Types::Key:
+        animator.Play("Key");
         break;
     }
 
@@ -71,9 +74,21 @@ void Item::Update(float dt)
     if ( Utils::OBB(itemHitbox->GetHitbox(), player->GetPlayerHitBox()->GetHitbox()) )
     {
         player->OnPickupItem(this);
-        SetActive(false);
-        ITEM_GEN->Erase(this->GetObjId());
+        
+        if ( !isKey )
+        {
+            SetActive(false);
+            ITEM_GEN->Erase(this->GetObjId());
+        } 
     }
+
+    if ( isKey )
+    {
+        itemHitbox->SetActive(false);
+        SetPos({ player->GetPos().x + (player->GetPlayerLastDir().x > 0.f ? -30.f : 30.f), player->GetPos().y });
+    }
+   
+
     if ( InputMgr::GetKeyDown(Keyboard::F1) )
     {
         isHitBox = !isHitBox;

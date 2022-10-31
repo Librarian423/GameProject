@@ -34,7 +34,6 @@ protected:
 	Vector2f velocity;
 	Vector2f direction;
 	Vector2f lastDirection;
-	Vector2f tempDirection;
 	Vector2f prevPosition;
 
 	VertexArrayObj* background;
@@ -47,7 +46,7 @@ protected:
 	int maxHp;
 
 	bool isHitBox;
-
+	bool isKey;
 public:
 	Player();
 	virtual~Player();
@@ -74,11 +73,14 @@ public:
 	HitBox* GetPlayerHitBox();
 	HitBox* GetAttackHitbox();
 	Vector2f GetPlayerDir() { return direction; }
+	Vector2f GetPlayerLastDir() { return lastDirection; }
 	int GetDamage() { return damage; }
 
 	void SetHp(int num);
 	void SetHpBar();
 	void OnPickupItem(Item* item);
 	void SetPlayerPos();
+	void SetIsKey() { isKey = false; }
+	bool GetIsKey() { return isKey; }
 };
 
