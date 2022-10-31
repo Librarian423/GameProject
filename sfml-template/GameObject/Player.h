@@ -2,6 +2,9 @@
 #include "SpriteObj.h"
 #include "Slime.h"
 #include "../Animation/Animator.h"
+#include <list>
+
+using namespace std;
 
 class HitBox;
 class Item;
@@ -32,8 +35,10 @@ protected:
 	Vector2f direction;
 	Vector2f lastDirection;
 	Vector2f tempDirection;
-	VertexArrayObj* background;
+	Vector2f prevPosition;
 
+	VertexArrayObj* background;
+	
 	float timer;
 	float attackTime;
 
@@ -56,6 +61,7 @@ public:
 	void Draw(RenderWindow& window);
 
 	void PlayAttack();
+
 	void Dash(float dt);
 	void OnCompleteAttack();
 
@@ -73,5 +79,6 @@ public:
 	void SetHp(int num);
 	void SetHpBar();
 	void OnPickupItem(Item* item);
+	void SetPlayerPos();
 };
 

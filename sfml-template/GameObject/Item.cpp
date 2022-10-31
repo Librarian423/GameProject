@@ -65,7 +65,7 @@ void Item::SetType(Types newTypes)
 
 void Item::Update(float dt)
 {
-    itemHitbox->SetPos({ GetPos().x,GetPos().y + 10 });
+    itemHitbox->SetPos(GetPos());
     animator.Update(dt);
     //player Á¢ÃË
     if ( Utils::OBB(itemHitbox->GetHitbox(), player->GetPlayerHitBox()->GetHitbox()) )

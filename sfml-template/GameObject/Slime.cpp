@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "HitBox.h"
 #include "ItemGenerator.h"
+#include "VertexArrayObj.h"
 #include "../Framework/ResourceMgr.h"
 #include "../Framework/InputMgr.h"
 #include <iostream>
@@ -17,6 +18,7 @@ Slime::~Slime()
 
 void Slime::Init(Player* player)
 {
+	SetPos({ 200.f,200.f });
 	this->player = player;
 	
 	hp = maxHp;
@@ -92,10 +94,16 @@ Slime::States Slime::GetState()
 	return currState;
 }
 
+void Slime::SetBackground(VertexArrayObj* bk)
+{
+	background = bk;
+}
+
 void Slime::Update(float dt)
 {
-	SpriteObj::Update(dt);
+	prevPosition = GetPos();
 
+	SpriteObj::Update(dt);
 	direction.x = (player->GetPos().x > GetPos().x) ? 1.f : -1.f;
 
 	//move
@@ -149,16 +157,27 @@ void Slime::Update(float dt)
 			}
 		}
 	}
-	slimeHitbox->SetPos({ GetPos().x,GetPos().y + 20.f });
-	
+
+	//position
+	slimeHitbox->SetPos(GetPos());
 	SetHpBar();
 	
+	//animation
+	animator.Update(dt);
+
+	for ( const auto& hb : background->GetHitBoxList() )
+	{
+		if ( Utils::OBB(hb->GetHitbox(), slimeHitbox->GetHitbox()) )
+		{
+			std::cout << "wall" << std::endl;
+			SetSlimePos();
+		}
+	}
+
 	if ( InputMgr::GetKeyDown(Keyboard::F1) )
 	{
 		isHitBox = !isHitBox;
 	}
-
-	animator.Update(dt);
 }
 
 void Slime::Draw(RenderWindow& window)
@@ -222,4 +241,15 @@ void Slime::SetHpBar()
 	{
 		healthBar.setOutlineThickness(2.f);
 	}
+}
+
+void Slime::SetSlimePos()
+{
+	SetPos(prevPosition);
+	slimeHitbox->SetPos(prevPosition);
+}
+
+HitBox* Slime::GetSlimeHitBox()
+{
+	return slimeHitbox;
 }
