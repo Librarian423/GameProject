@@ -2,13 +2,14 @@
 #include "../Framework/ResourceMgr.h"
 #include "../Framework/InputMgr.h"
 #include "../Framework/Utils.h"
+#include "VertexArrayObj.h"
 #include "Object.h"
 #include "HitBox.h"
 #include "Item.h"
 #include <iostream>
 
 Player::Player()
-	: currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.8f), isHitBox(true), damage(1), hp(10), maxHp(10)
+	: currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.5f), isHitBox(true), damage(1), hp(10), maxHp(10)
 {
 }
 
@@ -27,17 +28,18 @@ void Player::Init()
 	healthBar.setOutlineColor(Color::Black);
 	healthBar.setOutlineThickness(2.f);
 	healthBar.setSize({ 6.f * maxHp, 15.f });
-	healthBar.  setPosition({ GetPos().x, GetPos().y - 15.f });
+	healthBar.setPosition({ GetPos().x, GetPos().y - 15.f });
 	Utils::SetOrigin(healthBar, Origins::MC);
 
 	//player hitbox
 	playerHitbox = new HitBox();
 	playerHitbox->SetHitbox({ 0,0,25.f,25.f });
-	playerHitbox->SetPos({ GetPos().x + 5.f,GetPos().y + 35.f });
+	playerHitbox->SetPos(GetPos());
+	
 	//attack hitbox
 	attackHitbox = new HitBox();
 	attackHitbox->SetHitbox({ 0,0,80.f,35.f });
-	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x, GetPos().y + 40.f });
+	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x, GetPos().y });
 	attackHitbox->SetActive(false);
 
 	//animation
@@ -89,6 +91,12 @@ void Player::SetState(States newState)
 	}
 }
 
+void Player::SetBackground(VertexArrayObj* bk)
+{
+	background = bk;
+	//wallList = background->GetHitBoxList();
+}
+
 void Player::Update(float dt)
 {
 	direction.x = InputMgr::GetAxisRaw(Axis::Horizontal);
@@ -123,7 +131,8 @@ void Player::Update(float dt)
 	{
 		velocity.y = 0.f;
 	}
-	
+
+	prevPosition = GetPos();
 	Translate(velocity * dt);
 
 	//dash
@@ -135,6 +144,7 @@ void Player::Update(float dt)
 	{
 		speed = 500.f;
 	}
+
 	//attack
 	timer += dt;
 	if ( timer > attackTime && Keyboard::isKeyPressed(Keyboard::Key::Space) )
@@ -144,16 +154,26 @@ void Player::Update(float dt)
 		PlayAttack();
 		timer = 0.f;
 	}
-
+	
 	//positions
-	playerHitbox->SetPos({ GetPos().x + 5.f,GetPos().y + 35.f });
-	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x , GetPos().y + 40.f });
+	playerHitbox->SetPos(GetPos());
+	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x , GetPos().y });
 	
 	//hp bar
 	SetHpBar();
 
+	//animation
 	animator.Update(dt);
-	
+
+	for ( const auto& hb: background->GetHitBoxList() )
+	{
+		if ( Utils::OBB(hb->GetHitbox(), playerHitbox->GetHitbox()) )
+		{
+			std::cout << "wall" << std::endl;
+			SetPlayerPos();
+		}
+	}
+
 	if ( InputMgr::GetKeyDown(Keyboard::F1) )
 	{
  		isHitBox = !isHitBox;
@@ -163,6 +183,8 @@ void Player::Update(float dt)
 	{
 		lastDirection = direction;
 	}
+
+	
 }
 
 void Player::Draw(RenderWindow& window)
@@ -200,7 +222,6 @@ void Player::Dash(float dt)
 void Player::OnCompleteAttack()
 {
 	SetState(States::Idle);
-	//cout << "attack" << endl;
 	attackHitbox->SetActive(false);
 }
 
@@ -219,7 +240,6 @@ void Player::UpdateIdle(float dt)
 
 void Player::UpdateMove(float dt)
 {
-	//attackHitbox->SetActive(false);
 	if ( EqualFloat(direction.x, 0.f) && EqualFloat(direction.y, 0.f) )
 	{
 		SetState(States::Idle);
@@ -311,4 +331,11 @@ void Player::OnPickupItem(Item* item)
 		//exp += item->GetValue();
 		break;
 	}
+}
+
+void Player::SetPlayerPos()
+{
+	SetPos(prevPosition);
+	playerHitbox->SetPos(prevPosition);
+	healthBar.setPosition({ prevPosition.x, prevPosition.y - 15.f });
 }

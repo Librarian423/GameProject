@@ -28,6 +28,7 @@ public:
 
 	void SetHitbox(const FloatRect rect);
 	const RectangleShape& GetHitbox() const;
+	FloatRect& GetHitBoxRect() { return hitBoxRect; }
 
 	virtual	void SetDevMode(bool dev);
 };

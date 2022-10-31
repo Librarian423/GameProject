@@ -4,6 +4,7 @@
 
 class Player;
 class HitBox;
+class VertexArrayObj;
 
 class Slime : public SpriteObj
 {
@@ -30,6 +31,9 @@ protected:
 	Vector2f direction;
 	Vector2f lastDirection;
 	Vector2f dir;
+	Vector2f prevPosition;
+
+	VertexArrayObj* background;
 
 	int slimeState;
 	float moveTime;
@@ -52,6 +56,7 @@ public:
 
 	void SetState(States newState);
 	States GetState();
+	void SetBackground(VertexArrayObj* bk);
 
 	void Update(float dt);
 	void Draw(RenderWindow& window);
@@ -61,5 +66,8 @@ public:
 
 	void SetHp(int num);
 	void SetHpBar();
+	void SetSlimePos();
+
+	HitBox* GetSlimeHitBox();
 };
 
