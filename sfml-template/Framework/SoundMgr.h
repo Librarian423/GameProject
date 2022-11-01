@@ -28,6 +28,8 @@ public:
 
 	void Update();
 
+	void SetVolume(int num) { volume = num; }
+
 };
 
 #define SOUND_MGR (SoundMgr::GetInstance())

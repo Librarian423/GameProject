@@ -5,6 +5,7 @@
 #include "VertexArrayObj.h"
 #include "../Framework/ResourceMgr.h"
 #include "../Framework/InputMgr.h"
+#include "../Framework/SoundMgr.h"
 #include <iostream>
 
 Boss::Boss()
@@ -106,10 +107,12 @@ void Boss::SetState(States newState)
 		break;
 	case Boss::States::Dead:
 		animator.Play((direction.x < 0.f) ? "BossDead" : "BossDeadLeft");
+		SOUND_MGR->Play("sound/boss_die.wav");
 		bossHitbox->SetActive(false);
 		break;
 	case Boss::States::Attack:
 		animator.Play((direction.x < 0.f) ? "BossAttack" : "BossAttackLeft");
+		SOUND_MGR->Play("sound/boss_bite.wav");
 		attackHitbox->SetActive(true);
 		break;
 	}

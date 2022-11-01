@@ -49,8 +49,7 @@ void SceneDev2::Init()
 	player->Init();
 	player->SetPos({ 1500,1300 });
 	player->SetBackground(background);
-	objList.push_back(player);
-
+	
 	itemBox->SetPlayer(player);
 
 	CreateSlime(5);
@@ -61,10 +60,12 @@ void SceneDev2::Init()
 	boss->SetPos({ 2020.f,600.f });
 	boss->SetBackground(background);
 	boss->SetState(Boss::States::Idle);
+
 	objList.push_back(boss);
-
+	objList.push_back(player);
+	SOUND_MGR->Play("sound/bgm.wav",true);
 	ITEM_GEN->Init();
-
+	
 	for ( auto obj : objList )
 	{
 		obj->Init();
@@ -78,7 +79,7 @@ void SceneDev2::Release()
 
 void SceneDev2::Enter()
 {
-
+	
 	ITEM_GEN->Release();
 	
 	Vector2i size = FRAMEWORK->GetWindowSize();
@@ -127,17 +128,21 @@ void SceneDev2::Update(float dt)
 		
 	}
 
+	//dev modes
 	if ( InputMgr::GetKeyDown(Keyboard::Num1) )
 	{
 		itemBox->SetBoxFalse(true);
 		itemBox->SetState(ItemBox::States::Idle);
-		ITEM_GEN->Generate({ 300.f,300.f },true);
+		ITEM_GEN->Generate({ 1700.f,700.f },true);
 	}
-
 	if ( InputMgr::GetKeyDown(Keyboard::Num2) )
 	{
 		itemBox->SetActive(false);
 		ITEM_GEN->EraseKey();
+	}
+	if (InputMgr::GetKeyDown(Keyboard::Num3))
+	{
+		player->Init();
 	}
 	Scene::Update(dt);
 }
