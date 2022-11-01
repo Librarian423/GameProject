@@ -163,7 +163,7 @@ void Boss::Update(float dt)
 			if ( Utils::OBB(attackHitbox->GetHitbox(), player->GetPlayerHitBox()->GetHitbox()) )
 			{
 				cout << "boss attack player" << endl;
-				player->SetHp(damage);
+				player->SetHp(damage * 2);
 				getAttackTime = 0.f;
 			}
 		}
@@ -172,7 +172,6 @@ void Boss::Update(float dt)
 	//position
 	bossHitbox->SetPos(GetPos());
 	attackHitbox->SetPos({ GetPos().x, GetPos().y - 40.f });
-	//attackHitbox->SetPos(GetPos());
 
 	//hp bar
 	SetHpBar();
@@ -294,14 +293,8 @@ void Boss::AttackPattern(float dt)
 		Translate(dir * this->speed * dt);
 	}
 	//attack motion
-	/*if ( currState == States::Move && (Utils::Distance(player->GetPos(), GetPos()) < 350.f) && attack )
-	{
-		Translate(dir * 200.f * dt);
-	}*/
 	if ( currState == States::Move && Utils::Distance(player->GetPos(), GetPos()) < 85.f )
 	{
-		//attack = false;
-		//Translate(dir * 50.f * dt);
 		SetState(States::Attack);
 	}
 

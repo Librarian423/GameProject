@@ -21,7 +21,7 @@
 using namespace std;
 
 SceneDev2::SceneDev2()
-	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f), slimeTimer(0.8f), slimeState(0), boxCount(1)
+	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f), boxCount(1)
 {
 }
 
@@ -47,19 +47,13 @@ void SceneDev2::Init()
 	player = new Player();
 	player->SetName("Player");
 	player->Init();
-	player->SetPos({ 200,300 });
+	player->SetPos({ 130,500 });
 	player->SetBackground(background);
 	objList.push_back(player);
 
 	itemBox->SetPlayer(player);
 
-	slime = new Slime();
-	slime->SetName("Slime");
-	slime->Init(player);
-	slime->SetPos({ 200.f,200.f });
-	slime->SetBackground(background);
-	//slime->SetActive(false);
-	objList.push_back(slime);
+	CreateSlime(5);
 
 	boss = new Boss();
 	boss->SetName("Boss");
@@ -67,7 +61,6 @@ void SceneDev2::Init()
 	boss->SetPos({ 1020.f,100.f });
 	boss->SetBackground(background);
 	boss->SetState(Boss::States::Idle);
-	//boss->SetActive(false);
 	objList.push_back(boss);
 
 	ITEM_GEN->Init();
@@ -105,32 +98,15 @@ void SceneDev2::Exit()
 
 void SceneDev2::Update(float dt)
 {
-	//슬라임 패턴 3.f 마다 상태 변경
-	slimeTimer -= dt;
-	if ( slime->GetState() != Slime::States::Dead )
+	for ( auto it = objList.begin(); it != objList.end(); )
 	{
-		if ( slimeTimer < 0.f )
+		if ( !(*it)->GetActive() && !(*it)->GetName().compare("Slime") )
 		{
-			cout << "timer" << endl;
-			if ( slimeState % 2 == 0 )
-			{
-				slime->SetState(Slime::States::Idle);
-				slimeState = 1;
-			}
-			else
-			{
-				slime->SetState(Slime::States::Move);
-				slimeState = 0;
-			}
-			slimeTimer = 5.f;
+			delete (*it);
+			it = objList.erase(it);
 		}
-	}
-	//슬라임 리젠
-	else if ( slimeTimer < 0.f && slime->GetState() == Slime::States::Dead )
-	{
-		slime->Init(player);
-		slime->SetState(Slime::States::Idle);
-		slime->SetPos({ 200.f,200.f });
+		else
+			it++;
 	}
 	
 	worldView.setCenter(player->GetPos());
@@ -274,4 +250,18 @@ void SceneDev2::ReadMap()
 	}
 	file.close();
 	cout << "file close" << endl;
+}
+
+void SceneDev2::CreateSlime(int num)
+{
+	for ( int i = 0; i < num; i++ )
+	{
+		Slime* slime = new Slime();
+		slime->SetName("Slime");
+		slime->Init(player);
+		slime->SetPos({ Utils::RandomRange(1000.f,1100.f),Utils::RandomRange(200.f,500.f) });
+		slime->SetBackground(background);
+		slime->SetState(Slime::States::Idle);
+		objList.push_back(slime);
+	}
 }

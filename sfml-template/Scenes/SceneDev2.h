@@ -15,14 +15,13 @@ class SceneDev2 :public Scene
 	
 protected:
 	Player* player;
-	Slime* slime;
+	//Slime* slime;
 	Boss* boss;
 	ItemBox* itemBox;
+	//list<Slime*>slimeList;
 	//
-	int slimeState;
 	float timer;
 	float attackTimer;
-	float slimeTimer;
 
 	int boxCount;
 
@@ -47,8 +46,11 @@ public:
 	virtual void Update(float dt) override;
 	virtual void Draw(RenderWindow& window) override;
 
+	//map
 	void CreateBackground(int width, int height, float quadWidth, float quadHeight);
 	void SetTileNum();
 	void ReadMap();
+
+	void CreateSlime(int num);
 };
 

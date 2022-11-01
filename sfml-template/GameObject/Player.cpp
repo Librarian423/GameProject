@@ -137,7 +137,6 @@ void Player::Update(float dt)
 		UpdateMove(dt);
 		break;
 	case Player::States::Attack:
-		UpdateAttack(dt);
 		break;
 	}
 
@@ -248,7 +247,7 @@ void Player::PlayAttack()
 
 void Player::Dash(float dt)
 {
-	Translate(direction * dt);
+	Translate(direction * speed * dt);
 }
 
 void Player::OnCompleteAttack()
@@ -292,15 +291,6 @@ void Player::UpdateMove(float dt)
 		lastDirection.x = direction.x;
 	}
 
-}
-
-void Player::UpdateAttack(float dt)
-{
-	if (EqualFloat(direction.x, 0.f) )
-	{
-		SetState(States::Idle);
-		return;
-	}
 }
 
 bool Player::EqualFloat(float a, float b)
