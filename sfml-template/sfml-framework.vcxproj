@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="Animation\AnimationClip.cpp" />
     <ClCompile Include="Animation\Animator.cpp" />
+    <ClCompile Include="GameObject\Boss.cpp" />
     <ClCompile Include="GameObject\CreateMap.cpp" />
     <ClCompile Include="GameObject\VertexArrayObj.cpp" />
     <ClCompile Include="GameObject\Item.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="3rd\Singleton.h" />
     <ClInclude Include="Animation\AnimationClip.h" />
     <ClInclude Include="Animation\Animator.h" />
+    <ClInclude Include="GameObject\Boss.h" />
     <ClInclude Include="GameObject\CreateMap.h" />
     <ClInclude Include="GameObject\VertexArrayObj.h" />
     <ClInclude Include="GameObject\Item.h" />

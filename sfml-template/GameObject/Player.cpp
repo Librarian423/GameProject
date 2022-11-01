@@ -9,7 +9,7 @@
 #include <iostream>
 
 Player::Player()
-	: currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.5f), isHitBox(true), damage(1), hp(10), maxHp(10), isKey(false)
+	: currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.5f), isHitBox(true), damage(1), hp(10), maxHp(10), isKey(false), isAlive(true)
 {
 }
 
@@ -19,6 +19,8 @@ Player::~Player()
 
 void Player::Init()
 {
+	isAlive = true;
+
 	sprite.setScale({ 2.f,2.f });
 	
 	animator.SetTarget(&sprite);
@@ -35,6 +37,7 @@ void Player::Init()
 	playerHitbox = new HitBox();
 	playerHitbox->SetHitbox({ 0,0,25.f,25.f });
 	playerHitbox->SetPos(GetPos());
+	playerHitbox->SetActive(true);
 	
 	//attack hitbox
 	attackHitbox = new HitBox();
@@ -46,11 +49,14 @@ void Player::Init()
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerIdle"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerMove"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerAttack"));
+	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerDead"));
 	
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerIdleLeft"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerMoveLeft"));
 	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerAttackLeft"));
+	animator.AddClip(*ResourceMgr::GetInstance()->GetAnimationClip("PlayerDeadLeft"));
 
+	//Attack
 	{
 		AnimationEvent ev;
 		ev.clipId = "PlayerAttack";
@@ -63,6 +69,21 @@ void Player::Init()
 		ev.clipId = "PlayerAttackLeft";
 		ev.frame = 3;
 		ev.onEvent = bind(&Player::OnCompleteAttack, this);
+		animator.AddEvent(ev);
+	}
+	//Dead
+	{
+		AnimationEvent ev;
+		ev.clipId = "PlayerDead";
+		ev.frame = 2;
+		ev.onEvent = bind(&Player::OnCompleteDead, this);
+		animator.AddEvent(ev);
+	}
+	{
+		AnimationEvent ev;
+		ev.clipId = "PlayerDeadLeft";
+		ev.frame = 2;
+		ev.onEvent = bind(&Player::OnCompleteDead, this);
 		animator.AddEvent(ev);
 	}
 	
@@ -88,20 +109,25 @@ void Player::SetState(States newState)
 	case Player::States::Attack:
 		animator.Play((lastDirection.x > 0.f) ? "PlayerAttack" : "PlayerAttackLeft");
 		break;
+	case Player::States::Dead:
+		animator.Play((lastDirection.x > 0.f) ? "PlayerDead" : "PlayerDeadLeft");
+		break;
 	}
 }
 
 void Player::SetBackground(VertexArrayObj* bk)
 {
 	background = bk;
-	//wallList = background->GetHitBoxList();
 }
 
 void Player::Update(float dt)
 {
-	direction.x = InputMgr::GetAxisRaw(Axis::Horizontal);
-	direction.y = InputMgr::GetAxisRaw(Axis::Vertical);
-
+	if ( isAlive )
+	{
+		direction.x = InputMgr::GetAxisRaw(Axis::Horizontal);
+		direction.y = InputMgr::GetAxisRaw(Axis::Vertical);
+	}
+	
 	switch (currState)
 	{
 	case Player::States::Idle:
@@ -113,6 +139,12 @@ void Player::Update(float dt)
 	case Player::States::Attack:
 		UpdateAttack(dt);
 		break;
+	}
+
+	//Á×À½
+	if ( hp <= 0 )
+	{
+		SetState(States::Dead);
 	}
 
 	//°¡¼Ó
@@ -147,7 +179,7 @@ void Player::Update(float dt)
 
 	//attack
 	timer += dt;
-	if ( timer > attackTime && Keyboard::isKeyPressed(Keyboard::Key::Space) )
+	if ( isAlive && timer > attackTime && Keyboard::isKeyPressed(Keyboard::Key::Space) )
 	{
 		cout << "attack" << endl;
 		attackHitbox->SetActive(true);
@@ -222,6 +254,13 @@ void Player::Dash(float dt)
 void Player::OnCompleteAttack()
 {
 	SetState(States::Idle);
+	attackHitbox->SetActive(false);
+}
+
+void Player::OnCompleteDead()
+{
+	isAlive = false;
+	playerHitbox->SetActive(false);
 	attackHitbox->SetActive(false);
 }
 
@@ -322,15 +361,17 @@ void Player::OnPickupItem(Item* item)
 	switch ( item->GetType() )
 	{
 	case Item::Types::Potion:
-
+		cout << "potion" << endl;
 		hp += item->GetValue();
 		if ( hp >= maxHp )
 			hp = maxHp;
 		break;
 	case Item::Types::Coin:
+		cout << "coin" << endl;
 		//exp += item->GetValue();
 		break;
 	case Item::Types::Key:
+		cout << "key" << endl;
 		item->SetIsKey();
 		isKey = true;
 		break;

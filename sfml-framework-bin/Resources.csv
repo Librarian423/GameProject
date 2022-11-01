@@ -6,6 +6,8 @@ animations/PlayerMove.csv,3
 animations/PlayerMoveLeft.csv,3
 animations/PlayerAttack.csv,3
 animations/PlayerAttackLeft.csv,3
+animations/PlayerDead.csv,3
+animations/PlayerDeadLeft.csv,3
 graphics/slime.png,0
 animations/slime/SlimeIdle.csv,3
 animations/slime/SlimeIdleLeft.csv,3
@@ -23,3 +25,13 @@ animations/item/key/Key.csv,3
 graphics/chest_01.png,0
 animations/item/itembox/ItemBoxIdle.csv,3
 animations/item/itembox/ItemBoxOpen.csv,3
+graphics/enemy.png,0
+graphics/enemy_dead.png,0
+animations/boss/BossIdle.csv,3
+animations/boss/BossIdleLeft.csv,3
+animations/boss/BossMove.csv,3
+animations/boss/BossMoveLeft.csv,3
+animations/boss/BossAttack.csv,3
+animations/boss/BossAttackLeft.csv,3
+animations/boss/BossDead.csv,3
+animations/boss/BossDeadLeft.csv,3

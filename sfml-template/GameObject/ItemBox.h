@@ -41,5 +41,6 @@ public:
 	void Draw(RenderWindow& window);
 
 	void OnCompleteOpen();
+	void SetBoxFalse(bool isTrue = false);
 };
 

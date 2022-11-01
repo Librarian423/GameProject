@@ -6,7 +6,7 @@
 
 class Player;
 class Slime;
-//class Item;
+class Boss;
 class ItemBox;
 class VertexArrayObj;
 
@@ -16,12 +16,15 @@ class SceneDev2 :public Scene
 protected:
 	Player* player;
 	Slime* slime;
+	Boss* boss;
 	ItemBox* itemBox;
 	//
 	int slimeState;
 	float timer;
 	float attackTimer;
 	float slimeTimer;
+
+	int boxCount;
 
 	//map
 	VertexArrayObj* background;

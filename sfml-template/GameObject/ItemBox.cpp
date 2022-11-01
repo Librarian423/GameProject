@@ -19,7 +19,7 @@ void ItemBox::Init()
 {
 	this->player = player;
 
-	SetPos({ 1020.f,100.f });
+	SetPos({ 1020.f,400.f });
 	
 	//animation
 	animator.SetTarget(&sprite);
@@ -39,7 +39,7 @@ void ItemBox::Init()
 	itemboxHitbox->SetPos({ GetPos().x,GetPos().y - 40 });
 	itemboxHitbox->SetActive(false);
 
-	SpriteObj::Init();
+	//SpriteObj::Init();
 }
 
 void ItemBox::SetPlayer(Player* player)
@@ -79,14 +79,18 @@ void ItemBox::Update(float dt)
 	{
 		SetActive(false);
 	}
-	if ( player->GetIsKey() && Utils::OBB(itemboxHitbox->GetHitbox(), player->GetPlayerHitBox()->GetHitbox()) )
+	if ( GetActive() )
 	{
-		cout << "box" << endl;
-		player->SetIsKey();
-		ITEM_GEN->EraseKey();
-		SetState(States::Open);
-		ITEM_GEN->Generate(GetPos());
+		if ( player->GetIsKey() && Utils::OBB(itemboxHitbox->GetHitbox(), player->GetPlayerHitBox()->GetHitbox()) )
+		{
+			cout << "box" << endl;
+			player->SetIsKey();
+			ITEM_GEN->EraseKey();
+			SetState(States::Open);
+			ITEM_GEN->Generate(GetPos());
+		}
 	}
+	
 	if ( InputMgr::GetKeyDown(Keyboard::F1) )
 	{
 		isHitBox = !isHitBox;
@@ -109,4 +113,18 @@ void ItemBox::Draw(RenderWindow& window)
 void ItemBox::OnCompleteOpen()
 {
 	isBoxOpen = true;	
+}
+
+void ItemBox::SetBoxFalse(bool isTrue)
+{
+	if ( isTrue )
+	{
+		SetActive(true);
+		itemboxHitbox->SetActive(false);
+	}
+	else
+	{
+		SetActive(false);
+		itemboxHitbox->SetActive(false);
+	}
 }

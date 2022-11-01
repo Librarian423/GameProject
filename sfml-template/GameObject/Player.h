@@ -19,6 +19,7 @@ public:
 		Idle,
 		Move,
 		Attack,
+		Dead,
 	};
 protected:
 	Animator animator;
@@ -47,6 +48,7 @@ protected:
 
 	bool isHitBox;
 	bool isKey;
+	bool isAlive;
 public:
 	Player();
 	virtual~Player();
@@ -63,6 +65,7 @@ public:
 
 	void Dash(float dt);
 	void OnCompleteAttack();
+	void OnCompleteDead();
 
 	void UpdateIdle(float dt);
 	void UpdateMove(float dt);
