@@ -8,7 +8,7 @@
 #include <iostream>
 
 Slime::Slime()
-	: currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.f), hitTime(0.f), getAttackTime(1.f), attack(true), damage(1), hp(5), maxHp(5), barScaleX(60.f), isHitBox(true)
+	: currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.8f), hitTime(0.f), getAttackTime(1.f), attack(true), damage(1), hp(5), maxHp(5), barScaleX(60.f), isHitBox(false)
 {
 }
 
@@ -104,6 +104,23 @@ void Slime::Update(float dt)
 
 	SpriteObj::Update(dt);
 	direction.x = (player->GetPos().x > GetPos().x) ? 1.f : -1.f;
+
+	moveTime -= dt;
+	if ( moveTime < 0.f )
+	{
+		cout << "timer" << endl;
+		if ( slimeState % 2 == 0 )
+		{
+			SetState(Slime::States::Idle);
+			slimeState = 1;
+		}
+		else
+		{
+			SetState(Slime::States::Move);
+			slimeState = 0;
+		}
+		moveTime = 5.f;
+	}
 
 	//move
 	if ( currState == States::Move )

@@ -69,8 +69,7 @@ public:
 
 	void UpdateIdle(float dt);
 	void UpdateMove(float dt);
-	void UpdateAttack(float dt);
-
+	
 	bool EqualFloat(float a, float b);
 
 	HitBox* GetPlayerHitBox();
@@ -78,6 +77,7 @@ public:
 	Vector2f GetPlayerDir() { return direction; }
 	Vector2f GetPlayerLastDir() { return lastDirection; }
 	int GetDamage() { return damage; }
+	States GetCurrState() { return currState; }
 
 	void SetHp(int num);
 	void SetHpBar();

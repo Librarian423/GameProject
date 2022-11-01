@@ -21,7 +21,7 @@
 using namespace std;
 
 SceneDev2::SceneDev2()
-	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f), slimeTimer(0.8f), slimeState(0), boxCount(1)
+	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f), boxCount(1)
 {
 }
 
@@ -34,7 +34,7 @@ void SceneDev2::Init()
 	Release();
 	ReadMap();
 	SetTileNum();
-	CreateBackground(20, 40, 32.f, 32.f);
+	CreateBackground(50, 100, 32.f, 32.f);
 	background->Init();
 
 	itemBox = new ItemBox();
@@ -47,27 +47,20 @@ void SceneDev2::Init()
 	player = new Player();
 	player->SetName("Player");
 	player->Init();
-	player->SetPos({ 200,300 });
+	player->SetPos({ 1500,1300 });
 	player->SetBackground(background);
 	objList.push_back(player);
 
 	itemBox->SetPlayer(player);
 
-	slime = new Slime();
-	slime->SetName("Slime");
-	slime->Init(player);
-	slime->SetPos({ 200.f,200.f });
-	slime->SetBackground(background);
-	//slime->SetActive(false);
-	objList.push_back(slime);
+	CreateSlime(5);
 
 	boss = new Boss();
 	boss->SetName("Boss");
 	boss->Init(player);
-	boss->SetPos({ 1020.f,100.f });
+	boss->SetPos({ 2020.f,600.f });
 	boss->SetBackground(background);
 	boss->SetState(Boss::States::Idle);
-	//boss->SetActive(false);
 	objList.push_back(boss);
 
 	ITEM_GEN->Init();
@@ -85,8 +78,9 @@ void SceneDev2::Release()
 
 void SceneDev2::Enter()
 {
-	ITEM_GEN->Release();
 
+	ITEM_GEN->Release();
+	
 	Vector2i size = FRAMEWORK->GetWindowSize();
 
 	worldView.setSize(size.x, size.y);
@@ -96,6 +90,7 @@ void SceneDev2::Enter()
 	uiView.setCenter(size.x * 0.5f, size.y * 0.5f);
 
 	FRAMEWORK->GetWindow().setMouseCursorGrabbed(false);
+	
 }
 
 void SceneDev2::Exit()
@@ -105,32 +100,15 @@ void SceneDev2::Exit()
 
 void SceneDev2::Update(float dt)
 {
-	//슬라임 패턴 3.f 마다 상태 변경
-	slimeTimer -= dt;
-	if ( slime->GetState() != Slime::States::Dead )
+	for ( auto it = objList.begin(); it != objList.end(); )
 	{
-		if ( slimeTimer < 0.f )
+		if ( !(*it)->GetActive() && !(*it)->GetName().compare("Slime") )
 		{
-			cout << "timer" << endl;
-			if ( slimeState % 2 == 0 )
-			{
-				slime->SetState(Slime::States::Idle);
-				slimeState = 1;
-			}
-			else
-			{
-				slime->SetState(Slime::States::Move);
-				slimeState = 0;
-			}
-			slimeTimer = 5.f;
+			delete (*it);
+			it = objList.erase(it);
 		}
-	}
-	//슬라임 리젠
-	else if ( slimeTimer < 0.f && slime->GetState() == Slime::States::Dead )
-	{
-		slime->Init(player);
-		slime->SetState(Slime::States::Idle);
-		slime->SetPos({ 200.f,200.f });
+		else
+			it++;
 	}
 	
 	worldView.setCenter(player->GetPos());
@@ -142,6 +120,11 @@ void SceneDev2::Update(float dt)
 		itemBox->SetBoxFalse(true);
 		itemBox->SetState(ItemBox::States::Idle);
 		boxCount--;
+	}
+	//Game End
+	if ( player->GetCurrState() == Player::States::Dead )
+	{
+		
 	}
 
 	if ( InputMgr::GetKeyDown(Keyboard::Num1) )
@@ -241,7 +224,7 @@ void SceneDev2::SetTileNum()
 
 void SceneDev2::ReadMap()
 {
-	ifstream file("tilemap/map.txt");
+	ifstream file("tilemap/map2.txt");
 	if ( !file )
 	{
 		cout << "error";
@@ -274,4 +257,18 @@ void SceneDev2::ReadMap()
 	}
 	file.close();
 	cout << "file close" << endl;
+}
+
+void SceneDev2::CreateSlime(int num)
+{
+	for ( int i = 0; i < num; i++ )
+	{
+		Slime* slime = new Slime();
+		slime->SetName("Slime");
+		slime->Init(player);
+		slime->SetPos({ Utils::RandomRange(1400.f,1600.f),Utils::RandomRange(650.f,700.f) });
+		slime->SetBackground(background);
+		slime->SetState(Slime::States::Idle);
+		objList.push_back(slime);
+	}
 }

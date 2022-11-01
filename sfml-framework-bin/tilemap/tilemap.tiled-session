@@ -8,6 +8,9 @@
         "."
     ],
     "fileStates": {
+        "#tile": {
+            "scaleInDock": 1
+        },
         "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749032b5d7dfe/shader_example.tmx": {
             "scale": 0.912890625,
             "selectedLayer": 0,
@@ -187,20 +190,32 @@
             "scaleInEditor": 1
         },
         "untitled.tmx": {
-            "scale": 0.8913671874999999,
+            "scale": 0.5051116071428572,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 654.612384416495,
-                "y": 320.8554274946317
+                "x": 1077.9795837200054,
+                "y": 799.8232356710415
             }
         },
         "untitled.tmx#tile": {
             "scaleInDock": 1
+        },
+        "untitled2.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1313.6363636363635,
+                "y": 460.60606060606074
+            }
+        },
+        "untitled2.tmx#tile": {
+            "scaleInDock": 0.75
         }
     },
     "last.imagePath": "D:/PersonalProject/sfml-framework-bin/graphics",
+    "map.height": 50,
     "map.lastUsedFormat": "tmx",
-    "map.width": 40,
+    "map.width": 70,
     "openFiles": [
         "grass1.tsx",
         "grass2.tsx",
@@ -208,6 +223,8 @@
         "fence.tsx",
         "map1.tmx",
         "map2.tmx",
+        "untitled.tmx",
+        "untitled2.tmx",
         "untitled.tmx"
     ],
     "project": "tilemap.tiled-project",
@@ -219,11 +236,11 @@
         "map1.tmx",
         "map2.tmx",
         "untitled.tmx",
+        "untitled2.tmx",
         "C:/Users/ysh42/Desktop/maps/b2d.tmx",
         "C:/Users/ysh42/Desktop/maps/shader_example.tmx",
         "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357705a2bf7291b/b2d.tmx",
-        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749342b5e3d76/desert.tmx",
-        "C:/Users/ysh42/AppData/Local/Temp/BNZ.6357494f2b5ea596/addRemove.tmx"
+        "C:/Users/ysh42/AppData/Local/Temp/BNZ.635749342b5e3d76/desert.tmx"
     ],
     "tileset.embedInMap": true,
     "tileset.lastUsedFormat": "tsx"

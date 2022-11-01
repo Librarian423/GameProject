@@ -15,7 +15,7 @@ VertexArrayObj::~VertexArrayObj()
 
 void VertexArrayObj::Init()
 {
-	isHitBox = true;
+	//isHitBox = true;
 }
 
 VertexArray& VertexArrayObj::GetVA()
