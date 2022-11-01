@@ -2,6 +2,7 @@
 #include "../Framework/ResourceMgr.h"
 #include "../Framework/InputMgr.h"
 #include "../Framework/Utils.h"
+#include "../Framework/SoundMgr.h"
 #include "VertexArrayObj.h"
 #include "Object.h"
 #include "HitBox.h"
@@ -20,7 +21,7 @@ Player::~Player()
 void Player::Init()
 {
 	isAlive = true;
-
+	hp = maxHp;
 	sprite.setScale({ 2.f,2.f });
 	
 	animator.SetTarget(&sprite);
@@ -231,6 +232,7 @@ void Player::Draw(RenderWindow& window)
 
 void Player::PlayAttack()
 {
+	SOUND_MGR->Play("sound/sword.wav");
 	animator.Play((lastDirection.x > 0.f) ? "PlayerAttack" : "PlayerAttackLeft");
 	switch ( currState )
 	{

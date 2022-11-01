@@ -5,6 +5,7 @@
 #include "VertexArrayObj.h"
 #include "../Framework/ResourceMgr.h"
 #include "../Framework/InputMgr.h"
+#include "../Framework/SoundMgr.h"
 #include <iostream>
 
 Slime::Slime()
@@ -82,6 +83,7 @@ void Slime::SetState(States newState)
 		break;
 	case Slime::States::Dead:
 		animator.Play((direction.x > 0.f) ? "SlimeDead" : "SlimeDeadLeft");
+		SOUND_MGR->Play("sound/slime_die.wav");
 		slimeHitbox->SetActive(false);
 		break;
 	}
@@ -213,6 +215,7 @@ void Slime::Draw(RenderWindow& window)
 
 void Slime::OnCompleteDead()
 {
+	
 	SetActive(false);
 	slimeHitbox->SetActive(false);
 }
