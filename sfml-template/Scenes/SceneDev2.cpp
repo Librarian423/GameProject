@@ -34,7 +34,7 @@ void SceneDev2::Init()
 	Release();
 	ReadMap();
 	SetTileNum();
-	CreateBackground(20, 40, 32.f, 32.f);
+	CreateBackground(50, 100, 32.f, 32.f);
 	background->Init();
 
 	itemBox = new ItemBox();
@@ -47,7 +47,7 @@ void SceneDev2::Init()
 	player = new Player();
 	player->SetName("Player");
 	player->Init();
-	player->SetPos({ 130,500 });
+	player->SetPos({ 1500,1300 });
 	player->SetBackground(background);
 	objList.push_back(player);
 
@@ -58,7 +58,7 @@ void SceneDev2::Init()
 	boss = new Boss();
 	boss->SetName("Boss");
 	boss->Init(player);
-	boss->SetPos({ 1020.f,100.f });
+	boss->SetPos({ 2020.f,600.f });
 	boss->SetBackground(background);
 	boss->SetState(Boss::States::Idle);
 	objList.push_back(boss);
@@ -224,7 +224,7 @@ void SceneDev2::SetTileNum()
 
 void SceneDev2::ReadMap()
 {
-	ifstream file("tilemap/map.txt");
+	ifstream file("tilemap/map2.txt");
 	if ( !file )
 	{
 		cout << "error";
@@ -266,7 +266,7 @@ void SceneDev2::CreateSlime(int num)
 		Slime* slime = new Slime();
 		slime->SetName("Slime");
 		slime->Init(player);
-		slime->SetPos({ Utils::RandomRange(1000.f,1100.f),Utils::RandomRange(200.f,500.f) });
+		slime->SetPos({ Utils::RandomRange(1400.f,1600.f),Utils::RandomRange(650.f,700.f) });
 		slime->SetBackground(background);
 		slime->SetState(Slime::States::Idle);
 		objList.push_back(slime);

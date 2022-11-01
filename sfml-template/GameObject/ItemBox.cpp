@@ -19,7 +19,7 @@ void ItemBox::Init()
 {
 	this->player = player;
 
-	SetPos({ 1020.f,400.f });
+	SetPos({ 2340.f,600.f });
 	
 	//animation
 	animator.SetTarget(&sprite);
