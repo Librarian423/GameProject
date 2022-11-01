@@ -21,7 +21,7 @@
 using namespace std;
 
 SceneDev2::SceneDev2()
-	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f), slimeTimer(0.8f), slimeState(0)
+	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f), slimeTimer(0.8f), slimeState(0), boxCount(1)
 {
 }
 
@@ -135,6 +135,14 @@ void SceneDev2::Update(float dt)
 	
 	worldView.setCenter(player->GetPos());
 	worldView.setCenter(player->GetPos());
+	
+	//Gen itemBox
+	if ( boxCount > 0 && boss->GetState() == Boss::States::Dead )
+	{
+		itemBox->SetBoxFalse(true);
+		itemBox->SetState(ItemBox::States::Idle);
+		boxCount--;
+	}
 
 	if ( InputMgr::GetKeyDown(Keyboard::Num1) )
 	{
@@ -142,6 +150,7 @@ void SceneDev2::Update(float dt)
 		itemBox->SetState(ItemBox::States::Idle);
 		ITEM_GEN->Generate({ 300.f,300.f },true);
 	}
+
 	if ( InputMgr::GetKeyDown(Keyboard::Num2) )
 	{
 		itemBox->SetActive(false);

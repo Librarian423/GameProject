@@ -24,6 +24,8 @@ protected:
 	float attackTimer;
 	float slimeTimer;
 
+	int boxCount;
+
 	//map
 	VertexArrayObj* background;
 	map<string, Vector2i> tileType;

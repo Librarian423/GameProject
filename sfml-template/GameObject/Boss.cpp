@@ -8,7 +8,7 @@
 #include <iostream>
 
 Boss::Boss()
-    : currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), bossState(0), moveTime(0.f), hitTime(0.f), getAttackTime(1.f), attack(true), damage(1), hp(5), maxHp(5), barScaleX(60.f), isHitBox(true)
+    : currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), bossState(0), moveTime(0.f), hitTime(0.f), getAttackTime(1.f), attack(true), damage(1), hp(15), maxHp(15), barScaleX(60.f), isHitBox(true)
 {
 }
 
@@ -43,8 +43,8 @@ void Boss::Init(Player* player)
 
 	//attack hitbox
 	attackHitbox = new HitBox();
-	attackHitbox->SetHitbox({ 0,0,80.f,80.f });
-	attackHitbox->SetPos({ ((lastDirection.x > 0.f) ? 25 : -25) + GetPos().x, GetPos().y });
+	attackHitbox->SetHitbox({ 0,0,100.f,100.f });
+	attackHitbox->SetPos({ GetPos().x, GetPos().y - 40.f });
 	attackHitbox->SetActive(false);
 
 	//animation
@@ -60,14 +60,14 @@ void Boss::Init(Player* player)
 	{
 		AnimationEvent ev;
 		ev.clipId = "BossAttack";
-		ev.frame = 5;
+		ev.frame = 4;
 		ev.onEvent = bind(&Boss::OnCompleteAttack, this);
 		animator.AddEvent(ev);
 	}
 	{
 		AnimationEvent ev;
 		ev.clipId = "BossAttackLeft";
-		ev.frame = 5;
+		ev.frame = 4;
 		ev.onEvent = bind(&Boss::OnCompleteAttack, this);
 		animator.AddEvent(ev);
 	}
@@ -97,19 +97,20 @@ void Boss::SetState(States newState)
 	switch ( currState )
 	{
 	case Boss::States::Idle:
-		animator.Play((direction.x > 0.f) ? "BossIdle" : "BossIdleLeft");
-		attack = true;
-
+		attackHitbox->SetActive(false);
+		animator.PlayQueue((direction.x < 0.f) ? "BossIdle" : "BossIdleLeft");
 		break;
 	case Boss::States::Move:
-		animator.Play((direction.x > 0.f) ? "BossMove" : "BossMoveLeft");
+		animator.Play((direction.x < 0.f) ? "BossMove" : "BossMoveLeft");
+		attackHitbox->SetActive(false);
 		break;
 	case Boss::States::Dead:
-		animator.Play((direction.x > 0.f) ? "BossDead" : "BossDeadLeft");
+		animator.Play((direction.x < 0.f) ? "BossDead" : "BossDeadLeft");
 		bossHitbox->SetActive(false);
 		break;
 	case Boss::States::Attack:
-		animator.Play((direction.x > 0.f) ? "BossAttack" : "BossAttackLeft");
+		animator.Play((direction.x < 0.f) ? "BossAttack" : "BossAttackLeft");
+		attackHitbox->SetActive(true);
 		break;
 	}
 }
@@ -131,18 +132,15 @@ void Boss::Update(float dt)
 	SpriteObj::Update(dt);
 	direction.x = (player->GetPos().x > GetPos().x) ? 1.f : -1.f;
 
-	
-
 	//boss attack
 	if ( currState != States::Dead )
 	{
 		AttackPattern(dt);
 	}
-	
-	
+
 	//player attack hitbox hits boss
 	getAttackTime += dt;
-	if ( getAttackTime > 0.2f )
+	if ( getAttackTime > 0.5f )
 	{
 		if ( bossHitbox->GetActive() && player->GetAttackHitbox()->GetActive() )
 		{
@@ -153,8 +151,19 @@ void Boss::Update(float dt)
 				if ( hp <= 0 )
 				{
 					SetState(States::Dead);
+					bossHitbox->SetActive(false);
+					attackHitbox->SetActive(false);
 					ITEM_GEN->Generate(GetPos(), true);
 				}
+				getAttackTime = 0.f;
+			}
+		}
+		if ( attackHitbox->GetActive() && player->GetPlayerHitBox()->GetActive() )
+		{
+			if ( Utils::OBB(attackHitbox->GetHitbox(), player->GetPlayerHitBox()->GetHitbox()) )
+			{
+				cout << "boss attack player" << endl;
+				player->SetHp(damage);
 				getAttackTime = 0.f;
 			}
 		}
@@ -162,6 +171,10 @@ void Boss::Update(float dt)
 
 	//position
 	bossHitbox->SetPos(GetPos());
+	attackHitbox->SetPos({ GetPos().x, GetPos().y - 40.f });
+	//attackHitbox->SetPos(GetPos());
+
+	//hp bar
 	SetHpBar();
 
 	//animation
@@ -188,6 +201,7 @@ void Boss::Draw(RenderWindow& window)
 	if ( isHitBox )
 	{
 		bossHitbox->Draw(window);
+		attackHitbox->Draw(window);
 	}
 	if ( GetActive() )
 	{
@@ -259,7 +273,7 @@ void Boss::SetBossPos()
 	healthBar.setPosition({ prevPosition.x, prevPosition.y - 15.f });
 }
 
-HitBox* Boss::GetSlimeHitBox()
+HitBox* Boss::GetBossHitBox()
 {
     return bossHitbox;
 }
@@ -280,16 +294,15 @@ void Boss::AttackPattern(float dt)
 		Translate(dir * this->speed * dt);
 	}
 	//attack motion
-	if ( currState == States::Move && (Utils::Distance(player->GetPos(), GetPos()) < 350.f) && attack )
+	/*if ( currState == States::Move && (Utils::Distance(player->GetPos(), GetPos()) < 350.f) && attack )
 	{
 		Translate(dir * 200.f * dt);
-	}
-	if ( currState == States::Move && Utils::Distance(player->GetPos(), GetPos()) < 15.f )
+	}*/
+	if ( currState == States::Move && Utils::Distance(player->GetPos(), GetPos()) < 85.f )
 	{
-		attack = false;
-		Translate(dir * 50.f * dt);
+		//attack = false;
+		//Translate(dir * 50.f * dt);
 		SetState(States::Attack);
-
 	}
 
 	//boss hits player

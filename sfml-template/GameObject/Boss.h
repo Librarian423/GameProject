@@ -64,13 +64,14 @@ public:
 
 	void OnCompleteDead();
 	void OnCompleteAttack();
+
 	bool EqualFloat(float a, float b);
 
 	void SetHp(int num);
 	void SetHpBar();
 	void SetBossPos();
 
-	HitBox* GetSlimeHitBox();
+	HitBox* GetBossHitBox();
 
 	void AttackPattern(float dt);
 };
