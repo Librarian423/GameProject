@@ -77,6 +77,7 @@ public:
 	Vector2f GetPlayerDir() { return direction; }
 	Vector2f GetPlayerLastDir() { return lastDirection; }
 	int GetDamage() { return damage; }
+	States GetCurrState() { return currState; }
 
 	void SetHp(int num);
 	void SetHpBar();

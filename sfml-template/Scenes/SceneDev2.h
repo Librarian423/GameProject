@@ -15,10 +15,9 @@ class SceneDev2 :public Scene
 	
 protected:
 	Player* player;
-	//Slime* slime;
 	Boss* boss;
 	ItemBox* itemBox;
-	//list<Slime*>slimeList;
+	
 	//
 	float timer;
 	float attackTimer;

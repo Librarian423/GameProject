@@ -78,8 +78,9 @@ void SceneDev2::Release()
 
 void SceneDev2::Enter()
 {
-	ITEM_GEN->Release();
 
+	ITEM_GEN->Release();
+	
 	Vector2i size = FRAMEWORK->GetWindowSize();
 
 	worldView.setSize(size.x, size.y);
@@ -89,6 +90,7 @@ void SceneDev2::Enter()
 	uiView.setCenter(size.x * 0.5f, size.y * 0.5f);
 
 	FRAMEWORK->GetWindow().setMouseCursorGrabbed(false);
+	
 }
 
 void SceneDev2::Exit()
@@ -118,6 +120,11 @@ void SceneDev2::Update(float dt)
 		itemBox->SetBoxFalse(true);
 		itemBox->SetState(ItemBox::States::Idle);
 		boxCount--;
+	}
+	//Game End
+	if ( player->GetCurrState() == Player::States::Dead )
+	{
+		
 	}
 
 	if ( InputMgr::GetKeyDown(Keyboard::Num1) )

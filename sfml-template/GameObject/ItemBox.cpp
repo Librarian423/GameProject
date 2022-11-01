@@ -7,7 +7,7 @@
 
 
 ItemBox::ItemBox()
-	:isHitBox(true), eraseTimer(1.f), isBoxOpen(false)
+	:isHitBox(false), eraseTimer(1.f), isBoxOpen(false)
 {
 }
 

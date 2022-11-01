@@ -8,7 +8,7 @@
 #include <iostream>
 
 Item::Item()
-    :currState(Types::None), isHitBox(true), isKey(false), value(0)
+    :currState(Types::None), isHitBox(false), isKey(false), value(0)
 {
 }
 

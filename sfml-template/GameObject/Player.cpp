@@ -9,7 +9,7 @@
 #include <iostream>
 
 Player::Player()
-	: currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.5f), isHitBox(true), damage(1), hp(10), maxHp(10), isKey(false), isAlive(true)
+	: currState(States::None), speed(500.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), timer(1.f), attackTime(0.5f), isHitBox(false), damage(1), hp(10), maxHp(10), isKey(false), isAlive(true)
 {
 }
 

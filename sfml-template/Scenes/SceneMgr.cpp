@@ -3,7 +3,6 @@
 
 bool SceneMgr::Init()
 {
-    //sceneMap[Scenes::Dev1] = new SceneDev1();
     sceneMap[Scenes::Dev2] = new SceneDev2();
 
     curScene = Scenes::Dev2;
@@ -32,6 +31,7 @@ void SceneMgr::ChangeScene(Scenes scene)
 {
     sceneMap[curScene]->Exit();
     curScene = scene;
+    //sceneMap[curScene]->Init();
     sceneMap[curScene]->Enter();
 }
 

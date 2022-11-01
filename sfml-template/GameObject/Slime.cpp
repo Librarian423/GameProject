@@ -8,7 +8,7 @@
 #include <iostream>
 
 Slime::Slime()
-	: currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.8f), hitTime(0.f), getAttackTime(1.f), attack(true), damage(1), hp(5), maxHp(5), barScaleX(60.f), isHitBox(true)
+	: currState(States::None), speed(50.f), direction(1.f, 0.f), lastDirection(1.f, 0.f), slimeState(0), moveTime(0.8f), hitTime(0.f), getAttackTime(1.f), attack(true), damage(1), hp(5), maxHp(5), barScaleX(60.f), isHitBox(false)
 {
 }
 
