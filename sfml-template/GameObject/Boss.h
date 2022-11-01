@@ -6,7 +6,7 @@ class Player;
 class HitBox;
 class VertexArrayObj;
 
-class Slime : public SpriteObj
+class Boss : public SpriteObj
 {
 public:
 	enum class States
@@ -15,6 +15,7 @@ public:
 		Idle,
 		Move,
 		Dead,
+		Attack,
 	};
 protected:
 	Player* player;
@@ -22,7 +23,8 @@ protected:
 
 	RectangleShape healthBar;
 
-	HitBox* slimeHitbox;
+	HitBox* bossHitbox;
+	HitBox* attackHitbox;
 
 	States currState;
 
@@ -34,7 +36,7 @@ protected:
 
 	VertexArrayObj* background;
 
-	int slimeState;
+	int bossState;
 	float moveTime;
 	float hitTime;
 	float getAttackTime;
@@ -48,9 +50,9 @@ protected:
 
 	bool isHitBox;
 public:
-	Slime();
-	virtual ~Slime();
-	
+	Boss();
+	virtual ~Boss();
+
 	void Init(Player* player);
 
 	void SetState(States newState);
@@ -61,12 +63,16 @@ public:
 	void Draw(RenderWindow& window);
 
 	void OnCompleteDead();
+	void OnCompleteAttack();
+
 	bool EqualFloat(float a, float b);
 
 	void SetHp(int num);
 	void SetHpBar();
-	void SetSlimePos();
+	void SetBossPos();
 
-	HitBox* GetSlimeHitBox();
+	HitBox* GetBossHitBox();
+
+	void AttackPattern(float dt);
 };
 

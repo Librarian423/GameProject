@@ -69,7 +69,6 @@ void Slime::Init(Player* player)
 
 void Slime::SetState(States newState)
 {
-	prevState = currState;
 	currState = newState;
 
 	switch ( currState )
@@ -165,6 +164,7 @@ void Slime::Update(float dt)
 	//animation
 	animator.Update(dt);
 
+	//wall bound
 	for ( const auto& hb : background->GetHitBoxList() )
 	{
 		if ( Utils::OBB(hb->GetHitbox(), slimeHitbox->GetHitbox()) )
@@ -182,15 +182,15 @@ void Slime::Update(float dt)
 
 void Slime::Draw(RenderWindow& window)
 {
-	
-	if ( GetActive() )
-	{
-		SpriteObj::Draw(window);
-	}
 	if ( isHitBox )
 	{
 		slimeHitbox->Draw(window);
 	}
+	if ( GetActive() )
+	{
+		SpriteObj::Draw(window);
+	}
+	
 	window.draw(healthBar);
 }
 

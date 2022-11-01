@@ -8,6 +8,8 @@
 #include "../Framework/Framework.h"
 #include "../GameObject/Player.h"
 #include "../GameObject/Slime.h"
+#include "../GameObject/Boss.h"
+#include "../GameObject/ItemBox.h"
 #include "../GameObject/Item.h"
 #include "../GameObject/ItemGenerator.h"
 #include "../GameObject/VertexArrayObj.h"
@@ -19,7 +21,7 @@
 using namespace std;
 
 SceneDev2::SceneDev2()
-	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f), slimeTimer(0.8f), slimeState(0)
+	:Scene(Scenes::Dev2), timer(0.f), attackTimer(1.f), slimeTimer(0.8f), slimeState(0), boxCount(1)
 {
 }
 
@@ -35,6 +37,13 @@ void SceneDev2::Init()
 	CreateBackground(20, 40, 32.f, 32.f);
 	background->Init();
 
+	itemBox = new ItemBox();
+	itemBox->SetName("ItemBox");
+	itemBox->Init();
+	itemBox->SetActive(false);
+	itemBox->SetBoxFalse();
+	objList.push_back(itemBox);
+
 	player = new Player();
 	player->SetName("Player");
 	player->Init();
@@ -42,14 +51,24 @@ void SceneDev2::Init()
 	player->SetBackground(background);
 	objList.push_back(player);
 
+	itemBox->SetPlayer(player);
+
 	slime = new Slime();
 	slime->SetName("Slime");
 	slime->Init(player);
 	slime->SetPos({ 200.f,200.f });
 	slime->SetBackground(background);
+	//slime->SetActive(false);
 	objList.push_back(slime);
 
-	
+	boss = new Boss();
+	boss->SetName("Boss");
+	boss->Init(player);
+	boss->SetPos({ 1020.f,100.f });
+	boss->SetBackground(background);
+	boss->SetState(Boss::States::Idle);
+	//boss->SetActive(false);
+	objList.push_back(boss);
 
 	ITEM_GEN->Init();
 
@@ -86,6 +105,7 @@ void SceneDev2::Exit()
 
 void SceneDev2::Update(float dt)
 {
+	//슬라임 패턴 3.f 마다 상태 변경
 	slimeTimer -= dt;
 	if ( slime->GetState() != Slime::States::Dead )
 	{
@@ -105,6 +125,7 @@ void SceneDev2::Update(float dt)
 			slimeTimer = 5.f;
 		}
 	}
+	//슬라임 리젠
 	else if ( slimeTimer < 0.f && slime->GetState() == Slime::States::Dead )
 	{
 		slime->Init(player);
@@ -114,12 +135,27 @@ void SceneDev2::Update(float dt)
 	
 	worldView.setCenter(player->GetPos());
 	worldView.setCenter(player->GetPos());
+	
+	//Gen itemBox
+	if ( boxCount > 0 && boss->GetState() == Boss::States::Dead )
+	{
+		itemBox->SetBoxFalse(true);
+		itemBox->SetState(ItemBox::States::Idle);
+		boxCount--;
+	}
 
 	if ( InputMgr::GetKeyDown(Keyboard::Num1) )
 	{
-		ITEM_GEN->Generate({ 100.f,100.f });
+		itemBox->SetBoxFalse(true);
+		itemBox->SetState(ItemBox::States::Idle);
+		ITEM_GEN->Generate({ 300.f,300.f },true);
 	}
 
+	if ( InputMgr::GetKeyDown(Keyboard::Num2) )
+	{
+		itemBox->SetActive(false);
+		ITEM_GEN->EraseKey();
+	}
 	Scene::Update(dt);
 }
 

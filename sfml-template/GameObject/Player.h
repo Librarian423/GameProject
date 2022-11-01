@@ -19,6 +19,7 @@ public:
 		Idle,
 		Move,
 		Attack,
+		Dead,
 	};
 protected:
 	Animator animator;
@@ -34,7 +35,6 @@ protected:
 	Vector2f velocity;
 	Vector2f direction;
 	Vector2f lastDirection;
-	Vector2f tempDirection;
 	Vector2f prevPosition;
 
 	VertexArrayObj* background;
@@ -47,7 +47,8 @@ protected:
 	int maxHp;
 
 	bool isHitBox;
-
+	bool isKey;
+	bool isAlive;
 public:
 	Player();
 	virtual~Player();
@@ -64,6 +65,7 @@ public:
 
 	void Dash(float dt);
 	void OnCompleteAttack();
+	void OnCompleteDead();
 
 	void UpdateIdle(float dt);
 	void UpdateMove(float dt);
@@ -74,11 +76,14 @@ public:
 	HitBox* GetPlayerHitBox();
 	HitBox* GetAttackHitbox();
 	Vector2f GetPlayerDir() { return direction; }
+	Vector2f GetPlayerLastDir() { return lastDirection; }
 	int GetDamage() { return damage; }
 
 	void SetHp(int num);
 	void SetHpBar();
 	void OnPickupItem(Item* item);
 	void SetPlayerPos();
+	void SetIsKey() { isKey = false; }
+	bool GetIsKey() { return isKey; }
 };
 
