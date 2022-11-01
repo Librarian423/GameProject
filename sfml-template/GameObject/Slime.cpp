@@ -69,7 +69,6 @@ void Slime::Init(Player* player)
 
 void Slime::SetState(States newState)
 {
-	prevState = currState;
 	currState = newState;
 
 	switch ( currState )
