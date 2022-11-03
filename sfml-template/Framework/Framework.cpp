@@ -2,7 +2,6 @@
 #include "InputMgr.h"
 #include "../Scenes/SceneMgr.h"
 #include "ResourceMgr.h"
-#include "../DataTable/DataTableMGR.h"
 #include "../Framework/SoundMgr.h"
 
 Framework::Framework()
@@ -41,7 +40,6 @@ bool Framework::Init(int width, int height)
    
     RESOURCE_MGR->LoadAll();
     SOUND_MGR->Init();
-    DATATABLE_MGR->Init();
     SCENE_MGR->Init();
     InputMgr::Init();
 

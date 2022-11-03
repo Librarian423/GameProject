@@ -151,9 +151,6 @@
     <ClCompile Include="GameObject\Boss.cpp" />
     <ClCompile Include="GameObject\VertexArrayObj.cpp" />
     <ClCompile Include="GameObject\Item.cpp" />
-    <ClCompile Include="DataTable\DataTable.cpp" />
-    <ClCompile Include="DataTable\DataTableMGR.cpp" />
-    <ClCompile Include="DataTable\StringTable.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
     <ClCompile Include="Framework\InputMgr.cpp" />
     <ClCompile Include="Framework\ResourceMgr.cpp" />
@@ -182,9 +179,6 @@
     <ClInclude Include="GameObject\Boss.h" />
     <ClInclude Include="GameObject\VertexArrayObj.h" />
     <ClInclude Include="GameObject\Item.h" />
-    <ClInclude Include="DataTable\DataTable.h" />
-    <ClInclude Include="DataTable\DataTableMGR.h" />
-    <ClInclude Include="DataTable\StringTable.h" />
     <ClInclude Include="Framework\Framework.h" />
     <ClInclude Include="Framework\InputMgr.h" />
     <ClInclude Include="Framework\ResourceMgr.h" />
